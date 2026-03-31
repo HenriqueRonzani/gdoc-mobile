@@ -1,8 +1,8 @@
 import { View } from 'react-native'
 import { Text, Button } from 'react-native-paper'
-import { loginUser } from '../../services/authService.js'
+import { loginUser } from '@/services/authService.js'
 import { useState } from 'react'
-import { useSnackbar } from '../../providers/SnackbarProvider.js'
+import { useSnackbar } from '@/providers/SnackbarProvider.js'
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState<Boolean>(false)

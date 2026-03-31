@@ -1,13 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RootStackParamList } from './types.js'
-import Menu from '../screens/main/Menu.js'
+import Login from '@/screens/auth/Login.js'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-export default function MainStack() {
+export default function AuthStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'Menu'} component={Menu}/>
+      <Stack.Screen name={'Login'} component={Login}/>
     </Stack.Navigator>
   )
 }
