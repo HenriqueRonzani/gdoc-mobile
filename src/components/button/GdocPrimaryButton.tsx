@@ -13,6 +13,7 @@ export function GdocPrimaryButton({children, ...rest}: Props) {
       buttonColor={theme.colors.primary}
       textColor={theme.colors.onPrimary}
       children={children}
+      style={{borderRadius: 5}}
     />
   )
 }

@@ -1,4 +1,4 @@
-import { MD3LightTheme, MD3Theme } from 'react-native-paper'
+import { MD3LightTheme } from 'react-native-paper'
 import { DefaultTheme as NavTheme } from '@react-navigation/native'
 
 export const theme = {
@@ -9,8 +9,9 @@ export const theme = {
     background: '#FFFFFF',
     onPrimary: '#FFFFFF',
     onSecondary: '#FFFFFF',
-    "component-on": "#F0F0F0",
-    "component-off": "#D3D3D3"
+    text: '#7C7C7C',
+    'component-on': '#F0F0F0',
+    'component-off': '#D3D3D3'
   }
 }
 

@@ -6,15 +6,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { StyleSheet, View } from "react-native";
 import { GdocPrimaryButton } from "@/components/button/GdocPrimaryButton";
 
-type Props<T extends ZodTypeAny> = {
+export type GdocFormProps<T extends ZodTypeAny> = {
   initial: z.infer<T>
-  schema: T,
+  schema: T
   onSubmit: (data: z.infer<T>) => void
   children: React.ReactNode
-  confirmLabel?: string | null
+  footer?: React.ReactNode
+  showConfirm?: boolean
+  confirmLabel?: string
+  isLoading?: boolean
 }
 
-export default function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, children, confirmLabel}: Props<T>) {
+export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, children, footer, showConfirm, confirmLabel, isLoading}: GdocFormProps<T>) {
   type formData = z.infer<typeof schema>
   const methods = useForm<formData>({
     resolver: zodResolver(schema),
@@ -24,10 +27,18 @@ export default function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubm
   return (
     <FormProvider {...methods}>
       <View style={style.form}>
-        {children}
-        <GdocPrimaryButton onPress={methods.handleSubmit(onSubmit)}>
-          {confirmLabel ?? 'Confirmar'}
-        </GdocPrimaryButton>
+        <View style={style.formBody}>
+          {children}
+        </View>
+        <View style={style.formFooter}>
+          {(showConfirm ?? true) &&
+            <GdocPrimaryButton onPress={methods.handleSubmit(onSubmit)} loading={isLoading}>
+              {confirmLabel ?? 'Confirmar'}
+            </GdocPrimaryButton>
+          }
+
+          {footer}
+        </View>
       </View>
     </FormProvider>
   )
@@ -35,6 +46,13 @@ export default function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubm
 
 const style = StyleSheet.create({
   form: {
+    flex: 1
+  },
+  formBody: {
+    flex: 1,
+    gap: 10
+  },
+  formFooter: {
     gap: 10
   }
 })

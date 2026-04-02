@@ -1,63 +1,79 @@
-import { View } from 'react-native'
-import { Text } from 'react-native-paper'
-import { loginUser } from '@/services/authService'
+import { StyleSheet, View } from 'react-native'
 import { useState } from 'react'
 import { useSnackbar } from '@/providers/SnackbarProvider'
-import GdocTextInput from "@/components/gdoc-form/GdocTextInput";
-import GdocForm from "@/components/gdoc-form/GdocForm";
-import { z } from "zod";
-import GdocFormItem from "@/components/gdoc-form/GdocFormItem";
-import _ from "lodash"
-import GdocFormError from "@/components/gdoc-form/GdocFormError";
+import { GdocPageTitle } from '@/components/GdocPageTitle'
+import { ClientLogo } from '@/components/ClientLogo'
+import { LoginForm } from '@/components/auth/login/LoginForm'
+import { LoginFormData } from '@/schemas/auth.schema'
+import { useNavigation } from '@react-navigation/native'
+import { NavigatorType } from '@/types/navigation'
+import { Text } from 'react-native-paper'
+import { theme } from '@/theme'
+import { loginUser } from '@/services/auth.service'
+import { GdocSecondaryButton } from '@/components/button/GdocSecondaryButton'
+import { useAuth } from '@/providers/AuthProvider'
 
-export default function Login() {
-  const [isLoading, setIsLoading] = useState<Boolean>(false)
-  const {toast} = useSnackbar()
+export function Login() {
+  const {setToken} = useAuth()
+  const navigation = useNavigation<NavigatorType>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const {toastError, toastSuccess} = useSnackbar()
 
-  const initialForm = {
-    cpf: '',
-    password: ''
-  }
-
-  const schema = z.object({
-    cpf: z.string({coerce: true}).min(5, 'Pelo menos 5 caracteres'),
-    password: z.string().min(5, 'Pelo menos 5 caracteres')
-  })
-
-  const login = async (formData: typeof schema._type) => {
+  const login = async (formData: LoginFormData) => {
     try {
       setIsLoading(true)
-      toast(`cpf ${formData.cpf} password ${formData.password}`)
-      // await loginUser(formData.cpf, formData.password)
+      const response = await loginUser(formData)
+      await setToken(response?.access_token)
+      toastSuccess('Login realizado com Sucesso!')
     } catch (error) {
       console.log(error)
-      toast('Erro ao realizar login!')
+      toastError('Erro ao realizar login!')
     } finally {
       setIsLoading(false)
     }
   }
 
+  const goToSignUp = () => {
+    navigation.navigate('Menu')
+  }
+
+  const goToRecover = () => {
+    navigation.navigate('Recover')
+  }
+
+  const footer = (
+    <GdocSecondaryButton style={style.secondaryButton} onPress={goToRecover}>
+      CRIAR CONTA G-DOC
+    </GdocSecondaryButton>
+  )
+
   return (
-    <View>
-      <GdocForm initial={initialForm} schema={schema} onSubmit={login}>
-        <GdocFormItem name={'cpf'}>
-          {(field) => (
-            <>
-              <GdocTextInput field={field} label={'CPF'} placeholder={'CPF'}/>
-              <GdocFormError name={'cpf'}/>
-            </>
-          )}
-        </GdocFormItem>
-        <GdocFormItem name={'password'}>
-          {(field) => (
-            <>
-              <GdocTextInput field={field} label={'Senha'} placeholder={'Senha'}/>
-              <GdocFormError name={'password'}/>
-            </>
-          )}
-        </GdocFormItem>
-      </GdocForm>
-      {isLoading && <Text>Loading</Text>}
+    <View style={style.container}>
+      <GdocPageTitle>Acessar Plataforma G-Doc</GdocPageTitle>
+      <ClientLogo style={style.containerLogo}/>
+      <LoginForm onSubmit={login} isLoading={isLoading} footer={footer}>
+        <Text style={{color: theme.colors.text, fontWeight: 'bold'}}>
+          Problemas ao acessar?
+          <Text style={{color: theme.colors.primary}} onPress={goToSignUp}
+          > Recupere sua conta
+          </Text>
+        </Text>
+      </LoginForm>
     </View>
   )
 }
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    paddingHorizontal: 15
+  },
+  containerLogo: {
+    alignSelf: 'center'
+  },
+  secondaryButton: {
+    marginTop: 2
+  }
+})
