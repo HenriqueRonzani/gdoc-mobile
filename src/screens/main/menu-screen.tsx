@@ -1,8 +1,8 @@
 import { Text, View } from 'react-native'
-import { useAuth } from '@/providers/AuthProvider'
-import { GdocPrimaryButton } from '@/components/button/GdocPrimaryButton'
+import { useAuth } from '@/providers/auth-provider'
+import { GdocPrimaryButton } from '@/components/button/gdoc-primary-button'
 
-export function Menu() {
+export function MenuScreen() {
   const {clearToken} = useAuth()
   return (
     <View>

@@ -1,9 +1,9 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { MainStack } from '@/navigation/MainStack'
-import { AuthStack } from '@/navigation/AuthStack'
+import { MainStack } from '@/navigation/main-stack'
+import { AuthStack } from '@/navigation/auth-stack'
 import { navTheme } from '@/theme'
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@/providers/auth-provider'
 import { ActivityIndicator } from 'react-native-paper'
 import { View } from 'react-native'
 

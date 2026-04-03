@@ -1,19 +1,19 @@
 import { StyleSheet, View } from 'react-native'
 import { useState } from 'react'
-import { useSnackbar } from '@/providers/SnackbarProvider'
-import { GdocPageTitle } from '@/components/GdocPageTitle'
-import { ClientLogo } from '@/components/ClientLogo'
-import { LoginForm } from '@/components/auth/login/LoginForm'
+import { useSnackbar } from '@/providers/snackbar-provider'
+import { GdocPageTitle } from '@/components/gdoc-page-title'
+import { ClientLogo } from '@/components/client-logo'
+import { LoginForm } from '@/components/auth/login/login-form'
 import { LoginFormData } from '@/schemas/auth.schema'
 import { useNavigation } from '@react-navigation/native'
 import { NavigatorType } from '@/types/navigation'
 import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
 import { loginUser } from '@/services/auth.service'
-import { GdocSecondaryButton } from '@/components/button/GdocSecondaryButton'
-import { useAuth } from '@/providers/AuthProvider'
+import { GdocSecondaryButton } from '@/components/button/gdoc-secondary-button'
+import { useAuth } from '@/providers/auth-provider'
 
-export function Login() {
+export function LoginScreen() {
   const {setToken} = useAuth()
   const navigation = useNavigation<NavigatorType>()
   const [isLoading, setIsLoading] = useState<boolean>(false)

@@ -1,7 +1,7 @@
-import { GdocForm } from "@/components/gdoc-form/GdocForm";
-import { GdocFormItem } from "@/components/gdoc-form/GdocFormItem";
-import { GdocTextInput } from "@/components/gdoc-form/GdocTextInput";
-import { GdocFormError } from "@/components/gdoc-form/GdocFormError";
+import { GdocForm } from "@/components/gdoc-form/gdoc-form";
+import { GdocFormItem } from "@/components/gdoc-form/gdoc-form-item";
+import { GdocTextInput } from "@/components/gdoc-form/gdoc-text-input";
+import { GdocFormError } from "@/components/gdoc-form/gdoc-form-error";
 import { LoginFormData, LoginFormSchema } from "@/schemas/auth.schema";
 import React from "react";
 import { Masks } from 'react-native-mask-input'

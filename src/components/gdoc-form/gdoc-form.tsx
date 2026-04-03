@@ -4,7 +4,7 @@ import React from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StyleSheet, View } from "react-native";
-import { GdocPrimaryButton } from "@/components/button/GdocPrimaryButton";
+import { GdocPrimaryButton } from "@/components/button/gdoc-primary-button";
 
 export type GdocFormProps<T extends ZodTypeAny> = {
   initial: z.infer<T>

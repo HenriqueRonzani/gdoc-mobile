@@ -1,5 +1,5 @@
 import { Text } from 'react-native-paper'
 
-export function Recover() {
+export function RecoverScreen() {
   return <Text>RecoverScreen</Text>
 }
