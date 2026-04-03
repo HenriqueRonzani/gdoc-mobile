@@ -1,13 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { RootStackParamList } from './types'
-import Menu from '@/screens/main/Menu'
+import { RootStackParamList } from '@/types/navigation'
+import { MenuScreen } from '@/screens/main/menu-screen'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-export default function MainStack() {
+export function MainStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'Menu'} component={Menu}/>
+      <Stack.Screen name={'Menu'} component={MenuScreen}/>
     </Stack.Navigator>
   )
 }

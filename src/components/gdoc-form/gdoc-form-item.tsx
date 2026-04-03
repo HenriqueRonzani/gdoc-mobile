@@ -6,7 +6,7 @@ type Props = {
   children: (field: ControllerRenderProps<FieldValues, string>) => React.ReactElement
 }
 
-export default function GdocFormItem ({name, children}: Props) {
+export function GdocFormItem ({name, children}: Props) {
   const { control } = useFormContext();
 
   return (
