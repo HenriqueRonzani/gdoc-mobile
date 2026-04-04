@@ -37,12 +37,12 @@ export function LoginScreen() {
     navigation.navigate('Menu')
   }
 
-  const goToRecover = () => {
-    navigation.navigate('Recover')
+  const goToRegister = () => {
+    navigation.navigate('RegisterStack')
   }
 
   const footer = (
-    <GdocSecondaryButton style={style.secondaryButton} onPress={goToRecover}>
+    <GdocSecondaryButton style={style.secondaryButton} onPress={goToRegister}>
       CRIAR CONTA G-DOC
     </GdocSecondaryButton>
   )

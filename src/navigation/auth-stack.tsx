@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RootStackParamList } from '@/types/navigation'
 import { LoginScreen } from '@/screens/auth/login-screen'
 import { AuthHeader } from "@/components/auth/auth-header";
-import { RecoverScreen } from '@/screens/auth/recover-screen'
+import { RegisterStack } from './register-stack';
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -12,7 +12,7 @@ export function AuthStack() {
       header: () => <AuthHeader/>
     }}>
       <Stack.Screen name={'Login'} component={LoginScreen}/>
-      <Stack.Screen name={'Recover'} component={RecoverScreen}/>
+      <Stack.Screen name={'RegisterStack'} component={RegisterStack}/>
     </Stack.Navigator>
   )
 }
