@@ -32,14 +32,29 @@ export const RegisterFormExternalSchema = z.object({
 
 export const RegisterForm3Schema = z.object({
   street: z.string().min(1,"Campo obrigatorio"),
+
   number: z.string().min(1,"Campo obrigatorio"),
+
   neighborhood: z.string().min(1,"Campo obrigatorio"),
+
   city: z.string().min(1,"Campo obrigatorio"),
+
   state: z.string().min(1,"Campo obrigatorio"),
+
   zip: z.string().min(1,"Campo obrigatorio"),
+
   complement: z.string(),
-  password: z.string().min(5, 'Pelo menos 5 caracteres'),
-  confirmPassword: z.string().min(5, 'Pelo menos 5 caracteres')
+
+  password: z.string().min(8, 'Pelo menos 8 caracteres')
+  .regex(/[A-Z]/, "Precisa ter pelo menos uma letra maiúscula")
+  .regex(/[0-9]/, "Precisa ter pelo menos um número")
+  .regex(/[^A-Za-z0-9]/, "Precisa ter pelo menos um caractere especial"),
+
+  confirmPassword: z.string().min(8, 'Pelo menos 8 caracteres')
+  .regex(/[A-Z]/, "Precisa ter pelo menos uma letra maiúscula")
+  .regex(/[0-9]/, "Precisa ter pelo menos um número")
+  .regex(/[^A-Za-z0-9]/, "Precisa ter pelo menos um caractere especial"),
+
 }).refine((data) => data.password === data.confirmPassword, {
   message:"Senhas não combinam",
   path: ["confirmPassword"]
