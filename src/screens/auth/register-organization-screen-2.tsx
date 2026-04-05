@@ -1,41 +1,30 @@
 import { GdocText } from '@/components/gdoc-text';
 import { GdocPageTitle } from '@/components/gdoc-page-title';
 import { GdocStepper } from '@/components/gdoc-stepper';
-import { KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { GdocRegisterInformation } from '@/components/gdoc-register-information';
-import { Button} from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { UseRegister } from '@/contexts/use-register';
 import { NavigatorType } from '@/types/navigation';
-import { useState } from 'react';
 import { Masks } from 'react-native-mask-input';
 import { ScrollView } from 'react-native';
 import { GdocForm } from '@/components/gdoc-form/gdoc-form';
-import { RegisterExternalFormData, RegisterFormExternalSchema } from '@/schemas/auth.schema';
+import {  RegisterFormOrganizationSchema, RegisterOrganizationFormData } from '@/schemas/auth.schema';
 import { GdocFormItem } from '@/components/gdoc-form/gdoc-form-item';
 import { GdocTextInput } from '@/components/gdoc-form/gdoc-text-input';
 import { GdocFormError } from '@/components/gdoc-form/gdoc-form-error';
-import { GdocDropdown } from '@/components/gdoc-form/gdoc-dropdown';
 
-export function RegisterIndividualScreen2() {
+export function RegisterOrganizationScreen2() {
   const navigation = useNavigation<NavigatorType>();
 
-  const initialForm = {name:'', cpf_cnpj:'', birthday:'', genre: '', email: '', telephone: ''}
-
-  const options = [
-    {label: 'Masculino', value: 'male'},
-    {label: 'Feminino', value: 'female'},
-    {label: 'Outro', value: 'other'},
-  ]
-
-  const [open, setOpen] = useState(false)
- 
+  const initialForm = {name:'', cpf_cnpj:'', email: '', telephone: '', secondary_name: '', secondary_cpf: ''}
 
   //context
   const {setRegisterParams } = UseRegister();
 
-  function Submit(data: RegisterExternalFormData) {
-      setRegisterParams((prev)=> ({...prev, name: data.name, genre: data.genre, cpf_cnpj: data.cpf_cnpj, birthday: data.birthday, email: data.email, telephone: data.telephone, }))
+  function Submit(data: RegisterOrganizationFormData) {
+      setRegisterParams((prev)=> ({...prev, name: data.name,  cpf_cnpj: data.cpf_cnpj, email: data.email, telephone: data.telephone, secondary_cpf: data.secondary_cpf, secondary_name: data.secondary_name}))
       navigation.navigate("Register3")
     
   }
@@ -59,11 +48,11 @@ export function RegisterIndividualScreen2() {
           description="Complete os campos abaixo"
         />
 
-          <GdocForm initial={initialForm} onSubmit={Submit} schema={RegisterFormExternalSchema} confirmLabel='Proxímo' footer={footer}>
+          <GdocForm initial={initialForm} onSubmit={Submit} schema={RegisterFormOrganizationSchema} confirmLabel='Proxímo' footer={footer}>
             <GdocFormItem name={'name'}>
               {(field) => (
                 <>
-                  <GdocTextInput  field={field} label='Nome completo' placeholder='Nome completo'/>
+                  <GdocTextInput  field={field} label='Nome da organização' placeholder='Nome da organização'/>
                   <GdocFormError name={'name'}/>
                 </>
               )}
@@ -71,28 +60,12 @@ export function RegisterIndividualScreen2() {
             <GdocFormItem name={'cpf_cnpj'}>
               {(field) => (
                 <>
-                  <GdocTextInput mask={Masks.BRL_CPF}  field={field} label='CPF' placeholder='CPF'/>
+                  <GdocTextInput mask={Masks.BRL_CNPJ}  field={field} label='CNPJ' placeholder='CNPJ'/>
                   <GdocFormError name={'cpf_cnpj'}/>
                 </>
               )}
             </GdocFormItem>
-            <GdocFormItem name={'birthday'}>
-              {(field) => (
-                <>
-                  <GdocTextInput mask={Masks.DATE_DDMMYYYY}  field={field} label='Data de nascimento' placeholder='Data de nascimento'/>
-                  <GdocFormError name={'birthday'}/>
-                </>
-              )}
-            </GdocFormItem>
 
-            <GdocFormItem name={'genre'}>
-              {(field) => (
-                <>
-                  <GdocDropdown placeholder='Gênero'  items={options} open={open} setOpen={setOpen} field={field}/>
-                  <GdocFormError name={'genre'}/>
-                </>
-              )}
-            </GdocFormItem>
             <GdocFormItem name={'email'}>
               {(field) => (
                 <>
@@ -106,6 +79,24 @@ export function RegisterIndividualScreen2() {
                 <>
                   <GdocTextInput mask={Masks.BRL_PHONE} field={field} label='Telefone' placeholder='Telefone'/>
                   <GdocFormError name={'telephone'}/>
+                </>
+              )}
+            </GdocFormItem>
+
+            <GdocFormItem name={'secondary_name'}>
+              {(field) => (
+                <>
+                  <GdocTextInput  field={field} label='Nome completo' placeholder='Nome completo'/>
+                  <GdocFormError name={'secondary_name'}/>
+                </>
+              )}
+            </GdocFormItem>
+
+            <GdocFormItem name={'secondary_cpf'}>
+              {(field) => (
+                <>
+                  <GdocTextInput mask={Masks.BRL_CPF}  field={field} label='Cpf do responsavel' placeholder='Cpf do responsavel'/>
+                  <GdocFormError name={'secondary_cpf'}/>
                 </>
               )}
             </GdocFormItem>

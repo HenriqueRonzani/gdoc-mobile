@@ -8,6 +8,7 @@ export function RegisterContextProvider ({children}:{ children: React.ReactNode 
         name: null,
         cpf_cnpj: null,
         birthday: null,
+        genre: null,
         email: null,
         telephone: null,
         address: {
@@ -19,7 +20,9 @@ export function RegisterContextProvider ({children}:{ children: React.ReactNode 
             street: null,
             zip: null
         },
-        password: null
+        password: null,
+        secondary_cpf: null,
+        secondary_name: null
     }
     const [registerParams, setRegisterParams] = useState(initialRegisterParams)
 

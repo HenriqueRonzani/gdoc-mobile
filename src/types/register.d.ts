@@ -5,8 +5,11 @@ export type RegisterParams = {
     email: string | null,
     telephone: string | null,
     birthday: string | null,
+    genre: string | null,
     address: Address,
-    password: string | null
+    password: string | null,
+    secondary_name: string | null,
+    secondary_cpf: string | null
 }
 
 export type Address = {

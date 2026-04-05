@@ -3,13 +3,13 @@ import { GdocPageTitle } from '@/components/gdoc-page-title';
 import { GdocStepper } from '@/components/gdoc-stepper';
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { GdocRegisterInformation } from '@/components/gdoc-register-information';
-import { Button, HelperText, TextInput } from 'react-native-paper';
+import { Button} from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { NavigatorType } from '@/types/navigation';
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { GdocForm } from '@/components/gdoc-form/gdoc-form';
-import { RegisterExternalFormData, RegisterForm3Data, RegisterForm3Schema, RegisterFormExternalSchema } from '@/schemas/auth.schema';
+import { RegisterForm3Data, RegisterForm3Schema } from '@/schemas/auth.schema';
 import { GdocFormItem } from '@/components/gdoc-form/gdoc-form-item';
 import { GdocTextInput } from '@/components/gdoc-form/gdoc-text-input';
 import { GdocFormError } from '@/components/gdoc-form/gdoc-form-error';
@@ -24,7 +24,7 @@ import { Address } from '@/types/register';
 export function RegisterScreen3() {
   const navigation = useNavigation<NavigatorType>();
 
-  const initialForm = {city: '', complement: '',confirmPassword: '', neighborhood: '', number: '', password: '', state: '', street: '', zip: ''}
+  const initialForm = {city: '', complement: '',confirm_password: '', neighborhood: '', number: '', password: '', state: '', street: '', zip: ''}
 
   const [states, setStates] = useState<ItemType<string>[]>([])
   const [openState, setOpenState] = useState(false)
@@ -67,6 +67,8 @@ export function RegisterScreen3() {
   const GoBackRegister2 = () => {
     if (registerParams.type === "External") {
         navigation.navigate("RegisterIndividual2")
+    } else {
+      navigation.navigate("RegisterCompany2")
     }
   }
 
@@ -189,11 +191,11 @@ export function RegisterScreen3() {
                     )}
             </GdocFormItem>
 
-            <GdocFormItem name={'confirmPassword'}>
+            <GdocFormItem name={'confirm_password'}>
                     {(field) => (
                       <>
                         <GdocTextInput field={field} label={'Confirme a senha'} placeholder={'Confirme a senha'} secureTextEntry={true}/>
-                        <GdocFormError name={'confirmPassword'}/>
+                        <GdocFormError name={'confirm_password'}/>
                       </>
                     )}
             </GdocFormItem>

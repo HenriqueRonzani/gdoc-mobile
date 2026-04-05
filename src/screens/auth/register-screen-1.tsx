@@ -25,6 +25,8 @@ export function RegisterScreen1() {
 
     if (type === "External") {
       navigation.navigate("RegisterIndividual2")
+    } else {
+      navigation.navigate("RegisterCompany2")
     }
   }
 
