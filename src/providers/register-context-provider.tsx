@@ -4,7 +4,22 @@ import { RegisterContext } from "../contexts/register-context";
 
 export function RegisterContextProvider ({children}:{ children: React.ReactNode }) {
     const initialRegisterParams: RegisterParams = {
-        type: null
+        type: null,
+        name: null,
+        cpf_cnpj: null,
+        birthday: null,
+        email: null,
+        telephone: null,
+        address: {
+            city: null,
+            complement: null,
+            neighborhood: null,
+            number: null,
+            state: null,
+            street: null,
+            zip: null
+        },
+        password: null
     }
     const [registerParams, setRegisterParams] = useState(initialRegisterParams)
 

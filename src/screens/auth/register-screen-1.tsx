@@ -18,13 +18,14 @@ export function RegisterScreen1() {
   const {setRegisterParams} = UseRegister();
 
   function ChooseType(type: string) {
-    console.log("ola")
     setRegisterParams((prev) => ({
       ...prev,
       type: type
     }));
 
-    navigation.navigate("RegisterIndividual2")
+    if (type === "External") {
+      navigation.navigate("RegisterIndividual2")
+    }
   }
 
   return (
@@ -44,7 +45,7 @@ export function RegisterScreen1() {
 
         <View style={styles.optionCardSection}>
           <OptionCard 
-            onPress={()=>ChooseType("Individual")} 
+            onPress={()=>ChooseType("External")} 
             optionName='Pessoa Física' 
             imageSource={individual}
           />

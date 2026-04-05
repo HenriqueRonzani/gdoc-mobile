@@ -18,7 +18,7 @@ export function GdocTextInput({field, mask, ...rest}: Props) {
       {...rest}
       value={field.value}
       onChangeText={field.onChange}
-      style={style.textInput}
+      style={[style.textInput, rest.style]}
       selectionColor={theme.colors.secondary}
       render={mask ? props => (
         <MaskInput

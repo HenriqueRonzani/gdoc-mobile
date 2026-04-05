@@ -5,6 +5,7 @@ export type RootStackParamList = {
   Menu: undefined,
   Register1: undefined,
   RegisterIndividual2: undefined,
+  RegisterCompany2: undefined,
   Register3: undefined,
   Register4: undefined,
   RegisterStack: undefined

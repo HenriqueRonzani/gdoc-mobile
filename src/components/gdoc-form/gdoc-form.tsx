@@ -21,7 +21,9 @@ export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, chil
   type formData = z.infer<typeof schema>
   const methods = useForm<formData>({
     resolver: zodResolver(schema),
-    defaultValues: initial
+    defaultValues: initial,
+    mode: 'onChange',
+    reValidateMode: 'onChange'
   })
 
   return (
@@ -53,6 +55,7 @@ const style = StyleSheet.create({
     gap: 10
   },
   formFooter: {
+    marginTop: 20,
     gap: 10
   }
 })
