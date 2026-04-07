@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { ClientLogo } from '@/components/client-logo'
-import { LoginForm } from '@/components/auth/login/login-form'
+import { LoginForm } from '@/components/screens/auth/login/login-form'
 import { LoginFormData } from '@/schemas/auth.schema'
 import { useNavigation } from '@react-navigation/native'
 import { NavigatorType } from '@/types/navigation'
@@ -38,7 +38,7 @@ export function LoginScreen() {
   }
 
   const goToRegister = () => {
-    navigation.navigate('RegisterStack')
+    navigation.navigate('Register')
   }
 
   const footer = (

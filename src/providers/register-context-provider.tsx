@@ -1,28 +1,44 @@
 import { RegisterParams} from "@/types/register";
-import { useState } from "react";
-import { RegisterContext } from "../contexts/register-context";
+import React, { createContext, useState, useContext } from 'react'
+
+type RegisterContextType = {
+  registerParams: RegisterParams;
+  setRegisterParams: React.Dispatch<React.SetStateAction<RegisterParams>>;
+};
+
+export function useRegister() {
+  const registerContext = useContext(RegisterContext)
+
+  if (!registerContext) {
+    throw new Error("O contexto esta sendo usado em um ambiente incorreto");
+  }
+
+  return registerContext;
+}
+
+export const RegisterContext = createContext<RegisterContextType | null>(null);
 
 export function RegisterContextProvider ({children}:{ children: React.ReactNode }) {
     const initialRegisterParams: RegisterParams = {
-        type: null,
-        name: null,
-        cpf_cnpj: null,
-        birthday: null,
-        genre: null,
-        email: null,
-        telephone: null,
+        type: '',
+        name: '',
+        cpf_cnpj: '',
+        birthday: '',
+        genre: '',
+        email: '',
+        telephone: '',
         address: {
-            city: null,
-            complement: null,
-            neighborhood: null,
-            number: null,
-            state: null,
-            street: null,
-            zip: null
+            city: '',
+            complement: '',
+            neighborhood: '',
+            number: '',
+            state: '',
+            street: '',
+            zip: ''
         },
-        password: null,
-        secondary_cpf: null,
-        secondary_name: null
+        password: '',
+        secondary_cpf: '',
+        secondary_name: ''
     }
     const [registerParams, setRegisterParams] = useState(initialRegisterParams)
 

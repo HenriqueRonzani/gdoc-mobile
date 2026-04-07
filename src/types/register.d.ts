@@ -1,23 +1,23 @@
 export type RegisterParams = {
-    type: string | null,
-    name: string | null,
-    cpf_cnpj: string | null,
-    email: string | null,
-    telephone: string | null,
-    birthday: string | null,
-    genre: string | null,
+    type: string
+    name: string
+    cpf_cnpj: string
+    email: string
+    telephone: string
+    birthday: string
+    genre: string
     address: Address,
-    password: string | null,
-    secondary_name: string | null,
-    secondary_cpf: string | null
+    password: string
+    secondary_name: string
+    secondary_cpf: string
 }
 
 export type Address = {
-    street: string | null,
-    number: string | null,
-    neighborhood: string | null,
-    city: string | null,
-    complement: string | null,
-    state: string | null,
-    zip: string | null,
+    street: string
+    number: string
+    neighborhood: string
+    city: string
+    complement: string
+    state: string
+    zip: string
 }
