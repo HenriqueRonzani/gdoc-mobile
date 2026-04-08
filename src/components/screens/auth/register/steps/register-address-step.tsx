@@ -10,7 +10,7 @@ import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocStepperProgressBar } from '@/components/stepper/gdoc-stepper-progress-bar'
 import { AddressForm } from '@/components/screens/auth/register/address-form'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
-import { GdocForm } from '@/components/gdoc-form/gdoc-form'
+import { GdocForm } from '@/components/form/gdoc-form'
 
 const initialForm = {
   city: '',
@@ -38,13 +38,17 @@ export function RegisterAddressStep() {
       state: data.state,
       street: data.street
     }
-    setRegisterParams((prev) => ({...prev, password: data.password, address: address}))
+    setRegisterParams((prev) => ({
+      ...prev,
+      person: {...prev.person, address: address},
+      password: data.password
+    }))
     setStepName('use_terms')
   }
 
   const footer = (
     <GdocGrayedButton onPress={() => {
-      registerParams.type === 'External'
+      registerParams.type === 'Pessoa física'
         ? setStepName('person_data')
         : setStepName('company_data')
     }}
@@ -64,7 +68,11 @@ export function RegisterAddressStep() {
 
       <ScrollView keyboardShouldPersistTaps="handled">
         <GdocForm
-          initial={{...initialForm, ...registerParams, ...registerParams.address}}
+          initial={{
+            ...initialForm,
+            ...registerParams.person.address,
+            ...registerParams
+          }}
           schema={RegisterFormAddressSchema}
           onSubmit={onSubmit}
           confirmLabel="Próximo"

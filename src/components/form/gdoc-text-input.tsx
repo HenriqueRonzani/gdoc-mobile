@@ -23,6 +23,7 @@ export function GdocTextInput({field, mask, ...rest}: Props) {
       render={mask ? props => (
         <MaskInput
           {...props}
+          keyboardType={rest.keyboardType}
           value={field.value}
           onChangeText={(masked, unmasked) => {
             field.onChange(masked)

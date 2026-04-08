@@ -1,47 +1,40 @@
-import { RegisterFormPersonSchema, RegisterPersonFormData } from '@/schemas/auth.schema'
+import { GdocForm } from '@/components/form/gdoc-form'
+import { RegisterOrganizationFormData, RegisterFormOrganizationSchema } from '@/schemas/auth.schema'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
 import { Masks } from 'react-native-mask-input'
-import { GdocDropdown } from '@/components/form/gdoc-dropdown'
-import { GdocForm } from '@/components/form/gdoc-form'
 import React from 'react'
 import { useRegister } from '@/providers/register-context-provider'
 
 const initialForm = {
   name: '',
-  email: '',
   cpfCnpj: '',
-  dateOfBirth: '',
-  gender: '',
-  cellphone: ''
+  email: '',
+  cellphone: '',
+  secondary_name: '',
+  secondary_cpf_cnpj: ''
 }
 
-const genreOptions = [
-  {label: 'Masculino', value: 'male'},
-  {label: 'Feminino', value: 'female'},
-  {label: 'Outro', value: 'other'}
-]
-
 type Props = {
-  onSubmit: (data: RegisterPersonFormData) => void
+  onSubmit: (data: RegisterOrganizationFormData) => void
   footer: React.ReactNode
 }
 
-export function PersonForm({onSubmit, footer}: Props) {
+export function OrganizationForm({onSubmit, footer}: Props) {
   const {registerParams} = useRegister()
   return (
     <GdocForm
-      initial={{...initialForm, ...registerParams, ...registerParams.person}}
+      initial={{...initialForm, ...registerParams}}
       onSubmit={onSubmit}
-      schema={RegisterFormPersonSchema}
+      schema={RegisterFormOrganizationSchema}
       confirmLabel="Próximo"
       footer={footer}
     >
       <GdocFormItem name={'name'}>
         {(field) => (
           <>
-            <GdocTextInput field={field} label="Nome completo" placeholder="Nome completo"/>
+            <GdocTextInput field={field} label="Nome da organização" placeholder="Nome da organização"/>
             <GdocFormError name={'name'}/>
           </>
         )}
@@ -50,35 +43,13 @@ export function PersonForm({onSubmit, footer}: Props) {
         {(field) => (
           <>
             <GdocTextInput
-              mask={Masks.BRL_CPF}
+              mask={Masks.BRL_CNPJ}
               field={field}
-              label="CPF"
-              placeholder="CPF"
-              keyboardType={'number-pad'}
+              label="CNPJ"
+              placeholder="CNPJ"
+              keyboardType={'numeric'}
             />
             <GdocFormError name={'cpfCnpj'}/>
-          </>
-        )}
-      </GdocFormItem>
-      <GdocFormItem name={'dateOfBirth'}>
-        {(field) => (
-          <>
-            <GdocTextInput
-              mask={Masks.DATE_DDMMYYYY}
-              field={field}
-              label="Data de nascimento"
-              placeholder="Data de nascimento"
-              keyboardType="number-pad"
-            />
-            <GdocFormError name={'dateOfBirth'}/>
-          </>
-        )}
-      </GdocFormItem>
-      <GdocFormItem name={'gender'}>
-        {(field) => (
-          <>
-            <GdocDropdown placeholder="Gênero" items={genreOptions} field={field}/>
-            <GdocFormError name={'gender'}/>
           </>
         )}
       </GdocFormItem>
@@ -106,6 +77,28 @@ export function PersonForm({onSubmit, footer}: Props) {
               keyboardType={'numeric'}
             />
             <GdocFormError name={'cellphone'}/>
+          </>
+        )}
+      </GdocFormItem>
+      <GdocFormItem name={'secondary_name'}>
+        {(field) => (
+          <>
+            <GdocTextInput field={field} label="Nome completo" placeholder="Nome completo"/>
+            <GdocFormError name={'secondary_name'}/>
+          </>
+        )}
+      </GdocFormItem>
+      <GdocFormItem name={'secondary_cpf_cnpj'}>
+        {(field) => (
+          <>
+            <GdocTextInput
+              mask={Masks.BRL_CPF}
+              field={field}
+              label="Cpf do responsavel"
+              placeholder="CPF do responsável"
+              keyboardType={'numeric'}
+            />
+            <GdocFormError name={'secondary_cpf_cnpj'}/>
           </>
         )}
       </GdocFormItem>

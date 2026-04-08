@@ -21,12 +21,9 @@ export function RegisterUserTypeStep() {
   const chooseType = (type: string) => {
     setRegisterParams((prev) => ({
       ...prev,
-      type: type
+      type: type ? 'Pessoa física' : 'Pessoa jurídica'
     }))
-
-    type === 'External'
-      ? setStepName('person_data')
-      : setStepName('company_data')
+    setStepName(`${type}_data`)
   }
 
   return (
@@ -39,12 +36,12 @@ export function RegisterUserTypeStep() {
       </View>
 
       <OptionCard
-        onPress={() => chooseType('External')}
+        onPress={() => chooseType('person')}
         optionName="Pessoa Física"
         imageSource={individual}
       />
       <OptionCard
-        onPress={() => chooseType('Legal')}
+        onPress={() => chooseType('organization')}
         optionName="Pessoa Jurídica"
         imageSource={legal}
       />

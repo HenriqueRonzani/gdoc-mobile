@@ -3,26 +3,20 @@ import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { StyleSheet, View } from 'react-native'
 import { GdocMemo } from '@/components/gdoc-memo'
 import { ScrollView } from 'react-native'
-import { RegisterCompanyFormData } from '@/schemas/auth.schema'
+import { RegisterOrganizationFormData } from '@/schemas/auth.schema'
 import { useRegister } from '@/providers/register-context-provider'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocStepperProgressBar } from '@/components/stepper/gdoc-stepper-progress-bar'
-import { CompanyForm } from '@/components/screens/auth/register/company-form'
+import { OrganizationForm } from '@/components/screens/auth/register/organization-form'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 
-export function RegisterCompanyStep() {
+export function RegisterOrganizationStep() {
   const {setStepName} = useStepper()
   const {setRegisterParams} = useRegister()
 
-  const onSubmit = (data: RegisterCompanyFormData)  => {
+  const onSubmit = (data: RegisterOrganizationFormData)  => {
     setRegisterParams((prev) => ({
-      ...prev,
-      name: data.name,
-      cpf_cnpj: data.cpf_cnpj,
-      email: data.email,
-      telephone: data.telephone,
-      secondary_cpf: data.secondary_cpf,
-      secondary_name: data.secondary_name
+      ...prev, ...data
     }))
     setStepName('address')
   }
@@ -46,7 +40,7 @@ export function RegisterCompanyStep() {
       </View>
 
       <ScrollView keyboardShouldPersistTaps="handled">
-        <CompanyForm onSubmit={onSubmit} footer={footer}/>
+        <OrganizationForm onSubmit={onSubmit} footer={footer}/>
       </ScrollView>
     </View>
   )

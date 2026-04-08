@@ -16,12 +16,9 @@ export function RegisterPersonStep() {
   const submit = (data: RegisterPersonFormData) => {
     setRegisterParams((prev) => ({
       ...prev,
-      name: data.name,
-      genre: data.genre,
-      cpf_cnpj: data.cpf_cnpj,
-      birthday: data.birthday,
-      email: data.email,
-      telephone: data.telephone
+      person: {
+        ...prev.person, ...data
+      }
     }))
     setStepName('address')
   }

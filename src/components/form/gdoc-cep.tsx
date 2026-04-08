@@ -1,6 +1,6 @@
 import { TextInputProps } from 'react-native-paper'
 import { ControllerRenderProps, FieldValues, useFormContext } from 'react-hook-form'
-import { GdocTextInput } from '@/components/gdoc-form/gdoc-text-input'
+import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { useEffect } from 'react'
 import { getAddress } from '@/services/cep.service'
 import { Masks } from 'react-native-mask-input'

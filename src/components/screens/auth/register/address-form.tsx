@@ -1,12 +1,12 @@
-import { GdocFormItem } from '@/components/gdoc-form/gdoc-form-item'
+import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { useFormContext } from 'react-hook-form'
 import React, { useEffect, useState } from 'react'
-import { GdocTextInput } from '@/components/gdoc-form/gdoc-text-input'
-import { GdocFormError } from '@/components/gdoc-form/gdoc-form-error'
+import { GdocTextInput } from '@/components/form/gdoc-text-input'
+import { GdocFormError } from '@/components/form/gdoc-form-error'
 import { ItemType } from 'react-native-dropdown-picker'
-import { GdocDropdown } from '@/components/gdoc-form/gdoc-dropdown'
+import { GdocDropdown } from '@/components/form/gdoc-dropdown'
 import { getCities, getStates } from '@/services/cep.service'
-import { GdocCep } from '@/components/gdoc-form/gdoc-cep'
+import { GdocCep } from '@/components/form/gdoc-cep'
 import { View } from 'react-native'
 
 export function AddressForm() {

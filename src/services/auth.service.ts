@@ -1,7 +1,8 @@
 import api from '@/lib/axios'
-import { LoginFormData } from '@/schemas/auth.schema'
+import { LoginFormType } from '@/schemas/auth.schema'
+import { RegisterForm } from '@/types/register'
 
-export const loginUser = async (payload: LoginFormData) => {
+export const loginUser = async (payload: LoginFormType) => {
   const response = await api.post('/auth/login', {
     type: 6,
     data: {
@@ -11,3 +12,8 @@ export const loginUser = async (payload: LoginFormData) => {
   });
   return response.data;
 };
+
+export const registerUser = async (payload: RegisterForm) => {
+  const response = await api.post('/user/register', payload)
+  return response.data;
+}

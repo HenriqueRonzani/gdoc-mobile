@@ -4,7 +4,7 @@ import { useSnackbar } from '@/providers/snackbar-provider'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { ClientLogo } from '@/components/client-logo'
 import { LoginForm } from '@/components/screens/auth/login/login-form'
-import { LoginFormData } from '@/schemas/auth.schema'
+import { LoginFormType } from '@/schemas/auth.schema'
 import { useNavigation } from '@react-navigation/native'
 import { NavigatorType } from '@/types/navigation'
 import { Text } from 'react-native-paper'
@@ -19,7 +19,7 @@ export function LoginScreen() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const {toastError, toastSuccess} = useSnackbar()
 
-  const login = async (formData: LoginFormData) => {
+  const login = async (formData: LoginFormType) => {
     try {
       setIsLoading(true)
       const response = await loginUser(formData)
