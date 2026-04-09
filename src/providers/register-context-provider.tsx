@@ -18,41 +18,42 @@ export function useRegister() {
 
 export const RegisterContext = createContext<RegisterContextType | null>(null)
 
+export const initialRegisterParams: RegisterForm = {
+  contactOrganization: null,
+  'g-recaptcha-response': '',
+  icp_hash: '',
+  icp_issuer_display_name: '',
+  login_type: 6,
+  origin: 'external',
+  password: '',
+  person: {
+    address: {
+      city: '',
+      complement: '',
+      neighborhood: '',
+      number: '',
+      state: '',
+      street: '',
+      zip: ''
+    },
+    cellphone: '',
+    cpfCnpj: '',
+    dateOfBirth: '',
+    email: '',
+    gender: '',
+    name: '',
+    secondaryCpfCnpj: '',
+    textualSignature: null,
+  },
+  provider: {
+    avatar: null,
+    id: null,
+    name: null
+  },
+  type: '',
+}
+
 export function RegisterContextProvider({children}: { children: React.ReactNode }) {
-  const initialRegisterParams: RegisterForm = {
-    contactOrganization: null,
-    'g-recaptcha-response': '',
-    icp_hash: '',
-    icp_issuer_display_name: '',
-    login_type: 6,
-    origin: 'external',
-    password: '',
-    person: {
-      address: {
-        city: '',
-        complement: '',
-        neighborhood: '',
-        number: '',
-        state: '',
-        street: '',
-        zip: ''
-      },
-      cellphone: '',
-      cpfCnpj: '',
-      dateOfBirth: '',
-      email: '',
-      gender: '',
-      name: '',
-      secondaryCpfCnpj: '',
-      textualSignature: null,
-    },
-    provider: {
-      avatar: null,
-      id: null,
-      name: null
-    },
-    type: '',
-  }
   const [registerParams, setRegisterParams] = useState(initialRegisterParams)
 
   const contextValue = {registerParams, setRegisterParams}

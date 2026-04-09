@@ -1,7 +1,7 @@
 import { cnpj, cpf } from 'cpf-cnpj-validator'
 import { z } from 'zod'
 import api from '@/lib/axios'
-import { telephoneField } from '@/schemas/index'
+import { fullNameField, telephoneField } from '@/schemas/index'
 
 export const LoginFormSchema = z.object({
   cpf_cnpj: z.string({coerce: true}).min(5, 'Pelo menos 5 caracteres'),
@@ -9,7 +9,7 @@ export const LoginFormSchema = z.object({
 })
 
 export const RegisterFormPersonSchema = z.object({
-  name: z.string().min(1, 'Campo obrigatório').regex(/^\S+\s+\S+/, 'O nome deve incluir nome e sobrenome'),
+  name: fullNameField,
   email: z.string().min(1, 'Campo obrigatório').email('Email inválido'),
   cellphone: telephoneField,
   cpfCnpj: z.string().min(14, 'CPF incompleto').refine((field) => cpf.isValid(field), 'Cpf invalido'),
@@ -29,7 +29,7 @@ export const RegisterFormOrganizationSchema = z.object({
   email: z.string().min(1, 'Campo obrigatório').email('Email invalido'),
   cellphone: telephoneField,
   cpfCnpj: z.string().min(18, 'Cnpj incompleto').refine((field) => cnpj.isValid(field), 'Cnpj invalido'),
-  secondary_name: z.string().min(1, 'Campo obrigatório').regex(/^\S+\s\S+$/, 'O nome deve incluir nome e sobrenome'),
+  secondary_name: fullNameField,
   secondary_cpf_cnpj: z.string().min(14, 'Cpf incompleto').refine((field) => cpf.isValid(field), 'Cpf invalido')
 })
 
@@ -52,13 +52,9 @@ export const RegisterFormAddressSchema = z.object({
   path: ['confirm_password']
 })
 
-export const RegisterFormUseTermsSchema = z.object({
-  'g-recaptcha-response': z.string().min(1, 'Precisa fazer Captcha')
-})
 
 export type RegisterPersonFormData = z.infer<typeof RegisterFormPersonSchema>
 export type RegisterOrganizationFormData = z.infer<typeof RegisterFormOrganizationSchema>
 export type RegisterFormAddressData = z.infer<typeof RegisterFormAddressSchema>
-export type RegisterFormUseTermsData = z.infer<typeof RegisterFormUseTermsSchema>
 
 export type LoginFormType = z.infer<typeof LoginFormSchema>

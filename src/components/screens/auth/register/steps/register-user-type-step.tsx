@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import { OptionCard } from '@/components/gdoc-option-card'
 import individual from '@/assets/individual-icon.png'
 import legal from '@/assets/legal-entity-icon.png'
-import { useRegister } from '@/providers/register-context-provider'
+import { initialRegisterParams, useRegister } from '@/providers/register-context-provider'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 import { useNavigation } from '@react-navigation/native'
@@ -16,8 +16,8 @@ export function RegisterUserTypeStep() {
   const {setRegisterParams} = useRegister()
 
   const chooseType = (type: string) => {
-    setRegisterParams((prev) => ({
-      ...prev,
+    setRegisterParams((_) => ({
+      ...initialRegisterParams,
       type: type ? 'Pessoa física' : 'Pessoa jurídica'
     }))
     setStepName(`${type}_data`)

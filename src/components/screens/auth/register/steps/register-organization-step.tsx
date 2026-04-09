@@ -14,7 +14,10 @@ export function RegisterOrganizationStep() {
 
   const onSubmit = (data: RegisterOrganizationFormData) => {
     setRegisterParams((prev) => ({
-      ...prev, ...data
+      ...prev,
+      person: {
+        ...prev.person, ...data
+      }
     }))
     setStepName('address')
   }
