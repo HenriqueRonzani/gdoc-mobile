@@ -1,17 +1,14 @@
-import { GdocText } from '@/components/gdoc-text'
-import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { StyleSheet, View } from 'react-native'
-import { GdocMemo } from '@/components/gdoc-memo'
 import { OptionCard } from '@/components/gdoc-option-card'
 import individual from '@/assets/individual-icon.png'
 import legal from '@/assets/legal-entity-icon.png'
 import { useRegister } from '@/providers/register-context-provider'
 import { useStepper } from '@/providers/stepper-context-provider'
-import { GdocStepperProgressBar } from '@/components/stepper/gdoc-stepper-progress-bar'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 import { useNavigation } from '@react-navigation/native'
 import { NavigatorType } from '@/types/navigation'
-
+import { RegisterHeader } from '@/components/screens/auth/register/register-header'
+import React from 'react'
 
 export function RegisterUserTypeStep() {
   const navigation = useNavigation<NavigatorType>()
@@ -28,12 +25,7 @@ export function RegisterUserTypeStep() {
 
   return (
     <View style={styles.container}>
-      <View>
-        <GdocPageTitle>Criação de conta Gdoc</GdocPageTitle>
-        <GdocText>Escolha o tipo da sua conta</GdocText>
-        <GdocStepperProgressBar/>
-        <GdocMemo title="Tipo de conta" description="Preencha os campos abaixo"/>
-      </View>
+      <RegisterHeader memoTitle="Tipo de conta" memoDescription="Preencha os campos abaixo"/>
 
       <OptionCard
         onPress={() => chooseType('person')}

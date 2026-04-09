@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    gap: 13.4
+    gap: 13.4,
+    padding: 10
   },
   image: {
     height: 48,

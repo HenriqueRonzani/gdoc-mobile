@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         alignSelf: "center",
-        marginVertical: 20,
         color: "#565656",
     }
 })

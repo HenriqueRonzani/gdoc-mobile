@@ -1,16 +1,15 @@
-import { GdocText } from '@/components/gdoc-text'
-import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { StyleSheet, View } from 'react-native'
-import { GdocMemo } from '@/components/gdoc-memo'
 import { ScrollView } from 'react-native'
 import { RegisterFormAddressData, RegisterFormAddressSchema } from '@/schemas/auth.schema'
 import { Address } from '@/types/register'
 import { useRegister } from '@/providers/register-context-provider'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocStepperProgressBar } from '@/components/stepper/gdoc-stepper-progress-bar'
-import { AddressForm } from '@/components/screens/auth/register/address-form'
+import { AddressForm } from '@/components/screens/auth/register/forms/address-form'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 import { GdocForm } from '@/components/form/gdoc-form'
+import { RegisterHeader } from '@/components/screens/auth/register/register-header'
+import React from 'react'
 
 const initialForm = {
   city: '',
@@ -56,15 +55,7 @@ export function RegisterAddressStep() {
 
   return (
     <View style={styles.container}>
-      <View>
-        <GdocPageTitle>Criação de conta Gdoc</GdocPageTitle>
-        <GdocText>Preencha os seus dados abaixo</GdocText>
-        <GdocStepperProgressBar/>
-        <GdocMemo
-          title="Endereço e senha"
-          description="Complete os campos abaixo"
-        />
-      </View>
+      <RegisterHeader memoTitle="Endereço e senha" memoDescription="Complete os campos abaixo"/>
 
       <ScrollView keyboardShouldPersistTaps="handled">
         <GdocForm

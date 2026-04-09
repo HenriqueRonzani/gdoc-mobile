@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.gray,
     width: '100%',
     gap: 4,
-    padding: 15
+    paddingVertical: 8,
+    paddingHorizontal: 16
   },
   text: {
     fontSize: 14,

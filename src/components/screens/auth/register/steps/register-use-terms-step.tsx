@@ -1,17 +1,14 @@
-import { GdocText } from '@/components/gdoc-text'
-import { GdocPageTitle } from '@/components/gdoc-page-title'
-import { GdocStepperProgressBar } from '@/components/stepper/gdoc-stepper-progress-bar'
 import { StyleSheet, View } from 'react-native'
-import { GdocMemo } from '@/components/gdoc-memo'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
-import { GdocUseTerms } from '@/components/screens/auth/register/gdoc-use-terms'
+import { GdocUseTerms } from '@/components/screens/auth/register/forms/gdoc-use-terms'
 import React, { useState } from 'react'
 import { GdocConfirmRecaptcha } from '@/components/form/gdoc-confirm-recaptcha'
 import { useRegister } from '@/providers/register-context-provider'
 import { registerUser } from '@/services/auth.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { useAuth } from '@/providers/auth-provider'
+import { RegisterHeader } from '@/components/screens/auth/register/register-header'
 
 export function RegisterUseTermsStep() {
   const {setToken} = useAuth()
@@ -39,10 +36,7 @@ export function RegisterUseTermsStep() {
 
   return (
     <View style={styles.container}>
-      <GdocPageTitle>Criação de conta Gdoc</GdocPageTitle>
-      <GdocText>Preencha seus dados abaixo</GdocText>
-      <GdocStepperProgressBar/>
-      <GdocMemo title="Termos e condições" description="Complete os campos abaixo"/>
+      <RegisterHeader memoTitle="Termos e condições" memoDescription="Complete os campos abaixo"/>
 
       <GdocUseTerms/>
       <GdocConfirmRecaptcha onSubmit={onSubmit} loading={loading}/>

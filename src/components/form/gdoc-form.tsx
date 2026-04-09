@@ -1,10 +1,11 @@
-import { FormProvider, useForm } from "react-hook-form";
-import { ZodTypeAny } from "zod/v3";
-import React from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { StyleSheet, View } from "react-native";
-import { GdocPrimaryButton } from "@/components/button/gdoc-primary-button";
+import { FormProvider, useForm } from 'react-hook-form'
+import { ZodTypeAny } from 'zod/v3'
+import React from 'react'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { GdocPrimaryButton } from '@/components/button/gdoc-primary-button'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export type GdocFormProps<T extends ZodTypeAny> = {
   initial: z.infer<T>
@@ -28,20 +29,24 @@ export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, chil
 
   return (
     <FormProvider {...methods}>
-      <View style={style.form}>
+      <KeyboardAwareScrollView
+        style={style.form}
+        contentContainerStyle={style.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={style.formBody}>
           {children}
         </View>
+
         <View style={style.formFooter}>
           {(showConfirm ?? true) &&
             <GdocPrimaryButton onPress={methods.handleSubmit(onSubmit)} loading={isLoading}>
               {confirmLabel ?? 'Confirmar'}
             </GdocPrimaryButton>
           }
-
           {footer}
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     </FormProvider>
   )
 }
@@ -50,12 +55,16 @@ const style = StyleSheet.create({
   form: {
     flex: 1
   },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 25,
+  },
   formBody: {
     flex: 1,
     gap: 10
   },
   formFooter: {
-    marginTop: 20,
-    gap: 10
+    paddingTop: 6,
+    gap: 4
   }
 })
