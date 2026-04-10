@@ -1,8 +1,8 @@
-import { GdocForm } from "@/components/gdoc-form/gdoc-form";
-import { GdocFormItem } from "@/components/gdoc-form/gdoc-form-item";
-import { GdocTextInput } from "@/components/gdoc-form/gdoc-text-input";
-import { GdocFormError } from "@/components/gdoc-form/gdoc-form-error";
-import { LoginFormData, LoginFormSchema } from "@/schemas/auth.schema";
+import { GdocForm } from "@/components/form/gdoc-form";
+import { GdocFormItem } from "@/components/form/gdoc-form-item";
+import { GdocTextInput } from "@/components/form/gdoc-text-input";
+import { GdocFormError } from "@/components/form/gdoc-form-error";
+import { LoginFormType, LoginFormSchema } from "@/schemas/auth.schema";
 import React from "react";
 import { Masks } from 'react-native-mask-input'
 
@@ -10,7 +10,7 @@ const initialForm = {cpf_cnpj: '', password: ''}
 
 type Props = {
   children: React.ReactNode
-  onSubmit: (data: LoginFormData) => void
+  onSubmit: (data: LoginFormType) => void
   isLoading?: boolean
   footer: React.ReactNode
 }

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 import { theme } from '@/theme'
 import { ControllerRenderProps, FieldValues } from 'react-hook-form'
 import MaskInput from 'react-native-mask-input/src/MaskInput'
-import { Mask, Masks } from 'react-native-mask-input'
+import { Mask } from 'react-native-mask-input'
 
 type Props = TextInputProps & {
   field: ControllerRenderProps<FieldValues, string>
@@ -18,11 +18,12 @@ export function GdocTextInput({field, mask, ...rest}: Props) {
       {...rest}
       value={field.value}
       onChangeText={field.onChange}
-      style={style.textInput}
+      style={[style.textInput, rest.style]}
       selectionColor={theme.colors.secondary}
       render={mask ? props => (
         <MaskInput
           {...props}
+          keyboardType={rest.keyboardType}
           value={field.value}
           onChangeText={(masked, unmasked) => {
             field.onChange(masked)

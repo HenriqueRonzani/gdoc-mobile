@@ -24,6 +24,5 @@ export function RootNavigation () {
         {token ? <MainStack/> : <AuthStack/>}
       </SafeAreaView>
     </NavigationContainer>
-
   )
 }
