@@ -55,8 +55,8 @@ export function SectionsRenderer({drawerSectionsConfig}: SectionsProp) {
   return (
     <View>
       {drawerSectionsConfig.map((config, index) => (
-        <View style={style.sectionContainer}>
-          <Section key={config.name} {...config}/>
+        <View key={config.name} style={style.sectionContainer}>
+          <Section {...config}/>
           {index < drawerSectionsConfig.length - 1 && <GdocDivider style={style.sectionDivider}/>}
         </View>
       ))}
