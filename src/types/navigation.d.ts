@@ -4,6 +4,8 @@ export type RootStackParamList = {
   Login: undefined,
   Register: undefined
   Menu: undefined,
+  Profile: undefined,
+  Inbox: undefined
 }
 
 export type NavigatorType = NativeStackNavigationProp<RootStackParamList>

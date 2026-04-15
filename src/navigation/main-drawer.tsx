@@ -1,5 +1,7 @@
-import { createDrawerNavigator, DrawerContent, DrawerToggleButton } from '@react-navigation/drawer'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import { MenuScreen } from '@/screens/main/menu-screen'
+import { ProfileScreen } from '@/screens/main/profile-screen'
+import { InboxScreen } from '@/screens/main/inbox-screen'
 import { MainHeader } from "@/components/screens/main/main-header";
 import { theme } from '@/theme'
 import { MainDrawerContent } from '@/components/screens/main/main-drawer-content'
@@ -32,6 +34,8 @@ export function MainDrawer() {
       }}
     >
       <Drawer.Screen name={'Menu'} component={MenuScreen}/>
+      <Drawer.Screen name={'Profile'} component={ProfileScreen}/>
+      <Drawer.Screen name={'Inbox'} component={InboxScreen}/>
     </Drawer.Navigator>
   )
 }

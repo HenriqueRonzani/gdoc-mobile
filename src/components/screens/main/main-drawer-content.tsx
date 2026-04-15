@@ -18,12 +18,12 @@ const getDrawerConfig = (navigation: any): SectionsConfig => {
         {
           icon: 'account',
           title: 'Meu Perfil',
-          onPress: () => null
+          onPress: () => navigation.navigate('Profile')
         },
         {
           icon: 'inbox',
           title: 'Minhas Solicitações',
-          onPress: () => null
+          onPress: () => navigation.navigate('Inbox')
         }
       ]
     },

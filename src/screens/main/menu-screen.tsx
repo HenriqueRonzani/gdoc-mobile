@@ -7,6 +7,8 @@ export function MenuScreen() {
     <View style={style.container}>
       <GdocPageTitle>Serviços</GdocPageTitle>
       <Text style={style.text}>Busque e solicite os serviços oferecidos por Prefeitura Municipal de Modelandia</Text>
+
+      {/* Esse é só um exemplo de como usar o componente, ajustar conforme o protótipo*/}
       <GdocService
         iconName={'wrench'}
         iconColor={'#1A237E'}
