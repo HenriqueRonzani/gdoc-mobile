@@ -12,6 +12,7 @@ export const theme = {
     onPrimary: '#FFFFFF',
     onSecondary: '#FFFFFF',
     text: '#7C7C7C',
+    primaryText: '#565656',
     'component-on': '#F0F0F0',
     'component-off': '#D3D3D3'
   }

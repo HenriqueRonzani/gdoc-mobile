@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { RegisterPersonFormData } from '@/schemas/auth.schema'
 import { useRegister } from '@/providers/register-context-provider'
 import { useStepper } from '@/providers/stepper-context-provider'
