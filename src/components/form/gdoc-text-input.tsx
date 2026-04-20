@@ -1,9 +1,10 @@
-import { TextInput, TextInputProps, useTheme } from 'react-native-paper'
+import type { TextInputProps} from 'react-native-paper'
+import { TextInput, useTheme } from 'react-native-paper'
 import { StyleSheet } from 'react-native'
 import { theme } from '@/theme'
-import { ControllerRenderProps, FieldValues } from 'react-hook-form'
+import type { ControllerRenderProps, FieldValues } from 'react-hook-form'
 import MaskInput from 'react-native-mask-input/src/MaskInput'
-import { Mask } from 'react-native-mask-input'
+import type { Mask } from 'react-native-mask-input'
 
 type Props = TextInputProps & {
   field: ControllerRenderProps<FieldValues, string>
@@ -25,7 +26,7 @@ export function GdocTextInput({field, mask, ...rest}: Props) {
           {...props}
           keyboardType={rest.keyboardType}
           value={field.value}
-          onChangeText={(masked, unmasked) => {
+          onChangeText={(masked, _) => {
             field.onChange(masked)
           }}
           mask={mask}

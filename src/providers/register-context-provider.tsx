@@ -1,4 +1,4 @@
-import { RegisterForm } from '@/types/register'
+import type { RegisterForm } from '@/types/register'
 import React, { createContext, useState, useContext } from 'react'
 
 type RegisterContextType = {
@@ -19,14 +19,14 @@ export function useRegister() {
 export const RegisterContext = createContext<RegisterContextType | null>(null)
 
 export const initialRegisterParams: RegisterForm = {
-  contactOrganization: null,
+  'contactOrganization': null,
   'g-recaptcha-response': '',
-  icp_hash: '',
-  icp_issuer_display_name: '',
-  login_type: 6,
-  origin: 'external',
-  password: '',
-  person: {
+  'icp_hash': '',
+  'icp_issuer_display_name': '',
+  'login_type': 6,
+  'origin': 'external',
+  'password': '',
+  'person': {
     address: {
       city: '',
       complement: '',
@@ -43,14 +43,14 @@ export const initialRegisterParams: RegisterForm = {
     gender: '',
     name: '',
     secondaryCpfCnpj: '',
-    textualSignature: null,
+    textualSignature: null
   },
-  provider: {
+  'provider': {
     avatar: null,
     id: null,
     name: null
   },
-  type: '',
+  'type': ''
 }
 
 export function RegisterContextProvider({children}: { children: React.ReactNode }) {

@@ -3,9 +3,11 @@ import { theme } from '@/theme'
 import Logo from '@/assets/logo-global-fundo-branco.png'
 import { IconButton, Text } from 'react-native-paper'
 import { useAuth } from '@/providers/auth-provider'
-import { SectionsRenderer, SectionsConfig } from '@/components/gdoc-sections-renderer'
+import type { SectionsConfig } from '@/components/gdoc-sections-renderer'
+import { SectionsRenderer } from '@/components/gdoc-sections-renderer'
+import type { DrawerContentComponentProps } from '@react-navigation/drawer'
 
-const getDrawerConfig = (navigation: any): SectionsConfig => {
+const getDrawerConfig = ({navigation}: DrawerContentComponentProps): SectionsConfig => {
   return [
     {
       name: 'Navegação',
@@ -53,9 +55,9 @@ const getDrawerConfig = (navigation: any): SectionsConfig => {
   ]
 }
 
-export function MainDrawerContent(props: any) {
+export function MainDrawerContent(props: DrawerContentComponentProps) {
   const {clearToken} = useAuth()
-  const drawerItems = getDrawerConfig(props.navigation)
+  const drawerItems = getDrawerConfig(props)
   return (
     <View style={style.container}>
       <View style={style.drawerHeader}>

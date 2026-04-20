@@ -1,4 +1,5 @@
-import { Image, ImageSourcePropType, Pressable, StyleSheet, View } from 'react-native'
+import type { ImageSourcePropType} from 'react-native'
+import { Image, Pressable, StyleSheet } from 'react-native'
 import { GdocText } from './gdoc-text'
 
 type Props = {

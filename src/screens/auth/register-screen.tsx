@@ -4,7 +4,8 @@ import { RegisterOrganizationStep } from '@/components/screens/auth/register/ste
 import { RegisterAddressStep } from '@/components/screens/auth/register/steps/register-address-step'
 import { RegisterUseTermsStep } from '@/components/screens/auth/register/steps/register-use-terms-step'
 import { RegisterContextProvider } from '@/providers/register-context-provider'
-import { StepObjectType, StepperProvider } from '@/providers/stepper-context-provider'
+import type { StepObjectType} from '@/providers/stepper-context-provider'
+import { StepperProvider } from '@/providers/stepper-context-provider'
 import { KeyboardAvoidingView, Platform } from 'react-native'
 import { GdocStepperContent } from '@/components/stepper/gdoc-stepper-content'
 

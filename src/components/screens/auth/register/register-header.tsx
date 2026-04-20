@@ -11,7 +11,6 @@ type Props = {
 }
 
 export function RegisterHeader({memoTitle, memoDescription}: Props) {
-
   return (
     <View style={style.headerContainer}>
       <GdocPageTitle>Criação de conta Gdoc</GdocPageTitle>

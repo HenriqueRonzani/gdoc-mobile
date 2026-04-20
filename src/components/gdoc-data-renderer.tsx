@@ -77,7 +77,7 @@ const style = StyleSheet.create({
   },
   valueText: {
     fontSize: 12,
-    color: theme.colors.text,
+    color: theme.colors.text
   },
   fieldsContainer: {
     gap: 10

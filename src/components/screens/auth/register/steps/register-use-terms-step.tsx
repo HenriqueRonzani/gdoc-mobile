@@ -26,7 +26,7 @@ export function RegisterUseTermsStep() {
       })
       await setToken(result?.auth_token)
       toastSuccess('Registro realizado com sucesso')
-    } catch (error: any) {
+    } catch (error: unknown) {
       toastError('Houve um erro no registro')
       console.log(error)
     } finally {
@@ -57,5 +57,3 @@ const styles = StyleSheet.create({
     gap: 8
   }
 })
-
-

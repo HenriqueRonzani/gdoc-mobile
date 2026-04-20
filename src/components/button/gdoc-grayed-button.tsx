@@ -1,4 +1,5 @@
-import { Button, ButtonProps } from 'react-native-paper'
+import type { ButtonProps } from 'react-native-paper'
+import { Button } from 'react-native-paper'
 import { theme } from '@/theme'
 import React from 'react'
 
@@ -13,7 +14,7 @@ export function GdocGrayedButton({children, ...rest}: Props) {
       buttonColor={theme.colors.gray}
       textColor={theme.colors.text}
       style={{borderRadius: 5}}>
-      Voltar
+      {children}
     </Button>
   )
 }

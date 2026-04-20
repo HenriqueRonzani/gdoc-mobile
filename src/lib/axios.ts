@@ -3,7 +3,7 @@ import axios from 'axios'
 const baseUrl = process.env.EXPO_PUBLIC_GDOC_BACKEND
 
 const api = axios.create({
-  baseURL: baseUrl,
+  baseURL: baseUrl
 })
 
 export const setApiToken = (token: string) => {

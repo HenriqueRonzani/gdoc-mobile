@@ -1,9 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form'
-import { ZodTypeAny } from 'zod/v3'
+import type { ZodTypeAny } from 'zod/v3'
 import React from 'react'
-import { z } from 'zod'
+import type { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { GdocPrimaryButton } from '@/components/button/gdoc-primary-button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -57,7 +57,7 @@ const style = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 25,
+    paddingBottom: 25
   },
   formBody: {
     flex: 1,

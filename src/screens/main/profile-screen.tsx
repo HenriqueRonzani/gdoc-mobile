@@ -1,6 +1,7 @@
 import { Text } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
-import { GdocDataRenderer, RenderConfig } from '@/components/gdoc-data-renderer'
+import type { RenderConfig } from '@/components/gdoc-data-renderer'
+import { GdocDataRenderer } from '@/components/gdoc-data-renderer'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 
 const exampleData: RenderConfig = [
