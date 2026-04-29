@@ -1,5 +1,6 @@
-import { Controller, ControllerRenderProps, FieldValues, useFormContext } from "react-hook-form";
-import React from "react";
+import type { ControllerRenderProps, FieldValues} from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
+import React from 'react'
 
 type Props = {
   name: string
@@ -7,7 +8,7 @@ type Props = {
 }
 
 export function GdocFormItem ({name, children}: Props) {
-  const { control } = useFormContext();
+  const { control } = useFormContext()
 
   return (
     <Controller

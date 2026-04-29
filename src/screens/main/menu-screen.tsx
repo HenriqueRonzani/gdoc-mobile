@@ -24,7 +24,7 @@ const style = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     paddingHorizontal: 15,
-    gap: 8,
+    gap: 8
   },
   text: {
     fontSize: 14,
@@ -32,5 +32,5 @@ const style = StyleSheet.create({
     color: '#7C7C7C',
     justifyContent: 'center',
     textAlign: 'center'
-  },
+  }
 })

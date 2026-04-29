@@ -4,15 +4,15 @@ import { DefaultTheme as NavTheme } from '@react-navigation/native'
 export const theme = {
   ...MD3LightTheme,
   colors: {
-    primary: '#023452',
-    secondary: '#00CE84',
-    gray: '#F0F0F0',
-    error: '#B00020',
-    background: '#FFFFFF',
-    onPrimary: '#FFFFFF',
-    onSecondary: '#FFFFFF',
-    text: '#7C7C7C',
-    primaryText: '#565656',
+    'primary': '#023452',
+    'secondary': '#00CE84',
+    'gray': '#F0F0F0',
+    'error': '#B00020',
+    'background': '#FFFFFF',
+    'onPrimary': '#FFFFFF',
+    'onSecondary': '#FFFFFF',
+    'text': '#7C7C7C',
+    'primaryText': '#565656',
     'component-on': '#F0F0F0',
     'component-off': '#D3D3D3'
   }

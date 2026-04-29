@@ -43,7 +43,7 @@ function Section({name, items}: SectionConfig) {
     <View style={style.section}>
       <Text style={style.sectionText}>{name}</Text>
       <View style={style.sectionItems}>
-        {items.map((item) => (
+        {items.map(item => (
           <SectionItem key={item.title} {...item}/>
         ))}
       </View>
@@ -68,7 +68,7 @@ const style = StyleSheet.create({
   item: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
+    width: '100%'
   },
   itemIcon: {
     marginHorizontal: 10,
@@ -96,7 +96,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold'
   },
   sectionContainer: {
-    gap: 10,
+    gap: 10
   },
   sectionDivider: {
     backgroundColor: theme.colors.text

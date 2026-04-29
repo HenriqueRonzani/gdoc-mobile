@@ -1,4 +1,5 @@
-import React, { createContext, Dispatch, SetStateAction, useContext, useState } from 'react'
+import type { Dispatch, SetStateAction} from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 export type StepObjectType = {
   step_name: string,

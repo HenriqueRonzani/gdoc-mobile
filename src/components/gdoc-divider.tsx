@@ -1,10 +1,10 @@
-import { Divider, DividerProps } from 'react-native-paper'
+import type { DividerProps } from 'react-native-paper'
+import { Divider } from 'react-native-paper'
 import React from 'react'
 import { theme } from '@/theme'
 import { StyleSheet } from 'react-native'
 
 export function GdocDivider(props: DividerProps) {
-
   return (
     <Divider
       style={[style.divider, props.style]}

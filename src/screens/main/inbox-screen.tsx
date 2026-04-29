@@ -16,7 +16,7 @@ const inboxItem = {
   number: 'CPAD-14/2024',
   subject_name: 'Abertura de Sindicância-PAD',
   user_has_pending_signature: false,
-  users_can_reopen_document: true,
+  users_can_reopen_document: true
 }
 
 export function InboxScreen() {

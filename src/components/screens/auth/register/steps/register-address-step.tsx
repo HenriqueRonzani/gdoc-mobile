@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native'
-import { RegisterFormAddressData, RegisterFormAddressSchema } from '@/schemas/auth.schema'
-import { Address } from '@/types/register'
+import type { RegisterFormAddressData} from '@/schemas/auth.schema'
+import { RegisterFormAddressSchema } from '@/schemas/auth.schema'
+import type { Address } from '@/types/register'
 import { useRegister } from '@/providers/register-context-provider'
 import { useStepper } from '@/providers/stepper-context-provider'
-import { GdocStepperProgressBar } from '@/components/stepper/gdoc-stepper-progress-bar'
 import { AddressForm } from '@/components/screens/auth/register/forms/address-form'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 import { GdocForm } from '@/components/form/gdoc-form'
@@ -37,7 +37,7 @@ export function RegisterAddressStep() {
       state: data.state,
       street: data.street
     }
-    setRegisterParams((prev) => ({
+    setRegisterParams(prev => ({
       ...prev,
       person: {...prev.person, address: address},
       password: data.password
@@ -47,9 +47,10 @@ export function RegisterAddressStep() {
 
   const footer = (
     <GdocGrayedButton onPress={() => {
-      registerParams.type === 'Pessoa física'
-        ? setStepName('person_data')
-        : setStepName('company_data')
+      if (registerParams.type === 'Pessoa física')
+        setStepName('person_data')
+      else
+        setStepName('company_data')
     }}
     >Voltar</GdocGrayedButton>)
 

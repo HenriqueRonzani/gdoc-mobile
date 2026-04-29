@@ -25,12 +25,12 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
       } catch (error) {
         console.log(error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
 
     loadToken()
-  }, [])
+  }, [token])
 
   const setToken = async (token: string) => {
     await setAuthToken(token)

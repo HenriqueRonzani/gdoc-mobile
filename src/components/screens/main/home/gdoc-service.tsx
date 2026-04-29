@@ -19,7 +19,7 @@ export function GdocService({iconName, iconColor, title, onPress}: props) {
             icon={iconName}
             size={40}
             color={iconColor}
-            style={{ backgroundColor: iconColor + '20' }}
+            style={{ backgroundColor: `${iconColor  }20` }}
           />
         </View>
         <Text style={{color: theme.colors.primary}}>{title}</Text>
@@ -48,6 +48,6 @@ const style = StyleSheet.create({
     padding: 2,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: theme.colors.primary,
+    borderColor: theme.colors.primary
   }
 })

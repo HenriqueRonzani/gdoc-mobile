@@ -9,7 +9,7 @@ const createStepper = (progress: number, totalSteps: number) => {
       key={index}
       style={index < progress - 1
         ? styles.completedStepper
-        : index == progress - 1
+        : index === progress - 1
           ? styles.activeStepper
           : styles.inactiveStepper}
     />
