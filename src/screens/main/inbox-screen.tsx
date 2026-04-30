@@ -1,6 +1,10 @@
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { InboxItem } from '@/components/screens/main/inbox/inbox-item'
+import { useEffect } from 'react'
+import { getInbox } from '@/services/inbox.service'
+import api from '@/lib/axios'
+import { useAuth } from '@/providers/auth-provider'
 
 const inboxItem = {
   allow_external_archievement: false,
@@ -20,6 +24,26 @@ const inboxItem = {
 }
 
 export function InboxScreen() {
+
+  const auth = useAuth();
+  useEffect(()=> {
+    const fetchInbox = async () => {
+       try {
+        const token = auth.token;
+        console.log(token)
+        const response = await api.get("/inbox/query/external", {
+          headers: {
+            Authorization: token
+          }
+        });
+       console.log(response)
+       }catch (error) {
+        console.log(error)
+       }
+      
+    }
+    fetchInbox();
+  },[])
   return (
     <View style={style.container}>
       <Text>Tela de solicitações</Text>
