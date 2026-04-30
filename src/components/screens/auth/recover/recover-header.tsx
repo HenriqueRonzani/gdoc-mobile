@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native'
-import { GdocPageTitle } from '@/components/gdoc-page-title.js'
-import { GdocStepperProgressBar } from '@/components/stepper/gdoc-stepper-progress-bar.js'
-import { GdocMemo } from '@/components/gdoc-memo.js'
-import { GdocDivider } from '@/components/gdoc-divider.js'
+import { GdocPageTitle } from '@/components/gdoc-page-title'
+import { GdocStepperProgressBar } from '@/components/stepper/gdoc-stepper-progress-bar'
+import { GdocMemo } from '@/components/gdoc-memo'
+import { GdocDivider } from '@/components/gdoc-divider'
 import React from 'react'
 
 export function RecoverHeader() {
@@ -20,6 +20,6 @@ const style = StyleSheet.create({
   headerContainer: {
     width: '100%',
     paddingVertical: 4,
-    gap: 8
+    gap: 16
   }
 })

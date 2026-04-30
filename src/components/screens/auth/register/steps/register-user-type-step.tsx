@@ -30,12 +30,12 @@ export function RegisterUserTypeStep() {
       <OptionCard
         onPress={() => chooseType('person')}
         optionName="Pessoa Física"
-        imageSource={individual}
+        icon={'account'}
       />
       <OptionCard
         onPress={() => chooseType('organization')}
         optionName="Pessoa Jurídica"
-        imageSource={legal}
+        icon={'domain'}
       />
 
       <GdocGrayedButton onPress={() => navigation.navigate('Login')}>

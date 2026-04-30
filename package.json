@@ -23,6 +23,7 @@
     "react": "19.1.0",
     "react-hook-form": "^7.72.0",
     "react-native": "0.81.5",
+    "react-native-confirmation-code-field": "^9.0.0",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-mask-input": "^1.2.3",
