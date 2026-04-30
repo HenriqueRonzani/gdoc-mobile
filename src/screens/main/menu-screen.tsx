@@ -2,18 +2,29 @@ import { StyleSheet, Text, View } from 'react-native'
 import { GdocService } from '@/components/screens/main/home/gdoc-service'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 
+const data = {
+  name: 'Empresas',
+  items: [
+    { id: 1106, name: 'Casa do empreendedor', icon_name: 'domain', icon_color: '#2E7D32' },
+    { id: 1105, name: 'Fazenda', icon_name: 'domain', icon_color: '#2E7D32' }
+  ]
+}
+
 export function MenuScreen() {
   return (
     <View style={style.container}>
       <GdocPageTitle>Serviços</GdocPageTitle>
       <Text style={style.text}>Busque e solicite os serviços oferecidos por Prefeitura Municipal de Modelandia</Text>
 
-      {/* Esse é só um exemplo de como usar o componente, ajustar conforme o protótipo*/}
-      <GdocService
-        iconName={'wrench'}
-        iconColor={'#1A237E'}
-        title={'Chamado Técnico'}
-        onPress={() => console.log('Clique no serviço')}/>
+      {data.items.map((item) => (
+        <GdocService
+          key={item.id}
+          iconName={item.icon_name}
+          iconColor={item.icon_color}
+          title={item.name}
+          onPress={() => console.log(`Clique no serviço ${item.name}`)}
+        />
+      ))}
     </View>
   )
 }
