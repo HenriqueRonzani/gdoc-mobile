@@ -1,10 +1,11 @@
 import { StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Button, Text, TextInput } from 'react-native-paper'
 import { InboxItem } from '@/components/screens/main/inbox/inbox-item'
-import { useEffect } from 'react'
-import { getInbox } from '@/services/inbox.service'
+import { useEffect, useState } from 'react'
 import api from '@/lib/axios'
 import { useAuth } from '@/providers/auth-provider'
+import React from 'react'
+import { GdocTextInput } from '@/components/form/gdoc-text-input'
 
 const inboxItem = {
   allow_external_archievement: false,
@@ -26,31 +27,90 @@ const inboxItem = {
 export function InboxScreen() {
 
   const auth = useAuth();
+  const [tab, setTab] = useState("opened_by_me")
+  const [data, setData] = useState([]);
+  const [text, setText] = useState("");
+
   useEffect(()=> {
-    const fetchInbox = async () => {
+    const fetch = async () => {
        try {
-        const token = auth.token;
-        console.log(token)
-        const response = await api.get("/inbox/query/external", {
-          headers: {
-            Authorization: token
-          }
-        });
-       console.log(response)
-       }catch (error) {
-        console.log(error)
-       }
-      
+      const response = await api.get("inbox/query/external", {
+        params: {
+          tab: tab,
+          search: text
+        }
+      });
+      setData(response.data.data);
+    } catch (err) {
+      console.error("erro:", err);
     }
-    fetchInbox();
+    }
+    fetch();
   },[])
+
+   useEffect(()=> {
+    const fetch = async () => {
+       try {
+      const response = await api.get("inbox/query/external", {
+        params: {
+          tab: tab,
+          search: text
+        }
+      });
+      setData(response.data.data);
+    } catch (err) {
+      console.error("erro:", err);
+    }
+    }
+    fetch();
+  },[text])
+  
+
   return (
     <View style={style.container}>
-      <Text>Tela de solicitações</Text>
+      <Text  style={style.title}>Minhas solicitações</Text>
+      <View style={style.filter}>
+        <Button textColor={tab === "opened_by_me" ? "#1F1B79" : "#0000"} mode='text' onPress={async () => {
+          const response = await api.get("inbox/query/external", {
+          params: {
+            tab: "opened_by_me"
+          }});
+          setData(response.data.data);
+          setTab("opened_by_me");
+        }}>Abertos por mim</Button>
+
+        <Button textColor={tab === "opened_by_others" ? "#1F1B79" : "#0000"} mode='text' onPress={async ()=>{
+          const response = await api.get("inbox/query/external", {
+          params: {
+            tab: "opened_by_others",
+            search: text
+          }});
+          setData(response.data.data);
+          setTab("opened_by_others");
+        }}>Aberto por outros</Button>
+
+        <Button mode='text' textColor={tab === "archived" ? "#1F1B79" : "#0000"} onPress={async () =>{
+          const response = await api.get("inbox/query/external", {
+          params: {
+            tab: "archived",
+            search: text
+          }});
+          setData(response.data.data);
+          setTab("archived");
+        }}>Concluidos</Button>
+
+      </View>
       <View>
-        <InboxItem item={inboxItem}/>
-        <InboxItem item={inboxItem}/>
-        <InboxItem item={inboxItem}/>
+                 <TextInput
+         style={style.textInput}
+      label="Filtro"
+      mode='flat'
+      value={text}
+      onChangeText={text => setText(text)}
+    />
+    { data.map((item, index) => (
+      <InboxItem key={index} item={item} />
+     ))}
       </View>
     </View>
   )
@@ -63,5 +123,23 @@ const style = StyleSheet.create({
     flexDirection: 'column',
     paddingHorizontal: 15,
     gap: 8
+  },
+  textInput: {
+    margin: 30
+  },
+  filter: {
+    width: 336,
+    height: 111,
+    color:"#F5F5F5",
+    borderColor:"#000000",
+    borderWidth: 1,
+    borderRadius: 5,
+    alignSelf: 'center',
+    marginTop: 36
+  },
+  title: {
+    fontSize: 36,
+    alignSelf: 'center',
+    marginTop: 32
   }
 })
