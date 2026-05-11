@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 import { useStepper } from '@/providers/stepper-context-provider'
-import { TypeVerificationCodeForm } from '@/components/screens/auth/recover/forms/type-verification-code-form'
+import { VerifyRecoveryCodeForm } from '../forms/verify-recovery-code-form'
 import { theme } from '@/theme'
 import { Text } from 'react-native-paper'
 import { VerifyRecoveryCodeFormData } from '@/schemas/recover.schema'
@@ -10,22 +10,17 @@ import { verifyRecoveryCode } from '@/services/auth.service'
 import { useRecover } from '@/providers/recover-context-provider'
 import { useSnackbar } from '@/providers/snackbar-provider'
 
-export function TypeVerificationCodeStep() {
+export function VerifyRecoveryCodeStep() {
   const {setStepName} = useStepper()
   const {recoverParams, setRecoverParams} = useRecover()
   const {toastError} = useSnackbar()
 
   const onSubmit = async (data: VerifyRecoveryCodeFormData) => {
-    console.log('before')
-    console.log({
-      verification_token: recoverParams.verification_token,
-      verification_code: data.verification_code
-    })
     const response = await verifyRecoveryCode({
       verification_token: recoverParams.verification_token,
       verification_code: data.verification_code
     })
-    console.log(response)
+
     if (!response.is_valid) {
       toastError('Erro')
     }
@@ -34,16 +29,16 @@ export function TypeVerificationCodeStep() {
       ...recoverParams,
       verification_code: data.verification_code
     })
-    setStepName('set-new-password')
+    setStepName('finish_reset_password')
   }
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Enviamos um código para henri************@gmail.com</Text>
-        <TypeVerificationCodeForm
+        <VerifyRecoveryCodeForm
           onSubmit={onSubmit}
           footer={(
-            <GdocGrayedButton onPress={() => setStepName('send_verification_code_mean')}>
+            <GdocGrayedButton onPress={() => setStepName('request_recovery_code')}>
               Voltar
             </GdocGrayedButton>
           )}/>

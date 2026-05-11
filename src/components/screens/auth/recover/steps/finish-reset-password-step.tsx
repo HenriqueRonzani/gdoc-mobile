@@ -5,14 +5,14 @@ import { NavigatorType } from '@/types/navigation'
 import { theme } from '@/theme'
 import { Text } from 'react-native-paper'
 import React from 'react'
-import { SetNewPasswordForm } from '@/components/screens/auth/recover/forms/set-new-password-form'
+import { FinishResetPasswordForm } from '../forms/finish-reset-password-form'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 import { FinishResetPasswordFormData } from '@/schemas/recover.schema'
 import { finishResetPassword } from '@/services/auth.service'
 import { useRecover } from '@/providers/recover-context-provider'
 import { useSnackbar } from '@/providers/snackbar-provider'
 
-export function SetNewPasswordStep () {
+export function FinishResetPasswordStep () {
   const navigation = useNavigation<NavigatorType>()
   const {recoverParams, clearRecoverParams} = useRecover()
   const {toast} = useSnackbar()
@@ -33,7 +33,7 @@ export function SetNewPasswordStep () {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Digite seu CPF ou CNPJ</Text>
-        <SetNewPasswordForm onSubmit={onSubmit} footer={(
+        <FinishResetPasswordForm onSubmit={onSubmit} footer={(
           <GdocGrayedButton onPress={() => navigation.navigate('Login')}>
             Voltar
           </GdocGrayedButton>

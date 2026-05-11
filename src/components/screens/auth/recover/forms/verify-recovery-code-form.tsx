@@ -13,7 +13,7 @@ type Props = {
   footer: React.ReactNode
 }
 
-export const TypeVerificationCodeForm = ({onSubmit, footer}: Props) => {
+export const VerifyRecoveryCodeForm = ({onSubmit, footer}: Props) => {
   return (
     <GdocForm
       initial={initialForm}

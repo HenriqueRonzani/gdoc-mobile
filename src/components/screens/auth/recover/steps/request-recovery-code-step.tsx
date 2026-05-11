@@ -8,7 +8,7 @@ import { useRecover } from '@/providers/recover-context-provider'
 import { VerificationMethod } from '@/components/screens/auth/recover/verification-method'
 import { requestRecoveryCode } from '@/services/auth.service'
 
-export function SendVerificationCodeMeanStep() {
+export function RequestRecoveryCodeStep() {
   const {setStepName} = useStepper()
   const {recoverParams, setRecoverParams} = useRecover()
 
@@ -17,9 +17,8 @@ export function SendVerificationCodeMeanStep() {
       cpfCnpj: recoverParams.cpfCnpj,
       contact_id: methodId
     })
-    console.log(response)
     setRecoverParams({...recoverParams, verification_token: response.verification_token})
-    setStepName('type_verification_code')
+    setStepName('verify_recovery_code')
   }
 
   const recoveryMethods = recoverParams.recovery_methods
@@ -38,7 +37,7 @@ export function SendVerificationCodeMeanStep() {
           ))}
         </View>
 
-        <GdocGrayedButton onPress={() => setStepName('user_identity')}>
+        <GdocGrayedButton onPress={() => setStepName('get_recovery_methods')}>
           Voltar
         </GdocGrayedButton>
       </View>

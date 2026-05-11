@@ -14,7 +14,7 @@ type Props = {
   footer: React.ReactNode
 }
 
-export function UserIdentityForm ({onSubmit, footer}: Props) {
+export function GetRecoveryMethodsForm ({onSubmit, footer}: Props) {
   const {recoverParams} = useRecover()
   return (
     <GdocForm

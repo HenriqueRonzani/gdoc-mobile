@@ -7,21 +7,19 @@ import { NavigatorType } from '@/types/navigation'
 import { theme } from '@/theme'
 import { Text } from 'react-native-paper'
 import { GetRecoveryMethodsFormData } from '@/schemas/recover.schema'
-import { UserIdentityForm } from '@/components/screens/auth/recover/forms/user-identity-form'
+import { GetRecoveryMethodsForm } from '../forms/get-recovery-methods-form'
 import { useRecover } from '@/providers/recover-context-provider'
 import { getRecoveryMethods } from '@/services/auth.service'
 
-export function UserIdentityStep() {
+export function GetRecoveryMethodsStep() {
   const {setStepName} = useStepper()
   const {recoverParams, setRecoverParams} = useRecover()
   const navigation = useNavigation<NavigatorType>()
 
   const onSubmit = async (data: GetRecoveryMethodsFormData) => {
-    console.log('before', recoverParams)
     const response = await getRecoveryMethods(data)
     setRecoverParams({...recoverParams, cpfCnpj: data.cpfCnpj, recovery_methods: response})
-    console.log('after', recoverParams)
-    setStepName('send_verification_code_mean')
+    setStepName('request_recovery_code')
   }
 
   const footer = (
@@ -34,7 +32,7 @@ export function UserIdentityStep() {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Digite seu CPF ou CNPJ</Text>
-        <UserIdentityForm onSubmit={onSubmit} footer={footer}/>
+        <GetRecoveryMethodsForm onSubmit={onSubmit} footer={footer}/>
       </View>
     </View>
   )

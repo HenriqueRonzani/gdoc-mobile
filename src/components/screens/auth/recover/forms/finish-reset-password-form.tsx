@@ -13,7 +13,7 @@ type Props = {
   footer: React.ReactNode
 }
 
-export function SetNewPasswordForm({onSubmit, footer}: Props) {
+export function FinishResetPasswordForm({onSubmit, footer}: Props) {
   return (
     <GdocForm
       initial={initialForm}
