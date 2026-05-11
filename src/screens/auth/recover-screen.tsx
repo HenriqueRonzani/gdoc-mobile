@@ -7,6 +7,7 @@ import { SendVerificationCodeMeanStep } from '@/components/screens/auth/recover/
 import { TypeVerificationCodeStep } from '@/components/screens/auth/recover/steps/type-verification-code-step'
 import { RecoverHeader } from '@/components/screens/auth/recover/recover-header'
 import { SetNewPasswordStep } from '@/components/screens/auth/recover/steps/set-new-password-step'
+import { RecoverContextProvider } from '@/providers/recover-context-provider'
 
 const screens: StepObjectType[] = [
   {step_name: 'user_identity', component: UserIdentityStep, progress: 1},
@@ -21,12 +22,14 @@ export function RecoverScreen() {
       style={{flex: 1}}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <StepperProvider initialStepName={'user_identity'} steps={screens} totalSteps={4}>
-        <View style={style.container}>
-          <RecoverHeader/>
-          <GdocStepperContent/>
-        </View>
-      </StepperProvider>
+      <RecoverContextProvider>
+        <StepperProvider initialStepName={'user_identity'} steps={screens} totalSteps={4}>
+          <View style={style.container}>
+            <RecoverHeader/>
+            <GdocStepperContent/>
+          </View>
+        </StepperProvider>
+      </RecoverContextProvider>
     </KeyboardAvoidingView>
   )
 }

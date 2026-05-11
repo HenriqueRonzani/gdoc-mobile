@@ -17,3 +17,24 @@ export const registerUser = async (payload: RegisterForm) => {
   const response = await api.post('/user/register', payload)
   return response.data;
 }
+
+export const getRecoveryMethods = async (payload: GetRecoveryMethodForm) => {
+  console.log(payload)
+  const response = await api.post('/user/account/get-recovery-methods', payload)
+  return response.data as GetRecoveryMethodResponse
+}
+
+export const requestRecoveryCode = async (payload: RequestRecoveryCodeForm) => {
+  const response = await api.post('/user/account/request-recovery-code', payload)
+  return response.data as RequestRecoveryCodeResponse
+}
+
+export const verifyRecoveryCode = async (payload: VerifyRecoveryCodeForm) => {
+  const response = await api.post('/user/account/verify-recovery-code', payload)
+  return response.data as VerifyRecoveryCodeResponse
+}
+
+export const finishResetPassword = async (payload: FinishResetPasswordForm) => {
+  const response = await api.post('/user/account/finish-reset-password', payload)
+  return response.data as FinishResetPasswordResponse
+}

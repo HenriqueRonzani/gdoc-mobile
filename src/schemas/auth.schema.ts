@@ -1,6 +1,5 @@
 import { cnpj, cpf } from 'cpf-cnpj-validator'
 import { z } from 'zod'
-import api from '@/lib/axios'
 import { fullNameField, telephoneField } from '@/schemas/index'
 
 export const LoginFormSchema = z.object({

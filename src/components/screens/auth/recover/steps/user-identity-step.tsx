@@ -1,6 +1,4 @@
 import { StyleSheet, View } from 'react-native'
-import { RecoverHeader } from '@/components/screens/auth/recover/recover-header'
-import { UserIdentityForm } from '@/components/screens/auth/recover/forms/user-identity-form'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 import React from 'react'
@@ -8,12 +6,21 @@ import { useNavigation } from '@react-navigation/native'
 import { NavigatorType } from '@/types/navigation'
 import { theme } from '@/theme'
 import { Text } from 'react-native-paper'
+import { GetRecoveryMethodsFormData } from '@/schemas/recover.schema'
+import { UserIdentityForm } from '@/components/screens/auth/recover/forms/user-identity-form'
+import { useRecover } from '@/providers/recover-context-provider'
+import { getRecoveryMethods } from '@/services/auth.service'
 
 export function UserIdentityStep() {
   const {setStepName} = useStepper()
+  const {recoverParams, setRecoverParams} = useRecover()
   const navigation = useNavigation<NavigatorType>()
 
-  const onSubmit = (data: unknown) => {
+  const onSubmit = async (data: GetRecoveryMethodsFormData) => {
+    console.log('before', recoverParams)
+    const response = await getRecoveryMethods(data)
+    setRecoverParams({...recoverParams, cpfCnpj: data.cpfCnpj, recovery_methods: response})
+    console.log('after', recoverParams)
     setStepName('send_verification_code_mean')
   }
 

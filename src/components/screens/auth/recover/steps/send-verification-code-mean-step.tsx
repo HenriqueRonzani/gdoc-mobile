@@ -1,37 +1,41 @@
 import { StyleSheet, View } from 'react-native'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
-import { RecoverHeader } from '@/components/screens/auth/recover/recover-header'
 import React from 'react'
 import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
-import WhatsappIcon from '@/assets/whatsapp-icon.png'
-import { OptionCard } from '@/components/gdoc-option-card'
+import { useRecover } from '@/providers/recover-context-provider'
+import { VerificationMethod } from '@/components/screens/auth/recover/verification-method'
+import { requestRecoveryCode } from '@/services/auth.service'
 
 export function SendVerificationCodeMeanStep() {
   const {setStepName} = useStepper()
+  const {recoverParams, setRecoverParams} = useRecover()
 
-  const chooseMean = (mean: string) => {
+  const choseMethod = async (methodId: number) => {
+    const response = await requestRecoveryCode({
+      cpfCnpj: recoverParams.cpfCnpj,
+      contact_id: methodId
+    })
+    console.log(response)
+    setRecoverParams({...recoverParams, verification_token: response.verification_token})
     setStepName('type_verification_code')
   }
+
+  const recoveryMethods = recoverParams.recovery_methods
 
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Escolha um contato para receber o código de recuperação</Text>
         <View style={{gap: 8}}>
-          <OptionCard
-            style={styles.option}
-            onPress={() => chooseMean('e-mail')}
-            optionName="E-mail"
-            icon={'email-outline'}
-          />
-          <OptionCard
-            style={styles.option}
-            onPress={() => chooseMean('whatsapp')}
-            optionName="Telefone / WhatsApp"
-            icon={WhatsappIcon}
-          />
+          {recoveryMethods.map(i => (
+            <VerificationMethod
+              key={i.id}
+              method={i}
+              onClick={choseMethod}
+            />
+          ))}
         </View>
 
         <GdocGrayedButton onPress={() => setStepName('user_identity')}>
@@ -64,9 +68,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.text,
     borderRadius: 4
-  },
-  option: {
-    backgroundColor: theme.colors.gray
   },
   sendMeanItem: {
     flexDirection: 'row',

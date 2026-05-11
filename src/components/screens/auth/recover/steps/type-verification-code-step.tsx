@@ -5,10 +5,35 @@ import { useStepper } from '@/providers/stepper-context-provider'
 import { TypeVerificationCodeForm } from '@/components/screens/auth/recover/forms/type-verification-code-form'
 import { theme } from '@/theme'
 import { Text } from 'react-native-paper'
+import { VerifyRecoveryCodeFormData } from '@/schemas/recover.schema'
+import { verifyRecoveryCode } from '@/services/auth.service'
+import { useRecover } from '@/providers/recover-context-provider'
+import { useSnackbar } from '@/providers/snackbar-provider'
 
 export function TypeVerificationCodeStep() {
   const {setStepName} = useStepper()
-  const onSubmit = (data: unknown) => {
+  const {recoverParams, setRecoverParams} = useRecover()
+  const {toastError} = useSnackbar()
+
+  const onSubmit = async (data: VerifyRecoveryCodeFormData) => {
+    console.log('before')
+    console.log({
+      verification_token: recoverParams.verification_token,
+      verification_code: data.verification_code
+    })
+    const response = await verifyRecoveryCode({
+      verification_token: recoverParams.verification_token,
+      verification_code: data.verification_code
+    })
+    console.log(response)
+    if (!response.is_valid) {
+      toastError('Erro')
+    }
+
+    setRecoverParams({
+      ...recoverParams,
+      verification_code: data.verification_code
+    })
     setStepName('set-new-password')
   }
   return (

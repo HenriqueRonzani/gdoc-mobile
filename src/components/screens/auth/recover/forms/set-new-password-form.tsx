@@ -4,15 +4,12 @@ import { GdocForm } from '@/components/form/gdoc-form'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
+import { FinishResetPasswordFormData, FinishResetPasswordFormSchema } from '@/schemas/recover.schema'
 
 const initialForm = {password: '', confirm_password: ''}
-const schema = z.object({
-  password: z.string(),
-  confirm_password: z.string()
-})
 
 type Props = {
-  onSubmit: (data: z.infer<typeof schema>) => void
+  onSubmit: (data: FinishResetPasswordFormData) => void
   footer: React.ReactNode
 }
 
@@ -20,7 +17,7 @@ export function SetNewPasswordForm({onSubmit, footer}: Props) {
   return (
     <GdocForm
       initial={initialForm}
-      schema={schema}
+      schema={FinishResetPasswordFormSchema}
       onSubmit={onSubmit}
       footer={footer}
       confirmLabel={'Próximo'}

@@ -3,18 +3,26 @@ import { GdocText } from './gdoc-text'
 import { IconSource } from 'react-native-paper/src/components/Icon'
 import AvatarIcon from 'react-native-paper/src/components/Avatar/AvatarIcon'
 import { theme } from '@/theme'
+import { Text } from 'react-native-paper'
 
 type Props = PressableProps & {
   icon: IconSource;
   optionName: string,
+  description?: string,
   onPress: () => void;
 }
 
-export function OptionCard({icon, optionName, onPress, ...rest}: Props) {
+export function OptionCard({icon, optionName, description, onPress, ...rest}: Props) {
   return (
     <Pressable {...rest} style={[styles.container, rest.style as ViewStyle]} onPress={onPress}>
       <AvatarIcon size={50} icon={icon} style={styles.image}/>
+      <View>
       <GdocText>{optionName}</GdocText>
+
+      {description && (<Text style={styles.description}>
+        {description}
+      </Text>)}
+      </View>
     </Pressable>
   )
 }
@@ -32,6 +40,10 @@ const styles = StyleSheet.create({
   image: {
     height: 50,
     width: 50,
-    backgroundColor: theme.colors.primary + 'EE',
+    backgroundColor: theme.colors.primary + 'EE'
+  },
+  description: {
+    fontSize: 10,
+    color: theme.colors.text
   }
 })
