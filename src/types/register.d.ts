@@ -2,13 +2,13 @@ export type RegisterForm = {
   contactOrganization: string | null
   'g-recaptcha-response': string
   icp_hash: string
-  icp_issuer_display_name: ""
+  icp_issuer_display_name: ''
   login_type: 6
-  origin: "external"
+  origin: 'external'
   person: Person
   provider: Provider
   password: string
-  type: string | "Pessoa física" | "Pessoa jurídica"
+  type: string | 'Pessoa física' | 'Pessoa jurídica'
 }
 
 export type Person = {

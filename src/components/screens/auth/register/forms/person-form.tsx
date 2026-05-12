@@ -1,4 +1,5 @@
-import { RegisterFormPersonSchema, RegisterPersonFormData } from '@/schemas/auth.schema'
+import type { RegisterPersonFormData } from '@/schemas/auth.schema'
+import { RegisterFormPersonSchema } from '@/schemas/auth.schema'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
@@ -39,7 +40,7 @@ export function PersonForm({onSubmit, footer}: Props) {
       footer={footer}
     >
       <GdocFormItem name={'name'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput field={field} label="Nome completo" placeholder="Nome completo"/>
             <GdocFormError name={'name'}/>
@@ -47,7 +48,7 @@ export function PersonForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'cpfCnpj'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput
               mask={Masks.BRL_CPF}
@@ -61,7 +62,7 @@ export function PersonForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'dateOfBirth'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput
               mask={Masks.DATE_DDMMYYYY}
@@ -75,7 +76,7 @@ export function PersonForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'gender'}>
-        {(field) => (
+        {field => (
           <>
             <GdocDropdown placeholder="Gênero" items={genreOptions} field={field}/>
             <GdocFormError name={'gender'}/>
@@ -83,7 +84,7 @@ export function PersonForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'email'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput
               field={field}
@@ -96,7 +97,7 @@ export function PersonForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'cellphone'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput
               mask={Masks.BRL_PHONE}

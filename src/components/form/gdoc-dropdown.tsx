@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { ControllerRenderProps, FieldValues } from 'react-hook-form'
+import type { ControllerRenderProps, FieldValues } from 'react-hook-form'
 import { StyleSheet } from 'react-native'
-import DropDownPicker, { ItemType } from 'react-native-dropdown-picker'
+import type { ItemType } from 'react-native-dropdown-picker'
+import DropDownPicker from 'react-native-dropdown-picker'
 
 type Props = {
   field: ControllerRenderProps<FieldValues, string>,

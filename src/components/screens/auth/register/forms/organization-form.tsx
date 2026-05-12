@@ -1,5 +1,6 @@
 import { GdocForm } from '@/components/form/gdoc-form'
-import { RegisterOrganizationFormData, RegisterFormOrganizationSchema } from '@/schemas/auth.schema'
+import type { RegisterOrganizationFormData} from '@/schemas/auth.schema'
+import { RegisterFormOrganizationSchema } from '@/schemas/auth.schema'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
@@ -32,7 +33,7 @@ export function OrganizationForm({onSubmit, footer}: Props) {
       footer={footer}
     >
       <GdocFormItem name={'name'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput field={field} label="Nome da organização" placeholder="Nome da organização"/>
             <GdocFormError name={'name'}/>
@@ -40,7 +41,7 @@ export function OrganizationForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'cpfCnpj'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput
               mask={Masks.BRL_CNPJ}
@@ -54,7 +55,7 @@ export function OrganizationForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'email'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput
               field={field}
@@ -67,7 +68,7 @@ export function OrganizationForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'cellphone'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput
               mask={Masks.BRL_PHONE}
@@ -81,7 +82,7 @@ export function OrganizationForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'secondary_name'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput field={field} label="Nome completo" placeholder="Nome completo"/>
             <GdocFormError name={'secondary_name'}/>
@@ -89,7 +90,7 @@ export function OrganizationForm({onSubmit, footer}: Props) {
         )}
       </GdocFormItem>
       <GdocFormItem name={'secondary_cpf_cnpj'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput
               mask={Masks.BRL_CPF}

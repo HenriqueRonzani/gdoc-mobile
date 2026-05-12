@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { Snackbar, Text } from 'react-native-paper'
 import { StyleSheet } from 'react-native'
 
@@ -10,9 +10,9 @@ type SnackbarContextType = {
 
 const SnackbarContext = createContext<SnackbarContextType>({} as SnackbarContextType)
 
-export const useSnackbar = () => useContext(SnackbarContext);
+export const useSnackbar = () => useContext(SnackbarContext)
 
-export function SnackbarProvider({ children }: any) {
+export function SnackbarProvider({ children }: { children: React.ReactNode }) {
   const [message, setMessage] = useState<string>('')
   const [color, setColor] = useState<string>('#ffffff')
 
@@ -33,7 +33,7 @@ export function SnackbarProvider({ children }: any) {
     <SnackbarContext.Provider value={{ toast, toastSuccess, toastError }}>
       {children}
       <Snackbar
-        visible={!!message}
+        visible={Boolean(message)}
         style={{backgroundColor: color}}
         onDismiss={() => setMessage('')}
       >

@@ -18,17 +18,17 @@ export default defineConfig([
       globals: {
         ...globals.es2021,
         ...globals.browser
-      },
+      }
     },
     plugins: {
       js,
-      react: react as any,
-      'react-hooks': reactHooks as any,
-      import: importPlugin
+      'react': react as never,
+      'react-hooks': reactHooks as never,
+      'import': importPlugin
     },
     extends: [
       js.configs.recommended,
-      ...tseslint.configs.strict,
+      ...tseslint.configs.strict
     ],
     settings: {
       react: {
@@ -39,7 +39,7 @@ export default defineConfig([
       'node_modules',
       'dist/**',
       'android/**',
-      'ios/**',
+      'ios/**'
     ],
     rules: {
       /**
@@ -68,7 +68,7 @@ export default defineConfig([
       'quotes': ['error', 'single'],
       'quote-props': ['error', 'consistent-as-needed'],
       'comma-dangle': ['error', 'never'],
-      'semi': ['error', 'always'],
+      'semi': ['error', 'never'],
       'eol-last': ['error', 'always'],
       'linebreak-style': ['error', 'unix'],
 
@@ -88,13 +88,20 @@ export default defineConfig([
       'no-useless-return': 'error',
       'no-unexpected-multiline': 'error',
 
-      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/consistent-type-imports': 'error',
-      '@typescript-eslint/no-unused-vars': ['error'],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_'
+        }
+      ],
 
       ...reactHooks.configs.flat.recommended.rules,
       ...react.configs.recommended.rules,
-      'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-uses-react': 'off',
+      'react/prop-types': 'off'
     }
   }
 ])

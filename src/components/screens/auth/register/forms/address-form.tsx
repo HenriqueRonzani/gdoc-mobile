@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form'
 import React, { useEffect, useState } from 'react'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
-import { ItemType } from 'react-native-dropdown-picker'
+import type { ItemType } from 'react-native-dropdown-picker'
 import { GdocDropdown } from '@/components/form/gdoc-dropdown'
 import { getCities, getStates } from '@/services/cep.service'
 import { GdocCep } from '@/components/form/gdoc-cep'
@@ -17,8 +17,8 @@ export function AddressForm() {
   const selectedState = watch('state')
 
   useEffect(() => {
-    getStates().then(data => {
-      const formattedStates = data.map((state: any) => ({
+    getStates().then((data) => {
+      const formattedStates = data.map((state: { nome: string, sigla: string }) => ({
         label: state.nome,
         value: state.sigla
       }))
@@ -28,22 +28,20 @@ export function AddressForm() {
 
   useEffect(() => {
     if (selectedState) {
-      getCities(selectedState).then(data => {
-        const formattedCities = data.map((city: any) => ({
+      getCities(selectedState).then((data) => {
+        const formattedCities = data.map((city: { nome: string }) => ({
           label: city.nome,
           value: city.nome
         }))
         setCities(formattedCities)
       })
-    } else {
-      setCities([])
     }
   }, [selectedState])
 
   return (
     <View style={{flex: 1, gap: 10}}>
       <GdocFormItem name={'zip'}>
-        {(field) => (
+        {field => (
           <>
             <GdocCep field={field} label="CEP" placeholder="CEP"/>
             <GdocFormError name={'zip'}/>
@@ -51,7 +49,7 @@ export function AddressForm() {
         )}
       </GdocFormItem>
       <GdocFormItem name={'state'}>
-        {(field) => (
+        {field => (
           <>
             <GdocDropdown
               placeholder="Estado"
@@ -63,7 +61,7 @@ export function AddressForm() {
         )}
       </GdocFormItem>
       <GdocFormItem name={'city'}>
-        {(field) => (
+        {field => (
           <>
             <GdocDropdown
               placeholder="Cidades"
@@ -75,7 +73,7 @@ export function AddressForm() {
         )}
       </GdocFormItem>
       <GdocFormItem name={'street'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput field={field} label="Rua" placeholder="Rua"/>
             <GdocFormError name={'street'}/>
@@ -83,7 +81,7 @@ export function AddressForm() {
         )}
       </GdocFormItem>
       <GdocFormItem name={'number'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput field={field} label="Número" placeholder="Número"/>
             <GdocFormError name={'number'}/>
@@ -91,7 +89,7 @@ export function AddressForm() {
         )}
       </GdocFormItem>
       <GdocFormItem name={'complement'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput field={field} label="Complemento" placeholder="Complemento"/>
             <GdocFormError name={'complement'}/>
@@ -99,7 +97,7 @@ export function AddressForm() {
         )}
       </GdocFormItem>
       <GdocFormItem name={'password'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput field={field} label={'Senha'} placeholder={'Senha'} secureTextEntry={true}/>
             <GdocFormError name={'password'}/>
@@ -107,10 +105,10 @@ export function AddressForm() {
         )}
       </GdocFormItem>
       <GdocFormItem name={'confirm_password'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput field={field} label={'Confirme a senha'} placeholder={'Confirme a senha'}
-                           secureTextEntry={true}/>
+              secureTextEntry={true}/>
             <GdocFormError name={'confirm_password'}/>
           </>
         )}

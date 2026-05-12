@@ -1,4 +1,5 @@
-import Recaptcha, { RecaptchaRef } from 'react-native-recaptcha-that-works'
+import type { RecaptchaRef } from 'react-native-recaptcha-that-works'
+import Recaptcha from 'react-native-recaptcha-that-works'
 import React, { useRef, useState } from 'react'
 import { GdocPrimaryButton } from '@/components/button/gdoc-primary-button'
 import { View } from 'react-native'
