@@ -11,9 +11,10 @@ const initialForm = {verification_code: ''}
 type Props = {
   onSubmit: (data: VerifyRecoveryCodeFormData) => void
   footer: React.ReactNode
+  loading: boolean
 }
 
-export const VerifyRecoveryCodeForm = ({onSubmit, footer}: Props) => {
+export const VerifyRecoveryCodeForm = ({onSubmit, footer, loading}: Props) => {
   return (
     <GdocForm
       initial={initialForm}
@@ -21,6 +22,7 @@ export const VerifyRecoveryCodeForm = ({onSubmit, footer}: Props) => {
       onSubmit={onSubmit}
       confirmLabel={'Verificar Código'}
       footer={footer}
+      isLoading={loading}
     >
       <View style={{width: '80%', alignSelf: 'center'}}>
         <GdocFormItem name={'verification_code'}>

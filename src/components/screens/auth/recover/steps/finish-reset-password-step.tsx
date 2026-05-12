@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { NavigatorType } from '@/types/navigation'
 import { theme } from '@/theme'
 import { Text } from 'react-native-paper'
-import React from 'react'
+import React, { useState } from 'react'
 import { FinishResetPasswordForm } from '../forms/finish-reset-password-form'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 import { FinishResetPasswordFormData } from '@/schemas/recover.schema'
@@ -15,25 +15,34 @@ import { useSnackbar } from '@/providers/snackbar-provider'
 export function FinishResetPasswordStep () {
   const navigation = useNavigation<NavigatorType>()
   const {recoverParams, clearRecoverParams} = useRecover()
-  const {toast} = useSnackbar()
+  const {toast, toastError} = useSnackbar()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const onSubmit = async (data: FinishResetPasswordFormData) => {
-    const response = await finishResetPassword({
-      password: data.password,
-      verification_code: recoverParams.verification_code,
-      verification_token: recoverParams.verification_token
-    })
-    toast(response.message)
+    try {
+      setLoading(true)
+      const response = await finishResetPassword({
+        password: data.password,
+        verification_code: recoverParams.verification_code,
+        verification_token: recoverParams.verification_token
+      })
+      toast(response.message)
 
-    navigation.navigate('Login')
-    clearRecoverParams()
+      clearRecoverParams()
+      navigation.navigate('Login')
+    } catch (error: any) {
+      toastError('Houve um erro no registro')
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Digite seu CPF ou CNPJ</Text>
-        <FinishResetPasswordForm onSubmit={onSubmit} footer={(
+        <FinishResetPasswordForm onSubmit={onSubmit} loading={loading} footer={(
           <GdocGrayedButton onPress={() => navigation.navigate('Login')}>
             Voltar
           </GdocGrayedButton>

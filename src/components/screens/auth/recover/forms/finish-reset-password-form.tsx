@@ -11,9 +11,10 @@ const initialForm = {password: '', confirm_password: ''}
 type Props = {
   onSubmit: (data: FinishResetPasswordFormData) => void
   footer: React.ReactNode
+  loading: boolean
 }
 
-export function FinishResetPasswordForm({onSubmit, footer}: Props) {
+export function FinishResetPasswordForm({onSubmit, footer, loading}: Props) {
   return (
     <GdocForm
       initial={initialForm}
@@ -21,6 +22,7 @@ export function FinishResetPasswordForm({onSubmit, footer}: Props) {
       onSubmit={onSubmit}
       footer={footer}
       confirmLabel={'Próximo'}
+      isLoading={loading}
     >
       <GdocFormItem name={'password'}>
         {(field) => (

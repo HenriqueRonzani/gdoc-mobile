@@ -19,7 +19,6 @@ export const registerUser = async (payload: RegisterForm) => {
 }
 
 export const getRecoveryMethods = async (payload: GetRecoveryMethodForm) => {
-  console.log(payload)
   const response = await api.post('/user/account/get-recovery-methods', payload)
   return response.data as GetRecoveryMethodResponse
 }

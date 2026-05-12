@@ -12,9 +12,10 @@ const initialForm = {cpfCnpj: ''}
 type Props = {
   onSubmit: (data: GetRecoveryMethodsFormData) => void
   footer: React.ReactNode
+  loading: boolean
 }
 
-export function GetRecoveryMethodsForm ({onSubmit, footer}: Props) {
+export function GetRecoveryMethodsForm ({onSubmit, footer, loading}: Props) {
   const {recoverParams} = useRecover()
   return (
     <GdocForm
@@ -22,6 +23,7 @@ export function GetRecoveryMethodsForm ({onSubmit, footer}: Props) {
       schema={GetRecoveryMethodsFormSchema}
       onSubmit={onSubmit}
       footer={footer}
+      isLoading={loading}
       confirmLabel={"Próximo"}
     >
       <GdocFormItem name={'cpfCnpj'}>

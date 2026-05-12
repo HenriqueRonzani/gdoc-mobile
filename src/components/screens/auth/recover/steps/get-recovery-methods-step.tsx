@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { NavigatorType } from '@/types/navigation'
 import { theme } from '@/theme'
@@ -10,16 +10,27 @@ import { GetRecoveryMethodsFormData } from '@/schemas/recover.schema'
 import { GetRecoveryMethodsForm } from '../forms/get-recovery-methods-form'
 import { useRecover } from '@/providers/recover-context-provider'
 import { getRecoveryMethods } from '@/services/auth.service'
+import { useSnackbar } from '@/providers/snackbar-provider'
 
 export function GetRecoveryMethodsStep() {
   const {setStepName} = useStepper()
   const {recoverParams, setRecoverParams} = useRecover()
+  const [loading, setLoading] = useState<boolean>(false)
   const navigation = useNavigation<NavigatorType>()
+  const {toastError} = useSnackbar()
 
   const onSubmit = async (data: GetRecoveryMethodsFormData) => {
-    const response = await getRecoveryMethods(data)
-    setRecoverParams({...recoverParams, cpfCnpj: data.cpfCnpj, recovery_methods: response})
-    setStepName('request_recovery_code')
+    try {
+      setLoading(true)
+      const response = await getRecoveryMethods(data)
+      setRecoverParams({...recoverParams, cpfCnpj: data.cpfCnpj, recovery_methods: response})
+      setStepName('request_recovery_code')
+    } catch (error: any) {
+      toastError('Houve um erro')
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const footer = (
@@ -32,7 +43,7 @@ export function GetRecoveryMethodsStep() {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Digite seu CPF ou CNPJ</Text>
-        <GetRecoveryMethodsForm onSubmit={onSubmit} footer={footer}/>
+        <GetRecoveryMethodsForm loading={loading} onSubmit={onSubmit} footer={footer}/>
       </View>
     </View>
   )
