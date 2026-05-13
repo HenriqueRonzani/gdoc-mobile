@@ -1,5 +1,5 @@
 import api from '@/lib/axios'
-import type { LoginFormType } from '@/schemas/auth.schema'
+import type { LoginFormType } from '@/schemas/auth/login.schema'
 import type { RegisterForm } from '@/types/register'
 
 export const loginUser = async (payload: LoginFormType) => {

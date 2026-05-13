@@ -1,6 +1,6 @@
 import { GdocForm } from '@/components/form/gdoc-form'
-import type { RegisterOrganizationFormData} from '@/schemas/auth.schema'
-import { RegisterFormOrganizationSchema } from '@/schemas/auth.schema'
+import type { RegisterOrganizationFormData} from '@/schemas/auth/register.schema'
+import { RegisterFormOrganizationSchema } from '@/schemas/auth/register.schema'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
@@ -95,7 +95,7 @@ export function OrganizationForm({onSubmit, footer}: Props) {
             <GdocTextInput
               mask={Masks.BRL_CPF}
               field={field}
-              label="Cpf do responsavel"
+              label="CPF do responsável"
               placeholder="CPF do responsável"
               keyboardType={'numeric'}
             />
