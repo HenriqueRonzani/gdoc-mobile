@@ -1,8 +1,10 @@
-import { Text } from 'react-native-paper'
+import { PaperProvider, Text} from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 import type { RenderConfig } from '@/components/gdoc-data-renderer'
 import { GdocDataRenderer } from '@/components/gdoc-data-renderer'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
+import { ProfileEditModal } from '@/components/screens/main/profile/profile-edit-modal'
+import { useState } from "react";
 
 const exampleData: RenderConfig = [
   {
@@ -20,10 +22,18 @@ const exampleData: RenderConfig = [
   }
 ]
 
-export function ProfileScreen() {
-  return (
 
+
+export function ProfileScreen() {
+  const [visible, setVisible] = useState(false);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  return (
     <View style={style.container}>
+
+    <PaperProvider>
+          <ProfileEditModal active = {visible} onClose={hideModal}></ProfileEditModal>
       <GdocPageTitle>Meu Perfil</GdocPageTitle>
       <Text style={style.text}>Aqui você pode visualizar e gerenciar as informações da sua conta, como nome, e-mail e
         dados de contato.</Text>
@@ -33,9 +43,11 @@ export function ProfileScreen() {
         <GdocDataRenderer
           renderConfig={exampleData}
           headerTitle={'Dados Pessoais'}
-          headerAction={{title: 'Editar', onPress: () => console.log('Editar Header')}}
+          headerAction={{title: 'Editar', onPress: showModal}}
         />
       </View>
+    
+      </PaperProvider>
     </View>
   )
 }
