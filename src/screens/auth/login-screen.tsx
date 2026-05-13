@@ -33,8 +33,8 @@ export function LoginScreen() {
     }
   }
 
-  const goToSignUp = () => {
-    navigation.navigate('Menu')
+  const goToRecover = () => {
+    navigation.navigate('Recover')
   }
 
   const goToRegister = () => {
@@ -54,7 +54,7 @@ export function LoginScreen() {
       <LoginForm onSubmit={login} isLoading={isLoading} footer={footer}>
         <Text style={{color: theme.colors.text, fontWeight: 'bold'}}>
           Problemas ao acessar?
-          <Text style={{color: theme.colors.primary}} onPress={goToSignUp}
+          <Text style={{color: theme.colors.primary}} onPress={goToRecover}
           > Recupere sua conta
           </Text>
         </Text>
