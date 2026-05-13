@@ -4,7 +4,7 @@ import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
 import React from 'react'
 import { Masks } from 'react-native-mask-input'
-import { GetRecoveryMethodsFormData, GetRecoveryMethodsFormSchema } from '@/schemas/recover.schema'
+import { GetRecoveryMethodsFormData, GetRecoveryMethodsFormSchema } from '@/schemas/auth/recover.schema'
 import { useRecover } from '@/providers/recover-context-provider'
 
 const initialForm = {cpfCnpj: ''}

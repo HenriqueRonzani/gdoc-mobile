@@ -16,7 +16,7 @@ export function OptionCard({icon, optionName, description, onPress, ...rest}: Pr
   return (
     <Pressable {...rest} style={[styles.container, rest.style as ViewStyle]} onPress={onPress}>
       <AvatarIcon size={50} icon={icon} style={styles.image}/>
-      <View>
+      <View style={{flex:1, alignItems: 'center'}}>
       <GdocText>{optionName}</GdocText>
 
       {description && (<Text style={styles.description}>
@@ -31,11 +31,12 @@ const styles = StyleSheet.create({
   container: {
     borderColor: '#AEAEAE',
     borderWidth: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
     gap: 13.4,
-    padding: 10
+    paddingVertical: 10,
+    paddingHorizontal: 20
   },
   image: {
     height: 50,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary + 'EE'
   },
   description: {
-    fontSize: 10,
+    fontSize: 12,
     color: theme.colors.text
   }
 })

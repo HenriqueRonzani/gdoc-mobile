@@ -4,7 +4,7 @@ import { GdocForm } from '@/components/form/gdoc-form'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
-import { FinishResetPasswordFormData, FinishResetPasswordFormSchema } from '@/schemas/recover.schema'
+import { FinishResetPasswordFormData, FinishResetPasswordFormSchema } from '@/schemas/auth/recover.schema'
 
 const initialForm = {password: '', confirm_password: ''}
 
