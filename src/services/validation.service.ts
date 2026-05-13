@@ -62,7 +62,6 @@ export const validateCNPJ = (cnpjString: string): boolean => {
 export const validateCPFCNPJ = (cpfCnpj: string): boolean => {
   const onlyChars = cpfCnpj.replace(/[^a-zA-Z0-9]/g, '')
   if (onlyChars.length === 14) {
-    console.log('cpf')
     return validateCNPJ(cpfCnpj)
   }
   if (onlyChars.length == 11) {
