@@ -2,7 +2,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { MenuScreen } from '@/screens/main/menu-screen'
 import { ProfileScreen } from '@/screens/main/profile-screen'
 import { InboxScreen } from '@/screens/main/inbox-screen'
-import { MainHeader } from "@/components/screens/main/main-header";
+import { MainHeader } from '@/components/screens/main/main-header'
 import { theme } from '@/theme'
 import { MainDrawerContent } from '@/components/screens/main/main-drawer-content'
 import { AuthProvider } from '@/providers/auth-provider';

@@ -1,4 +1,5 @@
-import { Button, ButtonProps, useTheme } from 'react-native-paper'
+import type { ButtonProps} from 'react-native-paper'
+import { Button, useTheme } from 'react-native-paper'
 import React from 'react'
 
 type Props = ButtonProps & {
@@ -12,8 +13,9 @@ export function GdocSecondaryButton ({children, ...rest}: Props) {
       {...rest}
       buttonColor={theme.colors.secondary}
       textColor={theme.colors.onSecondary}
-      children={children}
       style={{borderRadius: 5}}
-    />
+    >
+      {children}
+    </Button>
   )
 }

@@ -1,5 +1,6 @@
-import { Image, ImageProps, StyleSheet } from "react-native";
-import brasao from "@/assets/brasao-exemplo.png";
+import type { ImageProps} from 'react-native'
+import { Image, StyleSheet } from 'react-native'
+import brasao from '@/assets/brasao-exemplo.png'
 
 export function ClientLogo({...rest}: ImageProps) {
   return <Image

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native'
-import { RegisterOrganizationFormData } from '@/schemas/auth.schema'
+import type { RegisterOrganizationFormData } from '@/schemas/auth/register.schema'
 import { useRegister } from '@/providers/register-context-provider'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { OrganizationForm } from '@/components/screens/auth/register/forms/organization-form'
@@ -13,7 +13,7 @@ export function RegisterOrganizationStep() {
   const {setRegisterParams} = useRegister()
 
   const onSubmit = (data: RegisterOrganizationFormData) => {
-    setRegisterParams((prev) => ({
+    setRegisterParams(prev => ({
       ...prev,
       person: {
         ...prev.person, ...data

@@ -233,3 +233,60 @@ Sem payload.
 `uuid` obrigatório na URL.
 
 Sem payload.
+
+# Recover
+
+### `POST /user/account/get-recovery-methods`
+
+`cpfCnpj` obrigatorio no body
+
+```json
+[
+  {
+    "type": "email",
+    "value": "henri***************@gmail.com",
+    "id": 132
+  },
+  {
+    "type": "telephone",
+    "value": "(**)*****-9999",
+    "id": 163
+  }
+]
+```
+
+### `POST /user/account/request-recovery-code`
+
+`contact_id`  Obrigatorio no body
+
+`cpfCnpj` Obrigatorio no body
+
+```json
+{
+  "verification_token": "224ff2fa-3c84-4739-b331-adc71b4747cc"
+}
+```
+
+### `POST /user/account/verify-recovery-code`
+
+`verification_token` Obrigatorio no body
+
+`verification_code` Obrigatorio no body
+
+```json
+{
+  "is_valid": true
+}
+```
+
+### `POST /user/account/finish-reset-password`
+
+`password` Obrigatorio no body
+
+`verification_code` Obrigatorio no body 
+
+`verification_token` Obrigatorio no body
+
+```json 
+{"message":"Senha redefinida com sucesso"}
+```

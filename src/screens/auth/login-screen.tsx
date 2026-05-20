@@ -4,9 +4,9 @@ import { useSnackbar } from '@/providers/snackbar-provider'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { ClientLogo } from '@/components/client-logo'
 import { LoginForm } from '@/components/screens/auth/login/login-form'
-import { LoginFormType } from '@/schemas/auth.schema'
+import type { LoginFormType } from '@/schemas/auth/login.schema'
 import { useNavigation } from '@react-navigation/native'
-import { NavigatorType } from '@/types/navigation'
+import type { NavigatorType } from '@/types/navigation'
 import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
 import { loginUser } from '@/services/auth.service'
@@ -33,8 +33,8 @@ export function LoginScreen() {
     }
   }
 
-  const goToSignUp = () => {
-    navigation.navigate('Menu')
+  const goToRecover = () => {
+    navigation.navigate('Recover')
   }
 
   const goToRegister = () => {
@@ -54,7 +54,7 @@ export function LoginScreen() {
       <LoginForm onSubmit={login} isLoading={isLoading} footer={footer}>
         <Text style={{color: theme.colors.text, fontWeight: 'bold'}}>
           Problemas ao acessar?
-          <Text style={{color: theme.colors.primary}} onPress={goToSignUp}
+          <Text style={{color: theme.colors.primary}} onPress={goToRecover}
           > Recupere sua conta
           </Text>
         </Text>

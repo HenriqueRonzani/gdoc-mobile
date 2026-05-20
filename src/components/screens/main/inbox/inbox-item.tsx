@@ -1,4 +1,4 @@
-import { InboxDocument } from '@/types/inbox'
+import type { InboxDocument } from '@/types/inbox'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { theme } from '@/theme'

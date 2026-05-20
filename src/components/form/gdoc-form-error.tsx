@@ -1,6 +1,6 @@
-import { Text } from "react-native-paper";
-import { StyleSheet } from "react-native";
-import { useFormContext } from "react-hook-form";
+import { Text } from 'react-native-paper'
+import { StyleSheet } from 'react-native'
+import { useFormContext } from 'react-hook-form'
 
 export function GdocFormError({name}: {name: string}) {
   const { formState: { errors } } = useFormContext()

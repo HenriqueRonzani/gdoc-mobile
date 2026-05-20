@@ -1,9 +1,10 @@
-import { GdocForm } from "@/components/form/gdoc-form";
-import { GdocFormItem } from "@/components/form/gdoc-form-item";
-import { GdocTextInput } from "@/components/form/gdoc-text-input";
-import { GdocFormError } from "@/components/form/gdoc-form-error";
-import { LoginFormType, LoginFormSchema } from "@/schemas/auth.schema";
-import React from "react";
+import { GdocForm } from '@/components/form/gdoc-form'
+import { GdocFormItem } from '@/components/form/gdoc-form-item'
+import { GdocTextInput } from '@/components/form/gdoc-text-input'
+import { GdocFormError } from '@/components/form/gdoc-form-error'
+import type { LoginFormType} from '@/schemas/auth/login.schema'
+import { LoginFormSchema } from '@/schemas/auth/login.schema'
+import React from 'react'
 import { Masks } from 'react-native-mask-input'
 
 const initialForm = {cpf_cnpj: '', password: ''}
@@ -26,15 +27,15 @@ export function LoginForm({children, onSubmit, isLoading, footer}: Props) {
       footer={footer}
     >
       <GdocFormItem name={'cpf_cnpj'}>
-        {(field) => (
+        {field => (
           <>
-            <GdocTextInput field={field} label={'CPF'} placeholder={'CPF'} mask={Masks.BRL_CPF}/>
+            <GdocTextInput field={field} label={'CPF/CNPJ'} placeholder={'CPF/CNPJ'} mask={Masks.BRL_CPF_CNPJ}/>
             <GdocFormError name={'cpf_cnpj'}/>
           </>
         )}
       </GdocFormItem>
       <GdocFormItem name={'password'}>
-        {(field) => (
+        {field => (
           <>
             <GdocTextInput field={field} label={'Senha'} placeholder={'Senha'} secureTextEntry={true}/>
             <GdocFormError name={'password'}/>

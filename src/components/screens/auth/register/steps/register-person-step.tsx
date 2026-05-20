@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native'
-import { RegisterPersonFormData } from '@/schemas/auth.schema'
+import type { RegisterPersonFormData } from '@/schemas/auth/register.schema'
 import { useRegister } from '@/providers/register-context-provider'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
@@ -12,7 +12,7 @@ export function RegisterPersonStep() {
   const {setStepName} = useStepper()
 
   const submit = (data: RegisterPersonFormData) => {
-    setRegisterParams((prev) => ({
+    setRegisterParams(prev => ({
       ...prev,
       person: {
         ...prev.person, ...data

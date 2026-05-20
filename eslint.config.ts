@@ -89,7 +89,13 @@ export default defineConfig([
       'no-unexpected-multiline': 'error',
 
       '@typescript-eslint/consistent-type-imports': 'error',
-      '@typescript-eslint/no-unused-vars': ['error'],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_'
+        }
+      ],
 
       ...reactHooks.configs.flat.recommended.rules,
       ...react.configs.recommended.rules,
