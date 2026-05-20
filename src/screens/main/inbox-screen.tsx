@@ -5,6 +5,7 @@ import { InboxItem } from '@/components/screens/main/inbox/inbox-item'
 import { FlatList } from 'react-native-gesture-handler'
 import { getInbox } from '@/services/inbox.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { debounce } from 'lodash'
 
 export function InboxScreen() {
   const {toastError} = useSnackbar()
@@ -21,13 +22,15 @@ export function InboxScreen() {
       setData(response?.data ?? [])
     } catch (error: unknown) {
       console.log(error)
-      toastError('Erro ao realizar login!')
+      toastError('Erro ao buscar documentos!')
     } finally {
       setLoading(false)
     }
   }
 
-  useEffect(() => {getInboxItems()}, [tab, search])
+  const getInboxItemsDebounce = debounce(getInboxItems, 500)
+
+  useEffect(() => {getInboxItemsDebounce()}, [tab, search])
 
   return (
     <View style={styles.container}>
@@ -46,7 +49,7 @@ export function InboxScreen() {
           <IconButton
             icon="refresh"
             size={20}
-            onPress={() => getInboxItems()}
+            onPress={() => getInboxItemsDebounce()}
             style={styles.icon}
           />
         </View>

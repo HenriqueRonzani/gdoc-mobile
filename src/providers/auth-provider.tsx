@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { clearAuthToken, getAuthToken, setAuthToken } from '@/services/auth.storage'
-import { setApiToken } from '@/lib/axios'
 
 type AuthContextType = {
   token: string | null
@@ -21,7 +20,6 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
     async function loadToken () {
       try {
         setLocalToken(await getAuthToken())
-        if (token) setApiToken(token)
       } catch (error) {
         console.log(error)
       } finally {
