@@ -1,40 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { IconButton, Text, TextInput } from 'react-native-paper'
-
+import { ActivityIndicator, IconButton, Text, TextInput } from 'react-native-paper'
 import { InboxItem } from '@/components/screens/main/inbox/inbox-item'
-import api from '@/lib/axios'
-import { useAuth } from '@/providers/auth-provider'
 import { FlatList } from 'react-native-gesture-handler'
+import { getInbox } from '@/services/inbox.service'
+import { useSnackbar } from '@/providers/snackbar-provider'
 
 export function InboxScreen() {
-  const auth = useAuth()
+  const {toastError} = useSnackbar()
 
   const [tab, setTab] = useState('opened_by_me')
   const [data, setData] = useState<any[]>([])
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const getInbox = async (tab: string, search: string) => {
+  const getInboxItems = async () => {
+    setLoading(true)
     try {
-      const response = await api.get('inbox/query/external', {
-        params: { tab, search },
-      })
-
-      return response.data
-    } catch (error) {
+      const response = await getInbox({tab, search})
+      setData(response?.data ?? [])
+    } catch (error: unknown) {
       console.log(error)
+      toastError('Erro ao realizar login!')
+    } finally {
+      setLoading(false)
     }
   }
 
-
-  useEffect(() => {
-    const fetchInbox = async () => {
-      const response = await getInbox(tab, search)
-      setData(response?.data ?? [])
-    }
-
-    fetchInbox()
-  }, [tab, search])
+  useEffect(() => {getInboxItems()}, [tab, search])
 
   return (
     <View style={styles.container}>
@@ -53,7 +46,7 @@ export function InboxScreen() {
           <IconButton
             icon="refresh"
             size={20}
-            onPress={() => setSearch('')}
+            onPress={() => getInboxItems()}
             style={styles.icon}
           />
         </View>
@@ -109,13 +102,17 @@ export function InboxScreen() {
         </View>
       </View>
 
-      <View>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <InboxItem item={item} />}
-          keyExtractor={(_, index) => index.toString()}
-        />
-      </View>
+      { loading
+        ? <ActivityIndicator animating={true} />
+        : <View>
+          <FlatList
+            data={data}
+            renderItem={({ item }) => <InboxItem item={item} />}
+            keyExtractor={(_, index) => index.toString()}
+          />
+        </View>
+      }
+
     </View>
   )
 }
@@ -124,6 +121,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
+    gap: 5
   },
 
   title: {
@@ -133,7 +131,7 @@ const styles = StyleSheet.create({
   },
 
   filter: {
-    width: 336,
+    width: '100%',
     height: 111,
     alignSelf: 'center',
     marginTop: 36,

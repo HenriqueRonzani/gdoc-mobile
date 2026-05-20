@@ -4,6 +4,8 @@ import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
 import { Icon } from 'react-native-paper/src'
 import dayjs from 'dayjs'
+import { Feather } from '@expo/vector-icons';
+import { formatFeatherIconName } from '@/services/format-feather-icon-name.helper'
 
 type props = {
   item: InboxDocument
@@ -15,13 +17,13 @@ export function InboxItem({item}: props) {
     console.log('oi')
   }
 
-  const icon = item.document_type_icon == null ? "file" : item.document_type_icon.replace(/Icon$/, '').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+  const icon = formatFeatherIconName(item.document_type_icon)
 
   return (
-    <View style={[style.itemContainer, style.itemHasUpdate]}>
+    <View style={[style.itemContainer, item.has_update && style.itemHasUpdate]}>
       <View style={style.itemHeader}>
         <View style={style.iconContainer}>
-          <Icon color={theme.colors.primaryText} source={icon} size={30}/>
+          <Icon color={theme.colors.primaryText} source={(props: any) => <Feather {...props} name={icon} />} size={30}/>
         </View>
         <View style={style.textContainer}>
           <View style={style.headerTitle}>
