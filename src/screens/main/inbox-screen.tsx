@@ -5,6 +5,7 @@ import { IconButton, Text, TextInput } from 'react-native-paper'
 import { InboxItem } from '@/components/screens/main/inbox/inbox-item'
 import api from '@/lib/axios'
 import { useAuth } from '@/providers/auth-provider'
+import { FlatList } from 'react-native-gesture-handler'
 
 export function InboxScreen() {
   const auth = useAuth()
@@ -25,14 +26,6 @@ export function InboxScreen() {
     }
   }
 
-  useEffect(() => {
-    const fetchInbox = async () => {
-      const response = await getInbox(tab, search)
-      setData(response?.data ?? [])
-    }
-
-    fetchInbox()
-  }, [])
 
   useEffect(() => {
     const fetchInbox = async () => {
@@ -48,7 +41,6 @@ export function InboxScreen() {
       <Text style={styles.title}>Minhas solicitações</Text>
 
       <View style={styles.filter}>
-        {/* SEARCH */}
         <View style={styles.searchRow}>
           <TextInput
             style={styles.searchInput}
@@ -118,9 +110,11 @@ export function InboxScreen() {
       </View>
 
       <View>
-        {data.map((item, index) => (
-          <InboxItem key={index} item={item} />
-        ))}
+        <FlatList
+          data={data}
+          renderItem={({ item }) => <InboxItem item={item} />}
+          keyExtractor={(_, index) => index.toString()}
+        />
       </View>
     </View>
   )

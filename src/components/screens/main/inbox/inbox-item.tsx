@@ -14,11 +14,14 @@ export function InboxItem({item}: props) {
     // TODO: Open document
     console.log('oi')
   }
+
+  const icon = item.document_type_icon == null ? "file" : item.document_type_icon.replace(/Icon$/, '').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+
   return (
     <View style={[style.itemContainer, style.itemHasUpdate]}>
       <View style={style.itemHeader}>
         <View style={style.iconContainer}>
-          <Icon color={theme.colors.primaryText} source={item.document_type_icon} size={30}/>
+          <Icon color={theme.colors.primaryText} source={icon} size={30}/>
         </View>
         <View style={style.textContainer}>
           <View style={style.headerTitle}>
