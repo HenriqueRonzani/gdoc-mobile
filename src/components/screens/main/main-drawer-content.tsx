@@ -6,6 +6,7 @@ import { useAuth } from '@/providers/auth-provider'
 import type { SectionsConfig } from '@/components/gdoc-sections-renderer'
 import { SectionsRenderer } from '@/components/gdoc-sections-renderer'
 import type { DrawerContentComponentProps } from '@react-navigation/drawer'
+import { useProfile } from '@/providers/profile-provider'
 
 const getDrawerConfig = ({navigation}: DrawerContentComponentProps): SectionsConfig => {
   return [
@@ -57,13 +58,14 @@ const getDrawerConfig = ({navigation}: DrawerContentComponentProps): SectionsCon
 
 export function MainDrawerContent(props: DrawerContentComponentProps) {
   const {clearToken} = useAuth()
+  const {profile} = useProfile()
   const drawerItems = getDrawerConfig(props)
   return (
     <View style={style.container}>
       <View style={style.drawerHeader}>
         <View style={style.userData}>
-          <Image source={Logo} style={style.userAvatar} resizeMode="contain"></Image>
-          <Text style={{fontSize: 10}}>Nome do usuário</Text>
+          <Image source={{uri: profile.person.photo_link}} style={style.userAvatar} resizeMode="contain"/>
+          <Text style={{fontSize: 10}}>{profile.person.name}</Text>
         </View>
         <IconButton icon={'logout'} size={15} iconColor={theme.colors.primaryText} onPress={clearToken}/>
       </View>

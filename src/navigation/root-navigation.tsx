@@ -6,9 +6,10 @@ import { navTheme } from '@/theme'
 import { useAuth } from '@/providers/auth-provider'
 import { ActivityIndicator } from 'react-native-paper'
 import { View } from 'react-native'
+import { ProfileProvider } from '@/providers/profile-provider'
 
-export function RootNavigation () {
-  const { token, isLoading } = useAuth()
+export function RootNavigation() {
+  const {token, isLoading} = useAuth()
 
   if (isLoading) {
     return (
@@ -21,7 +22,15 @@ export function RootNavigation () {
   return (
     <NavigationContainer theme={navTheme}>
       <SafeAreaView style={{flex: 1}}>
-        {token ? <MainDrawer/> : <AuthStack/>}
+        {
+          token
+            ? (
+              <ProfileProvider>
+                <MainDrawer/>
+              </ProfileProvider>
+            )
+            : <AuthStack/>
+        }
       </SafeAreaView>
     </NavigationContainer>
   )

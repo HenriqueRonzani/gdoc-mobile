@@ -6,6 +6,7 @@ import { getProfile } from '@/services/profile.service'
 import { ProfileAreas } from '@/components/screens/main/profile/profile-areas'
 import { ProfileType } from '@/types/profile'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { useProfile } from '@/providers/profile-provider'
 
 const initialProfile: ProfileType = {
   person: {
@@ -27,23 +28,7 @@ const initialProfile: ProfileType = {
 
 export function ProfileScreen() {
   const { toastError } = useSnackbar()
-  const [profile, setProfile] = useState<ProfileType>(initialProfile)
-  const [loading, setLoading] = useState(false)
-
-  async function loadProfile() {
-    setLoading(true)
-    try {
-      const data = await getProfile()
-      setProfile(data)
-    } catch (err: unknown) {
-      toastError('Erro ao carregar perfil')
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => { loadProfile() }, [])
+  const {profile} = useProfile()
 
   return (
     <ScrollView style={style.container}>
@@ -57,16 +42,10 @@ export function ProfileScreen() {
         as informações da sua conta, como nome,
         e-mail e dados de contato.
       </Text>
-      {
-        loading
-          ? <Text>Carregando...</Text>
-          : (
-            <View style={style.contentContainer}>
-              <ProfileAreas profile={profile} />
 
-            </View>
-          )
-      }
+      <View style={style.contentContainer}>
+        <ProfileAreas profile={profile} />
+      </View>
     </ScrollView>
   )
 }
