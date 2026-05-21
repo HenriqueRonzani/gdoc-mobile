@@ -12,7 +12,7 @@ const initialProfile: ProfileType = {
     name: '',
     cpfCnpj: '',
     dateOfBirth: '',
-    gender: 'null' as any,
+    gender: 'other',
     email: '',
     cellphone: '',
     address: {
