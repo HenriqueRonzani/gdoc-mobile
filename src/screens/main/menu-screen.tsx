@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { GdocService } from '@/components/screens/main/home/gdoc-service'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
+import { useOrganization } from '@/providers/organization-provider'
 
 export function MenuScreen() {
+  const {organization} = useOrganization()
   return (
     <View style={style.container}>
       <GdocPageTitle>Serviços</GdocPageTitle>
-      <Text style={style.text}>Busque e solicite os serviços oferecidos por Prefeitura Municipal de Modelandia</Text>
+      <Text style={style.text}>Busque e solicite os serviços oferecidos por {organization.name}</Text>
 
       {/* Esse é só um exemplo de como usar o componente, ajustar conforme o protótipo*/}
       <GdocService
