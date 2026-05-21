@@ -32,13 +32,13 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <PaperProvider theme={theme}>
-        <OrganizationProvider>
-          <SnackbarProvider>
+        <SnackbarProvider>
+          <OrganizationProvider>
             <AuthProvider>
               <AppContent/>
             </AuthProvider>
-          </SnackbarProvider>
-        </OrganizationProvider>
+          </OrganizationProvider>
+        </SnackbarProvider>
       </PaperProvider>
     </SafeAreaProvider>
   )
