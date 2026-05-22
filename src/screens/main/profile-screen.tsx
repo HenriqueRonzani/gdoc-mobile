@@ -1,42 +1,52 @@
+import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native-paper'
-import { StyleSheet, View } from 'react-native'
-import type { RenderConfig } from '@/components/gdoc-data-renderer'
-import { GdocDataRenderer } from '@/components/gdoc-data-renderer'
+import { StyleSheet, View, ScrollView } from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
+import { getProfile } from '@/services/profile.service'
+import { ProfileAreas } from '@/components/screens/main/profile/profile-areas'
+import { ProfileType } from '@/types/profile'
+import { useSnackbar } from '@/providers/snackbar-provider'
+import { useProfile } from '@/providers/profile-provider'
 
-const exampleData: RenderConfig = [
-  {
-    title: 'Nome',
-    value: 'Henrique'
-  },
-  {
-    title: 'CPF',
-    value: '123.123.123-12',
-    customActions: [
-      {icon: 'plus', onPress: () => console.log('Adicionar')},
-      {icon: 'pencil', onPress: () => console.log('Editar')},
-      {icon: 'trash-can', onPress: () => console.log('Excluir')}
-    ]
+const initialProfile: ProfileType = {
+  person: {
+    name: '',
+    cpfCnpj: '',
+    dateOfBirth: '',
+    gender: 'other',
+    email: '',
+    cellphone: '',
+    address: {
+      zip: '',
+      city: '',
+      state: '',
+      street: '',
+      number: ''
+    }
   }
-]
+}
 
 export function ProfileScreen() {
+  const { toastError } = useSnackbar()
+  const {profile} = useProfile()
+
   return (
+    <ScrollView style={style.container}>
 
-    <View style={style.container}>
-      <GdocPageTitle>Meu Perfil</GdocPageTitle>
-      <Text style={style.text}>Aqui você pode visualizar e gerenciar as informações da sua conta, como nome, e-mail e
-        dados de contato.</Text>
+      <GdocPageTitle>
+        Meu Perfil
+      </GdocPageTitle>
+
+      <Text style={style.text}>
+        Aqui você pode visualizar e gerenciar
+        as informações da sua conta, como nome,
+        e-mail e dados de contato.
+      </Text>
+
       <View style={style.contentContainer}>
-
-        {/* Esse é só um exemplo de como usar o componente, ajustar conforme o protótipo*/}
-        <GdocDataRenderer
-          renderConfig={exampleData}
-          headerTitle={'Dados Pessoais'}
-          headerAction={{title: 'Editar', onPress: () => console.log('Editar Header')}}
-        />
+        <ProfileAreas profile={profile} />
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -48,16 +58,20 @@ const style = StyleSheet.create({
     paddingHorizontal: 15,
     gap: 8
   },
+
   contentContainer: {
     backgroundColor: 'white',
     padding: 10,
-    borderRadius: 10
+    borderRadius: 10,
+    gap: 15
   },
+
   text: {
     fontSize: 14,
     alignSelf: 'flex-start',
     color: '#7C7C7C',
     justifyContent: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: 10
   }
 })

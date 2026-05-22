@@ -4,15 +4,17 @@ import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 import MaterialCommunityIcon from 'react-native-paper/src/components/MaterialCommunityIcon'
+import { useOrganization } from '@/providers/organization-provider'
 
 export function MainHeader() {
+  const {organization} = useOrganization()
   const navigation = useNavigation()
   return (
     <View style={style.header}>
       <View style={{flexDirection: 'row', width: '50%', gap: 5, alignItems: 'center'}}>
         <ClientLogo style={style.logo}/>
         <View style={{flexDirection: 'column'}}>
-          <Text style={{fontSize: 12}}>Prefeitura Municipal de Modelandia</Text>
+          <Text style={{fontSize: 12}}>{organization.name}</Text>
           <Text style={{fontSize: 12, color: theme.colors.text, fontWeight: 'bold'}}>Central de Atendimento</Text>
         </View>
       </View>
