@@ -10,7 +10,7 @@ type props = {
   onPress: () => void
 }
 
-export function GdocService({iconName, iconColor, title, onPress}: props) {
+export function GdocSubject({iconName, iconColor, title, onPress}: props) {
   return (
     <Pressable style={style.container} onPress={onPress}>
       <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}>
@@ -19,10 +19,10 @@ export function GdocService({iconName, iconColor, title, onPress}: props) {
             icon={iconName}
             size={40}
             color={iconColor}
-            style={{ backgroundColor: `${iconColor  }20` }}
+            style={{ backgroundColor: `${iconColor ?? '#000000'}20` }}
           />
         </View>
-        <Text style={{color: theme.colors.primary}}>{title}</Text>
+        <Text style={style.title}>{title}</Text>
       </View>
       <View style={style.gotoIcon}>
         <Icon source={'arrow-right'} size={25}/>
@@ -49,5 +49,10 @@ const style = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     borderColor: theme.colors.primary
+  },
+  title: {
+    color: theme.colors.primary,
+    flexWrap: 'wrap',
+    width: '70%'
   }
 })
