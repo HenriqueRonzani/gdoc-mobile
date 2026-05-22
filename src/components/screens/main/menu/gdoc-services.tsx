@@ -23,7 +23,7 @@ export const GdocServices = ({serviceLetterId, serviceId}: Props) => {
       const response = await getServices(serviceLetterId, serviceId)
       setServices(response.items)
     } catch (error: unknown) {
-      toastError('Erro ao carregar categorias')
+      toastError('Erro ao carregar serviços')
       console.log(error)
     } finally {
       setLoading(false)

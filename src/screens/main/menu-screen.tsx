@@ -27,7 +27,7 @@ export function MenuScreen() {
     <ScrollView style={style.container}>
       <GdocPageTitle>Serviços</GdocPageTitle>
       <View style={style.content}>
-        <Text style={style.text}>Busque e solicite os serviços oferecidos por Prefeitura Municipal de Modelandia</Text>
+        <Text style={style.text}>Busque e solicite os serviços oferecidos por {organization.name}</Text>
         { parentId && (
           <Pressable style={style.backContainer} onPress={onPreviousCategory}>
             <Icon source={'arrow-left'} size={25}/>
