@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { clearAuthToken, getAuthToken, setAuthToken } from '@/services/auth.storage'
+import api from '@/lib/axios'
+import { isAxiosError } from 'axios'
+import { useSnackbar } from '@/providers/snackbar-provider'
 
 type AuthContextType = {
   token: string | null
@@ -13,11 +16,12 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export const useAuth = () => useContext(AuthContext)
 
 export function AuthProvider({children}: { children: React.ReactNode }) {
-  const [token, setLocalToken] = useState<string|null>(null)
+  const {toastError} = useSnackbar()
+  const [token, setLocalToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    async function loadToken () {
+    async function loadToken() {
       try {
         setLocalToken(await getAuthToken())
       } catch (error) {
@@ -30,6 +34,24 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
     loadToken()
   }, [token])
 
+  useEffect(() => {
+    const interceptor = api.interceptors.response.use(
+      (response) => response,
+      async (error: unknown) => {
+        if (isAxiosError(error) && error?.response && error.response.status === 401) {
+          console.log('Sessão Expirada')
+          toastError('Sessão Expirada')
+          await clearToken()
+        }
+
+        return Promise.reject(error)
+      }
+    )
+    return ()=> {
+      api.interceptors.response.eject(interceptor)
+    }
+  }, [])
+
   const setToken = async (token: string) => {
     await setAuthToken(token)
     setLocalToken(token)
@@ -41,7 +63,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ token, setToken, clearToken, isLoading }}>
+    <AuthContext.Provider value={{token, setToken, clearToken, isLoading}}>
       {children}
     </AuthContext.Provider>
   )
