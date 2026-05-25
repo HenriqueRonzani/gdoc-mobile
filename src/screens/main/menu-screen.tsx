@@ -4,38 +4,80 @@ import { useOrganization } from '@/providers/organization-provider'
 import { GdocCategories } from '@/components/screens/main/menu/gdoc-categories'
 import { GdocServices } from '@/components/screens/main/menu/gdoc-services'
 import { useEffect, useState } from 'react'
-import { IconButton } from 'react-native-paper'
+import { ActivityIndicator } from 'react-native-paper'
 import { Icon } from 'react-native-paper/src'
+import { Subject } from '@/types/service'
+import { getRootServiceLetter, getServiceLetterService } from '@/services/service.service'
+import { useSnackbar } from '@/providers/snackbar-provider'
 
 export function MenuScreen() {
+  const {toastError} = useSnackbar()
   const {organization} = useOrganization()
 
-  const [parentId, setParentId] = useState<number|null>(null)
-  const [serviceId, setServiceId] = useState<number>(organization.external_service_letter.root.id)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [categories, setCategories] = useState<Subject[]>([])
+  const [services, setServices] = useState<Subject[]>([])
+  const [parentIds, setParentIds] = useState<number[]>([])
+
   const serviceLetterId = organization.external_service_letter_id
 
   const onPressCategory = (clickedServiceId: number) => {
-    setServiceId(clickedServiceId)
+    setParentIds([...parentIds, clickedServiceId])
+  }
+
+  const onPressService = (id: number) => {
+    console.log(`Clique no serviço id: ${id}`)
   }
 
   const onPreviousCategory = () => {
-    if (parentId)
-      setServiceId(parentId)
+    if (parentIds.length > 0) {
+      setParentIds(parentIds.slice(0, parentIds.length - 1))
+    }
   }
+
+  const loadCategories = async () => {
+    setLoading(true)
+    try {
+      const response = parentIds.length === 0
+        ? await getRootServiceLetter(serviceLetterId)
+        : await getServiceLetterService(serviceLetterId, parentIds.at(-1) as number)
+
+      const categories = response.data.filter(i => i.type === 'CATEGORY')
+      const services = response.data.filter(i => i.type === 'SERVICE')
+      setCategories(categories)
+      setServices(services)
+    } catch (error: unknown) {
+      toastError('Erro ao carregar categorias')
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadCategories()
+  }, [parentIds])
 
   return (
     <ScrollView style={style.container}>
       <GdocPageTitle>Serviços</GdocPageTitle>
       <View style={style.content}>
         <Text style={style.text}>Busque e solicite os serviços oferecidos por {organization.name}</Text>
-        { parentId && (
+        {parentIds.length > 0 && (
           <Pressable style={style.backContainer} onPress={onPreviousCategory}>
             <Icon source={'arrow-left'} size={25}/>
             <Text style={style.backText}>Voltar a categoria anterior</Text>
           </Pressable>
         )}
-        <GdocCategories serviceLetterId={serviceLetterId} serviceId={serviceId} onPressCategory={onPressCategory} setParentId={setParentId}/>
-        <GdocServices serviceLetterId={serviceLetterId} serviceId={serviceId}/>
+        {loading
+          ? <ActivityIndicator animating={true}/>
+          : (
+            <View>
+              <GdocCategories categories={categories} onPressCategory={onPressCategory}/>
+              <GdocServices services={services} onPressService={onPressService}/>
+            </View>
+          )
+        }
       </View>
     </ScrollView>
   )
@@ -51,7 +93,7 @@ const style = StyleSheet.create({
   },
   backContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   backText: {
     fontSize: 12
