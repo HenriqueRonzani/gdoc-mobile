@@ -1,11 +1,12 @@
 import api from '@/lib/axios'
+import { Subject } from '@/types/service'
 
-export const getServices = async (serviceLetterId: number, serviceId: number) => {
-  const response = await api.get(`/document/service-letter/${serviceLetterId}/view/${serviceId}/services`)
-  return response.data
+export const getRootServiceLetter = async (serviceLetterId: number) => {
+  const response = await api.get(`/integration/native-login/service-letter/${serviceLetterId}/services`)
+  return response.data as { data: Subject[] }
 }
 
-export const getCategories = async (serviceLetterId: number, serviceId: number) => {
-  const response = await api.get(`/document/service-letter/${serviceLetterId}/view/${serviceId}/categories`)
-  return response.data
+export const getServiceLetterService = async (serviceLetterId: number, categoryId: number) => {
+  const response = await api.get(`/integration/native-login/service-letter/${serviceLetterId}/services/${categoryId}/items`)
+  return response.data as { data: Subject[] }
 }
