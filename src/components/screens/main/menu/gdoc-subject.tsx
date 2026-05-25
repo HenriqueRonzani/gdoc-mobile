@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, View } from 'react-native'
 import { theme } from '@/theme'
 import { Avatar, Text } from 'react-native-paper'
-import { Icon } from 'react-native-paper/src'
+import { Icon } from 'react-native-paper'
 
 type props = {
   iconName: string
