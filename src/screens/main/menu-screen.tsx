@@ -7,12 +7,15 @@ import { useEffect, useState } from 'react'
 import { ActivityIndicator } from 'react-native-paper'
 import { Icon } from 'react-native-paper/src'
 import { Subject } from '@/types/service'
-import { getRootServiceLetter, getServiceLetterService } from '@/services/service.service'
+import { getRootServiceLetter, getServiceLetterByCategory } from '@/services/service.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { useNavigation } from '@react-navigation/native'
+import type { NavigatorType } from '@/types/navigation'
 
 export function MenuScreen() {
   const {toastError} = useSnackbar()
   const {organization} = useOrganization()
+  const navigation = useNavigation<NavigatorType>()
 
   const [loading, setLoading] = useState<boolean>(false)
   const [categories, setCategories] = useState<Subject[]>([])
@@ -26,7 +29,9 @@ export function MenuScreen() {
   }
 
   const onPressService = (id: number) => {
-    console.log(`Clique no serviço id: ${id}`)
+    navigation.navigate('CreateDocument', {
+      serviceId: id
+    })
   }
 
   const onPreviousCategory = () => {
@@ -40,7 +45,7 @@ export function MenuScreen() {
     try {
       const response = parentIds.length === 0
         ? await getRootServiceLetter(serviceLetterId)
-        : await getServiceLetterService(serviceLetterId, parentIds.at(-1) as number)
+        : await getServiceLetterByCategory(serviceLetterId, parentIds.at(-1) as number)
 
       const categories = response.data.filter(i => i.type === 'CATEGORY')
       const services = response.data.filter(i => i.type === 'SERVICE')

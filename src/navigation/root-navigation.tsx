@@ -18,7 +18,7 @@ export function RootNavigation() {
       </View>
     )
   }
-
+  console.log(token)
   return (
     <NavigationContainer theme={navTheme}>
       <SafeAreaView style={{flex: 1}}>

@@ -25,33 +25,65 @@ export type extension =
   | ".mp3"
   | ".mp4"
   | ".ogg"
+  | "*"
 
-type StringBool = 'false' | 'true'
+export type StringBool = 'false' | 'true'
+export type FieldType =
+  | 'string'
+  | 'checkbox'
+  | 'radio'
+  | 'select'
+  | 'date'
+  | 'file'
 
-export type CustomFieldConfig = {
-  id: string
-  type: 'string' | 'checkbox' | 'radio' | 'select' | 'date' | file
-  name: string
-  is_required: 'true' | ''
-  options: {
-    mask: '' | string
-    defaultvalue: string | null
-    'maxchar': ''
-    'minvalue': ''
-    'maxvalue': ''
-    'dateformat': ''
-    'values': string[] | null
-    'readonly': StringBool
-    'date_range': StringBool
-    'initial_date': string | null
-    'final_date': string | null
-    'optional_message_error_validation': string | ''
-    'extensions': extension[] | null
-    'position': null
-    'select_searchable': null
-    'select_multiple': null
-  }
-}
+type BaseCustomFieldConfig = {
+  id: string | number;
+  name: string;
+  is_required: 'true' | '';
+};
+
+type CommonOptions = {
+  mask: '' | string;
+  defaultvalue: string | null;
+  maxchar: '';
+  minvalue: '';
+  maxvalue: '';
+  dateformat: '';
+  readonly: StringBool;
+  date_range: StringBool;
+  initial_date: string | null;
+  final_date: string | null;
+  optional_message_error_validation: string | '';
+  position: null;
+  select_searchable: null;
+  select_multiple: null;
+};
+
+export type ChoiceFieldConfig = BaseCustomFieldConfig & {
+  type: 'checkbox' | 'radio' | 'select';
+  options: CommonOptions & {
+    values: string[];
+    extensions: extension[] | null;
+  };
+};
+
+export type FileFieldConfig = BaseCustomFieldConfig & {
+  type: 'file';
+  options: CommonOptions & {
+    values: string[] | null;
+    extensions: extension[];
+  };
+};
+
+export type StandardFieldConfig = BaseCustomFieldConfig & {
+  type: 'string' | 'date';
+  options: CommonOptions & {
+    values: string[] | null;
+    extensions: extension[] | null;
+  };
+};
+
+export type CustomFieldConfig = ChoiceFieldConfig | FileFieldConfig | StandardFieldConfig;
 
 export type IdentificationType = 'ANONYMOUS' | 'CONFIDENTIAL' | 'NOT_CONFIDENTIAL'
 
@@ -61,7 +93,7 @@ export type RecipientOption = {
   recipient_name: string
 }
 
-export type CreationSubject = {
+export type Service = {
   id: 1190
   name: string
   type: string
@@ -82,10 +114,10 @@ type FieldCreation = {
   value: string
 }
 
-export type CreateSubjectRequest = {
+export type CreateDocumentRequest = {
   service_id: number
   recipients: Recipients[]
   identification_type: IdentificationType
-  field: FieldCreation
+  fields: FieldCreation
   is_test: boolean
 }

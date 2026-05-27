@@ -21,5 +21,6 @@ export const EXTENSION_MIMETYPE_MAPPING: Record<extension, string | string[]> = 
   '.ogg': [
     'audio/ogg',
     'video/ogg'
-  ]
+  ],
+  '*': '*/*'
 };

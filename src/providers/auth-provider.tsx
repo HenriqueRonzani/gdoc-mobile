@@ -30,9 +30,8 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
         setIsLoading(false)
       }
     }
-
     loadToken()
-  }, [token])
+  }, [])
 
   useEffect(() => {
     const interceptor = api.interceptors.response.use(
@@ -60,6 +59,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
   const clearToken = async () => {
     await clearAuthToken()
     setLocalToken(null)
+    console.log(token)
   }
 
   return (

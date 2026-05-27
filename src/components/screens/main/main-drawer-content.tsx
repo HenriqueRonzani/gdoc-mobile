@@ -7,6 +7,8 @@ import type { SectionsConfig } from '@/components/gdoc-sections-renderer'
 import { SectionsRenderer } from '@/components/gdoc-sections-renderer'
 import type { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { useProfile } from '@/providers/profile-provider'
+import { useNavigation } from '@react-navigation/native'
+import type { NavigatorType } from '@/types/navigation'
 
 const getDrawerConfig = ({navigation}: DrawerContentComponentProps): SectionsConfig => {
   return [
