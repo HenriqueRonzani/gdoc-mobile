@@ -1,7 +1,9 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { IdentificationType, Service } from '@/types/service'
 
 export type CreateDocumentRouteParam = {
-  serviceId: number
+  service: Service
+  identificationType: IdentificationType
 }
 
 export type RootStackParamList = {

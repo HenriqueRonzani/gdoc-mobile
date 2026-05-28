@@ -36,8 +36,8 @@ export function GdocAttachment ({field, allowedExtensions}: Props) {
       }
 
       field.onChange(fileFormatted)
-    } catch (e) {
-      console.log(e)
+    } catch (error: unknown) {
+      console.log(error)
     }
   }
 

@@ -66,8 +66,6 @@ export const makeServiceSchema = (customFields: CustomFieldConfig[]): ZodTypeAny
       !finalDate || !finalDate.isBefore(date, 'days')
     )
 
-    console.log(initialDate?.toString(), finalDate?.toString(), date.toString(), isValid)
-
     if (!isValid) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
