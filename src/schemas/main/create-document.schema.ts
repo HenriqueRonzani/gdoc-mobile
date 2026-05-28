@@ -1,6 +1,10 @@
 import { CheckboxValue, CustomFieldConfig, FileValue, StringValue } from '@/types/service'
 import { z } from 'zod'
 import { ZodTypeAny } from 'zod/v3'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+
+dayjs.extend(customParseFormat)
 
 const baseFileSchema = z.object({
   uri: z.string().min(1),
@@ -26,8 +30,7 @@ export const makeServiceSchema = (customFields: CustomFieldConfig[]): ZodTypeAny
       }
       if (fieldConfig.type === 'checkbox') {
         return baseCheckBoxSchema.safeParse(field.value).success
-      }
-      else {
+      } else {
         return baseStringFieldSchema.safeParse(field.value).success
       }
     }
@@ -36,6 +39,42 @@ export const makeServiceSchema = (customFields: CustomFieldConfig[]): ZodTypeAny
   }, {
     message: 'Campo obrigatório',
     path: ['value']
+  }).superRefine((field, ctx) => {
+    const fieldConfig = customFields.find(c => c.id === field.field_id)
+    if (!fieldConfig || fieldConfig.type !== 'date') return true
+
+    const date = dayjs(field.value, 'DD/MM/YYYY')
+    if (!date.isValid()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Data inválida'
+      })
+      return
+    }
+
+    if (!(fieldConfig.options.initial_date || fieldConfig.options.final_date)) return true
+
+    const initialDateDays = Number(fieldConfig.options.initial_date?.match(/[+-]?\d+/)?.[0])
+    const finalDateDays = Number(fieldConfig.options.final_date?.match(/[+-]?\d+/)?.[0])
+
+    const initialDate = Number.isNaN(initialDateDays) ? null : dayjs().add(initialDateDays, 'days')
+    const finalDate = Number.isNaN(finalDateDays) ? null : dayjs().add(finalDateDays, 'days')
+
+    const isValid = (
+      !initialDate || !initialDate.isAfter(date, 'days')
+    ) && (
+      !finalDate || !finalDate.isBefore(date, 'days')
+    )
+
+    console.log(initialDate?.toString(), finalDate?.toString(), date.toString(), isValid)
+
+    if (!isValid) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: fieldConfig.options.optional_message_error_validation || 'Data fora dos limites',
+        path: ['value']
+      })
+    }
   }).transform((field) => ({
     id: field.field_id,
     value: field.value
@@ -54,8 +93,7 @@ export const makeServiceSchema = (customFields: CustomFieldConfig[]): ZodTypeAny
       }
       if (fieldConfig?.type === 'checkbox') {
         return baseFileSchema.safeParse(i.value).success
-      }
-      else {
+      } else {
         return baseStringFieldSchema.safeParse(i.value).success
       }
     })
