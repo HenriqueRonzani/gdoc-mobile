@@ -94,7 +94,7 @@ export type RecipientOption = {
 }
 
 export type Service = {
-  id: 1190
+  id: string | number
   name: string
   type: string
   fields: CustomFieldConfig[]
@@ -109,15 +109,25 @@ type Recipients = {
   responsible_id: number
 }
 
+export type FileValue = {
+  uri: string,
+  name: string
+  type: string
+}
+
+export type CheckboxValue = string[]
+
+export type StringValue = string
+
 type FieldCreation = {
-  id: number
-  value: string
+  id: number | string
+  value: StringValue | CheckboxValue | FileValue
 }
 
 export type CreateDocumentRequest = {
   service_id: number
-  recipients: Recipients[]
+  recipients: number[]
   identification_type: IdentificationType
-  fields: FieldCreation
+  fields: FieldCreation[]
   is_test: boolean
 }

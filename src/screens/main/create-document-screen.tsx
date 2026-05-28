@@ -3,13 +3,15 @@ import { CreateDocumentRouteParam, ParamType } from '@/types/navigation'
 import { useOrganization } from '@/providers/organization-provider'
 import { createDocument, getService } from '@/services/service.service'
 import { useEffect, useState } from 'react'
-import { CreateDocumentRequest, IdentificationType, Service } from '@/types/service'
+import { IdentificationType, Service } from '@/types/service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { CreateDocumentForm } from '@/components/screens/main/create-document/create-document-form'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { IdentificationTypeModal } from '@/components/screens/main/create-document/identification-type-modal'
+import { TransformedCreateDocumentFormData } from '@/schemas/main/create-document.schema'
+import { isAxiosError } from 'axios'
 
 export function CreateDocumentScreen() {
   const {toastError} = useSnackbar()
@@ -22,7 +24,7 @@ export function CreateDocumentScreen() {
   const [loading, setLoading] = useState<boolean>(false)
   const [service, setService] = useState<Service>()
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [formData, setFormData] = useState<CreateDocumentRequest|null>(null)
+  const [formData, setFormData] = useState<TransformedCreateDocumentFormData|null>(null)
 
   const loadServiceConfig = async () => {
     setLoading(true)
@@ -41,7 +43,7 @@ export function CreateDocumentScreen() {
     loadServiceConfig()
   }, [])
 
-  const onsubmit = (data: CreateDocumentRequest) => {
+  const onsubmit = (data: TransformedCreateDocumentFormData) => {
     setOpenModal(true)
     setFormData(data)
   }
@@ -55,19 +57,17 @@ export function CreateDocumentScreen() {
     if (!formData) return
     console.log('formData', formData)
     try {
-      const customFields = Object.entries(formData.fields).map(([key, value]) => ({
-        id: parseInt(key.replace('id_', '')),
-        value: value
-      })).filter(i => i.value !== '' && i.value?.length !== 0)
       const response = await createDocument({
         recipients: [formData.recipients],
         identification_type: chosenType,
         service_id: serviceId,
-        fields: customFields
+        fields: formData.fields,
+        is_test: false
       })
       console.log(response)
     } catch (e) {
-      console.log(e.response.data)
+      if (isAxiosError(e) && 'response' in e && e.response && 'data' in e.response)
+        console.log(e.response.data)
     }
   }
 

@@ -1,40 +1,31 @@
 import { CreateDocumentRequest, CustomFieldConfig, Service } from '@/types/service'
 import { GdocForm } from '@/components/form/gdoc-form'
-import { makeServiceSchema } from '@/schemas/main/create-document.schema'
+import { makeServiceSchema, TransformedCreateDocumentFormData } from '@/schemas/main/create-document.schema'
 import { StyleSheet, View } from 'react-native'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocDropdown } from '@/components/form/gdoc-dropdown'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
 import { RenderCustomFieldInput } from '@/components/screens/main/create-document/render-custom-field-input'
 import { Text } from 'react-native-paper'
-import { GdocDivider } from '@/components/gdoc-divider'
 import { theme } from '@/theme'
+import { GdocFormArray } from '@/components/form/gdoc-form-array'
 
 type Props = {
   service: Service
-  onSubmit: (data: CreateDocumentRequest) => void
+  onSubmit: (data: TransformedCreateDocumentFormData) => void
 }
 
 export function CreateDocumentForm({service, onSubmit}: Props) {
-  const fields: Record<string|number, any> = {}
+  const customFields = service.fields
 
-  for (const customField of service.fields) {
-    const fieldName = `id_${customField.id}`
-    if (customField.type === 'checkbox') {
-      fields[fieldName] = []
-    } else if (customField.type === 'file') {
-      fields[fieldName] = null
-    } else {
-      fields[fieldName] = ''
-    }
-  }
+  const initialFields = customFields.map(field => ({
+    field_id: field.id,
+    value: field.type === 'checkbox' ? [] : (field.options.defaultvalue || '')
+  }))
 
   const initialValue = {
-    service_id: service.id,
     recipients: 0,
-    identification_type: '',
-    fields: fields,
-    is_test: false
+    fields: initialFields,
   }
 
   const schema = makeServiceSchema(service.fields)
@@ -65,17 +56,24 @@ export function CreateDocumentForm({service, onSubmit}: Props) {
           )}
         </GdocFormItem>
 
-        {service.fields.map(customField => (
-          <GdocFormItem name={`fields.id_${customField.id}`} key={customField.id}>
-            {field => (
-              <>
-                <RenderCustomFieldInput field={field} customFieldConfig={customField}/>
-                <GdocFormError name={`fields.id_${customField.id}`}/>
-                <GdocDivider/>
-              </>
-            )}
-          </GdocFormItem>
-        ))}
+        <GdocFormArray name={'fields'}>
+          {fields => (
+            fields.map((arrayField, index) => {
+              const fieldConfig = customFields.find(c => c.id === arrayField.field_id)
+              if (!fieldConfig) return
+              return (
+                <GdocFormItem name={`fields.${index}.value`} key={arrayField.id}>
+                  {field =>
+                    <>
+                      <RenderCustomFieldInput field={field} customFieldConfig={fieldConfig}/>
+                      <GdocFormError name={`fields.${index}.value`}/>
+                    </>
+                  }
+                </GdocFormItem>
+              )
+            })
+          )}
+        </GdocFormArray>
 
       </View>
     </GdocForm>

@@ -3,9 +3,9 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import { Icon } from 'react-native-paper/src'
 import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
-import * as DocumentPicker from 'expo-document-picker';
+import * as DocumentPicker from 'expo-document-picker'
 import { EXTENSION_MIMETYPE_MAPPING } from '@/mapping/extension-mimetype.mapping'
-import { extension } from '@/types/service'
+import { extension, FileValue } from '@/types/service'
 
 type Props = {
   field: ControllerRenderProps<FieldValues, string>
@@ -25,15 +25,15 @@ export function GdocAttachment ({field, allowedExtensions}: Props) {
 
       if (result.canceled) {
         console.log('Usuario cancelou escolha de anexo')
-        return;
+        return
       }
-      const file = result.assets[0];
+      const file = result.assets[0]
 
-      const fileFormatted = {
+      const fileFormatted: FileValue = {
         uri: file.uri,
         name: file.name,
-        type: file.mimeType
-      };
+        type: file.mimeType || 'application/octet-stream'
+      }
 
       field.onChange(fileFormatted)
     } catch (e) {
@@ -44,9 +44,9 @@ export function GdocAttachment ({field, allowedExtensions}: Props) {
   return (
     <Pressable style={style.container} onPress={handleClick}>
       <View style={style.textContainer}>
-        <Icon size={14} source={'paperclip'} color={field.value === null ? 'red' : 'black'}/>
+        <Icon size={14} source={'paperclip'} color={!field.value ? 'red' : 'black'}/>
         <Text style={style.text}>
-          { field.value === null ? 'Toque para adicionar um anexo' : 'Toque para trocar o anexo' }
+          { !field.value ? 'Toque para adicionar um anexo' : 'Toque para trocar o anexo' }
         </Text>
       </View>
       {/*Adicionar preview ou icon quando for anexado*/}
