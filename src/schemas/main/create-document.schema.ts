@@ -1,4 +1,4 @@
-import { CheckboxValue, CustomFieldConfig, FileValue, StringValue } from '@/types/service'
+import { CheckboxValue, CustomFieldConfig, extension, FileValue, StringValue } from '@/types/service'
 import { z } from 'zod'
 import { ZodTypeAny } from 'zod/v3'
 import dayjs from 'dayjs'
@@ -16,7 +16,7 @@ const baseCheckBoxSchema = z.array(z.string()).min(1)
 
 const baseStringFieldSchema = z.string().min(1)
 
-export const makeServiceSchema = (customFields: CustomFieldConfig[]): ZodTypeAny => {
+export const makeServiceSchema = (hasRecipientOptions: boolean, customFields: CustomFieldConfig[]): ZodTypeAny => {
   const fieldSchema = z.object({
     field_id: z.string().or(z.number()),
     value: z.any()
@@ -41,13 +41,40 @@ export const makeServiceSchema = (customFields: CustomFieldConfig[]): ZodTypeAny
     path: ['value']
   }).superRefine((field, ctx) => {
     const fieldConfig = customFields.find(c => c.id === field.field_id)
+    if (!fieldConfig || fieldConfig.type !== 'file') return
+    if (!baseFileSchema.safeParse(field.value).success) return
+
+    const cleanExtensions = fieldConfig.options.extensions.flatMap(i => i.split(',')).map(i => i.trim()) as extension[]
+    if (cleanExtensions.includes('*')) return
+
+    const currentExtension = field.value?.name?.match(/\.(\w*)/g)?.at(-1)?.toLowerCase()
+    if (!currentExtension) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Arquivo sem extensão',
+        path: ['value']
+      })
+      return
+    }
+
+    const isValid = cleanExtensions.includes(currentExtension)
+    if (!isValid) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Arquivo com extensão incorreta',
+        path: ['value']
+      })
+    }
+  }).superRefine((field, ctx) => {
+    const fieldConfig = customFields.find(c => c.id === field.field_id)
     if (!fieldConfig || fieldConfig.type !== 'date') return true
 
     const date = dayjs(field.value, 'DD/MM/YYYY')
     if (!date.isValid()) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Data inválida'
+        code: z.ZodIssueCode.invalid_date,
+        message: 'Data inválida',
+        path: ['value']
       })
       return
     }
@@ -73,13 +100,22 @@ export const makeServiceSchema = (customFields: CustomFieldConfig[]): ZodTypeAny
         path: ['value']
       })
     }
-  }).transform((field) => ({
-    id: field.field_id,
-    value: field.value
-  }) as TransformedFields)
+  }).transform((field) => {
+      const fieldConfig = customFields.find(c => c.id === field.field_id)
+      const value = fieldConfig?.type === 'checkbox' ? field.value.join(', ') : field.value
+      return {
+        id: field.field_id,
+        value: value
+      } as TransformedFields
+    }
+  )
 
   return z.object({
-    recipients: z.coerce.number().int().min(1, {message: 'Campo obrigatório'}),
+    recipients: hasRecipientOptions
+      ? z.coerce.number().int().min(1, {
+        message: 'Campo obrigatório'
+      })
+      : z.coerce.number().int().optional(),
     fields: z.array(fieldSchema)
   }).transform((data: TransformedCreateDocumentFormData) => {
     const filtered = data.fields.filter(i => {
@@ -90,7 +126,7 @@ export const makeServiceSchema = (customFields: CustomFieldConfig[]): ZodTypeAny
         return baseFileSchema.safeParse(i.value).success
       }
       if (fieldConfig?.type === 'checkbox') {
-        return baseFileSchema.safeParse(i.value).success
+        return baseCheckBoxSchema.safeParse(i.value).success
       } else {
         return baseStringFieldSchema.safeParse(i.value).success
       }
@@ -110,7 +146,7 @@ type FormFields = {
 
 type CreateDocumentFormData = {
   recipients: number
-  value: FormFields
+  value: FormFields[]
 }
 
 export type TransformedFields = {
@@ -119,6 +155,6 @@ export type TransformedFields = {
 }
 
 export type TransformedCreateDocumentFormData = {
-  recipients: number
+  recipients?: number
   fields: TransformedFields[]
 }

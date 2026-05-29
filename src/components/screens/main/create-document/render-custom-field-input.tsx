@@ -61,6 +61,7 @@ export function RenderCustomFieldInput({field, customFieldConfig}: Props) {
     case 'file':
       return (
         <View>
+          <Text style={style.label}>{customFieldConfig.name}</Text>
           <GdocAttachment field={field} allowedExtensions={customFieldConfig.options.extensions}/>
         </View>
       )

@@ -126,7 +126,7 @@ type FieldCreation = {
 
 export type CreateDocumentRequest = {
   service_id: number
-  recipients: number[]
+  recipients?: number[]
   identification_type: IdentificationType
   fields: FieldCreation[]
   is_test: boolean

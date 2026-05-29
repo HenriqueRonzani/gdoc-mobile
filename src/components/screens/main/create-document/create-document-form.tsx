@@ -25,15 +25,18 @@ export function CreateDocumentForm({service, onSubmit}: Props) {
 
   const initialValue = {
     recipients: 0,
-    fields: initialFields,
+    fields: initialFields
   }
 
-  const schema = makeServiceSchema(service.fields)
+  const recipientsItems = service.recipient_options.map(i => {
+    const value = i.responsible_id || i.sector_id
+    return {
+      label: i.recipient_name,
+      value: String(value)
+    }
+  })
 
-  const recipientsItems = service.recipient_options.map(i => ({
-    label: i.recipient_name,
-    value: String(i.responsible_id)
-  }))
+  const schema = makeServiceSchema(recipientsItems.length > 0, service.fields)
 
   return (
     <GdocForm
@@ -42,19 +45,22 @@ export function CreateDocumentForm({service, onSubmit}: Props) {
       onSubmit={onSubmit}
     >
       <View style={style.container}>
-        <GdocFormItem name={'recipients'}>
-          {field => (
-            <>
-              <Text style={style.label}>Remetente Responsável:</Text>
-              <GdocDropdown
-                field={field}
-                placeholder="Responsável"
-                items={recipientsItems}
-              />
-              <GdocFormError name={'recipients'}/>
-            </>
-          )}
-        </GdocFormItem>
+
+        {recipientsItems.length > 0 && (
+          <GdocFormItem name={'recipients'}>
+            {field => (
+              <>
+                <Text style={style.label}>Remetente Responsável:</Text>
+                <GdocDropdown
+                  field={field}
+                  placeholder="Responsável"
+                  items={recipientsItems}
+                />
+                <GdocFormError small name={'recipients'}/>
+              </>
+            )}
+          </GdocFormItem>
+        )}
 
         <GdocFormArray name={'fields'}>
           {fields => (
@@ -66,7 +72,7 @@ export function CreateDocumentForm({service, onSubmit}: Props) {
                   {field =>
                     <>
                       <RenderCustomFieldInput field={field} customFieldConfig={fieldConfig}/>
-                      <GdocFormError name={`fields.${index}.value`}/>
+                      <GdocFormError small name={`fields.${index}.value`}/>
                     </>
                   }
                 </GdocFormItem>

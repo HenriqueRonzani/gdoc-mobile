@@ -25,7 +25,6 @@ export function MenuScreen() {
   const [service, setService] = useState<Service|null>(null)
   const [openModal, setOpenModal] = useState<boolean>(false)
 
-
   const onPressService = async (id: number) => {
     setLoading(true)
     try {

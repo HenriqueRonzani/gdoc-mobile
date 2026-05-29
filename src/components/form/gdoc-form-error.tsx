@@ -9,11 +9,16 @@ const getFieldRecursive = (data: Record<string, any>, fields: string[]) => {
   return data?.[fields[0]]
 }
 
-export function GdocFormError({name}: {name: string}) {
+type Props = {
+  name: string
+  small?: boolean
+}
+
+export function GdocFormError({name, small}: Props) {
   const { formState: { errors } } = useFormContext()
   const error = getFieldRecursive(errors, name.split('.'))
   if (!error) return null
-  return <Text style={style.message}>{error.message?.toString()}</Text>
+  return <Text style={[style.message, small && {fontSize: 10}]}>{error.message?.toString()}</Text>
 }
 
 const style = StyleSheet.create({

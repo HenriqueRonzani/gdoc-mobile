@@ -59,7 +59,6 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
   const clearToken = async () => {
     await clearAuthToken()
     setLocalToken(null)
-    console.log(token)
   }
 
   return (

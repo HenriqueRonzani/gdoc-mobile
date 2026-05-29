@@ -3,11 +3,12 @@ import { Icon } from 'react-native-paper/src'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import { GdocCategories } from '@/components/screens/main/menu/service-sheet/gdoc-categories'
 import { GdocServices } from '@/components/screens/main/menu/service-sheet/gdoc-services'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Subject } from '@/types/service'
 import { useOrganization } from '@/providers/organization-provider'
 import { getRootServiceLetter, getServiceLetterByCategory } from '@/services/service.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { useFocusEffect } from '@react-navigation/native'
 
 type Props = {
   onPressService: (id: number) => void
@@ -23,7 +24,6 @@ export function GdocCategoryNavigation ({onPressService, loading}: Props) {
   const [categories, setCategories] = useState<Subject[]>([])
   const [services, setServices] = useState<Subject[]>([])
   const [parentIds, setParentIds] = useState<number[]>([])
-
 
   const onPreviousCategory = () => {
     if (parentIds.length > 0) {
@@ -58,6 +58,13 @@ export function GdocCategoryNavigation ({onPressService, loading}: Props) {
     loadCategories()
   }, [parentIds])
 
+  useFocusEffect(
+    useCallback(() => {
+      setParentIds([])
+      return () => {}
+    }, [])
+  )
+
   return (
     <View style={style.content}>
       <Text style={style.text}>Busque e solicite os serviços oferecidos por {organization.name}</Text>
@@ -82,7 +89,6 @@ export function GdocCategoryNavigation ({onPressService, loading}: Props) {
 
 
 const style = StyleSheet.create({
-
   backContainer: {
     flexDirection: 'row',
     alignItems: 'center'

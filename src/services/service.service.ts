@@ -19,11 +19,9 @@ export const getService = async (serviceLetterId: number, serviceId: number) => 
 
 export const createDocument = async (payload: CreateDocumentRequest) => {
   const formData = formatToFormData(payload)
-  console.log('formattedFormData', formData)
   const response = await api.post('/integration/native-login/document',
     formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
-  console.log('response', response)
   return response.data
 }
