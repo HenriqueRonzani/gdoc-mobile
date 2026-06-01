@@ -6,12 +6,12 @@ import type { ControllerRenderProps, FieldValues } from 'react-hook-form'
 import MaskInput from 'react-native-mask-input/src/MaskInput'
 import type { Mask } from 'react-native-mask-input'
 
-type Props = TextInputProps & {
+export type GdocTextInputProps = TextInputProps & {
   field: ControllerRenderProps<FieldValues, string>
   mask?: Mask
 }
 
-export function GdocTextInput({field, mask, ...rest}: Props) {
+export function GdocTextInput({field, mask, ...rest}: GdocTextInputProps) {
   const theme = useTheme()
 
   return (

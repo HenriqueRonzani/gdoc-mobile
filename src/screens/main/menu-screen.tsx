@@ -1,51 +1,39 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { useOrganization } from '@/providers/organization-provider'
-import { GdocCategories } from '@/components/screens/main/menu/gdoc-categories'
-import { GdocServices } from '@/components/screens/main/menu/gdoc-services'
-import { useEffect, useState } from 'react'
-import { ActivityIndicator } from 'react-native-paper'
-import { Icon } from 'react-native-paper/src'
-import { Subject } from '@/types/service'
-import { getRootServiceLetter, getServiceLetterService } from '@/services/service.service'
+import { useState } from 'react'
+import { IdentificationType, Service } from '@/types/service'
+import { getService } from '@/services/service.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { useNavigation } from '@react-navigation/native'
+import type { NavigatorType } from '@/types/navigation'
+import { IdentificationTypeModal } from '@/components/screens/main/create-document/identification-type-modal'
+import { GdocCategoryNavigation } from '@/components/screens/main/menu/gdoc-category-navigation'
 
 export function MenuScreen() {
   const {toastError} = useSnackbar()
   const {organization} = useOrganization()
-
-  const [loading, setLoading] = useState<boolean>(false)
-  const [categories, setCategories] = useState<Subject[]>([])
-  const [services, setServices] = useState<Subject[]>([])
-  const [parentIds, setParentIds] = useState<number[]>([])
-
+  const navigation = useNavigation<NavigatorType>()
   const serviceLetterId = organization.external_service_letter_id
 
-  const onPressCategory = (clickedServiceId: number) => {
-    setParentIds([...parentIds, clickedServiceId])
-  }
+  const [loading, setLoading] = useState<boolean>(false)
+  const [service, setService] = useState<Service|null>(null)
+  const [openModal, setOpenModal] = useState<boolean>(false)
 
-  const onPressService = (id: number) => {
-    console.log(`Clique no serviço id: ${id}`)
-  }
-
-  const onPreviousCategory = () => {
-    if (parentIds.length > 0) {
-      setParentIds(parentIds.slice(0, parentIds.length - 1))
-    }
-  }
-
-  const loadCategories = async () => {
+  const onPressService = async (id: number) => {
     setLoading(true)
     try {
-      const response = parentIds.length === 0
-        ? await getRootServiceLetter(serviceLetterId)
-        : await getServiceLetterService(serviceLetterId, parentIds.at(-1) as number)
-
-      const categories = response.data.filter(i => i.type === 'CATEGORY')
-      const services = response.data.filter(i => i.type === 'SERVICE')
-      setCategories(categories)
-      setServices(services)
+      const response = await getService(serviceLetterId, id)
+      const identificationTypes = response.identification_type.filter(i => i !== 'CONFIDENTIAL')
+      if (identificationTypes.length > 1) {
+        setService(response)
+        setOpenModal(true)
+      } else {
+        navigation.navigate('CreateDocument', {
+          service: response,
+          identificationType: identificationTypes[0]
+        })
+      }
     } catch (error: unknown) {
       toastError('Erro ao carregar categorias')
       console.log(error)
@@ -54,31 +42,25 @@ export function MenuScreen() {
     }
   }
 
-  useEffect(() => {
-    loadCategories()
-  }, [parentIds])
+  const onCloseModal = () => {
+    setOpenModal(false)
+    setService(null)
+  }
+
+  const onConfirmModal = (chosenType: IdentificationType) => {
+    if (!service) return
+    navigation.navigate('CreateDocument', {
+      service: service,
+      identificationType: chosenType
+    })
+    setOpenModal(false)
+  }
 
   return (
     <ScrollView style={style.container}>
       <GdocPageTitle>Serviços</GdocPageTitle>
-      <View style={style.content}>
-        <Text style={style.text}>Busque e solicite os serviços oferecidos por {organization.name}</Text>
-        {parentIds.length > 0 && (
-          <Pressable style={style.backContainer} onPress={onPreviousCategory}>
-            <Icon source={'arrow-left'} size={25}/>
-            <Text style={style.backText}>Voltar a categoria anterior</Text>
-          </Pressable>
-        )}
-        {loading
-          ? <ActivityIndicator animating={true}/>
-          : (
-            <View>
-              <GdocCategories categories={categories} onPressCategory={onPressCategory}/>
-              <GdocServices services={services} onPressService={onPressService}/>
-            </View>
-          )
-        }
-      </View>
+      <GdocCategoryNavigation onPressService={onPressService} loading={loading}/>
+      <IdentificationTypeModal open={openModal} onClose={onCloseModal} onChoose={onConfirmModal} loading={loading}/>
     </ScrollView>
   )
 }

@@ -1,6 +1,5 @@
 import { Image, StyleSheet, View } from 'react-native'
 import { theme } from '@/theme'
-import Logo from '@/assets/logo-global-fundo-branco.png'
 import { IconButton, Text } from 'react-native-paper'
 import { useAuth } from '@/providers/auth-provider'
 import type { SectionsConfig } from '@/components/gdoc-sections-renderer'

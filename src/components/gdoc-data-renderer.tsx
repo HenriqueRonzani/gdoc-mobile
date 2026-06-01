@@ -9,7 +9,7 @@ type CustomAction = {
 
 type FieldConfig = {
   title: string
-  value?: string
+  value?: string | null
   customActions?: CustomAction[]
 }
 
