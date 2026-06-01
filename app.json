@@ -21,8 +21,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.gdocmobile"
+      "predictiveBackGestureEnabled": false
     },
     "web": {
       "favicon": "./src/assets/favicon.png"

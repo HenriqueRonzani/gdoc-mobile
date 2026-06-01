@@ -126,7 +126,8 @@ export const makeServiceSchema = (hasRecipientOptions: boolean, customFields: Cu
         return baseFileSchema.safeParse(i.value).success
       }
       if (fieldConfig?.type === 'checkbox') {
-        return baseCheckBoxSchema.safeParse(i.value).success
+        // at this point checkbox is transformed and joined into string, condition is kept just to make it clear
+        return baseStringFieldSchema.safeParse(i.value).success
       } else {
         return baseStringFieldSchema.safeParse(i.value).success
       }
@@ -146,7 +147,7 @@ type FormFields = {
 
 type CreateDocumentFormData = {
   recipients: number
-  value: FormFields[]
+  fields: FormFields[]
 }
 
 export type TransformedFields = {

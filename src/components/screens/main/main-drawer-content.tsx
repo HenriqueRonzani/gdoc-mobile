@@ -1,14 +1,11 @@
 import { Image, StyleSheet, View } from 'react-native'
 import { theme } from '@/theme'
-import Logo from '@/assets/logo-global-fundo-branco.png'
 import { IconButton, Text } from 'react-native-paper'
 import { useAuth } from '@/providers/auth-provider'
 import type { SectionsConfig } from '@/components/gdoc-sections-renderer'
 import { SectionsRenderer } from '@/components/gdoc-sections-renderer'
 import type { DrawerContentComponentProps } from '@react-navigation/drawer'
 import { useProfile } from '@/providers/profile-provider'
-import { useNavigation } from '@react-navigation/native'
-import type { NavigatorType } from '@/types/navigation'
 
 const getDrawerConfig = ({navigation}: DrawerContentComponentProps): SectionsConfig => {
   return [

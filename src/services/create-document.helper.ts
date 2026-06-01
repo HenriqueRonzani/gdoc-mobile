@@ -19,6 +19,9 @@ export const formatToFormData = (
   outerField?: string
 ) => {
   for (const [field, value] of Object.entries(data)) {
+    if (value === undefined || value == null) {
+      continue
+    }
 
     const fieldName = outerField ? `${outerField}[${field}]` : field
     if (value && typeof value === 'object' && !value.uri) {

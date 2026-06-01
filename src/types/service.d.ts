@@ -115,7 +115,7 @@ export type FileValue = {
   type: string
 }
 
-export type CheckboxValue = string[]
+export type CheckboxValue = string
 
 export type StringValue = string
 

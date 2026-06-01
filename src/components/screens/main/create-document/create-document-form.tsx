@@ -1,4 +1,4 @@
-import { CreateDocumentRequest, CustomFieldConfig, Service } from '@/types/service'
+import { Service } from '@/types/service'
 import { GdocForm } from '@/components/form/gdoc-form'
 import { makeServiceSchema, TransformedCreateDocumentFormData } from '@/schemas/main/create-document.schema'
 import { StyleSheet, View } from 'react-native'
