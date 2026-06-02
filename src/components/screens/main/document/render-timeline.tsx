@@ -46,7 +46,7 @@ export function RenderTimeline({uuid, documentInfo}: Props) {
     <View style={style.container}>
       {firstDispatch && (
         <Dispatch
-          key={0}
+          key={firstDispatch.dispatch_number}
           timelineItem={firstDispatch}
           documentInfo={documentInfo}
           isFirst={true}
@@ -64,7 +64,7 @@ export function RenderTimeline({uuid, documentInfo}: Props) {
               <View style={style.dispatchContainer}>
                 <Text style={style.dispatchText}>Novo despacho - {dayjs(item.created_at).format('DD/MM/YYYY')}</Text>
                 <Dispatch
-                  key={index}
+                  key={item.dispatch_number}
                   timelineItem={item}
                   documentInfo={documentInfo}
                   isFirst={true}

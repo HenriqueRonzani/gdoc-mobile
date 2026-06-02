@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { Icon } from 'react-native-paper/src'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { handleRequestError } from '@/services/request-error.helper'
+import { AttachmentPreview } from '@/components/attachment-preview'
 
 type Props = {
   attachment: Attachment
@@ -18,7 +19,6 @@ export function GdocAttachment({attachment}: Props) {
   const {toastError} = useSnackbar()
 
   const [isDownloading, setIsDownloading] = useState<boolean>(false)
-  const [attachmentSizeString, setAttachmentSizeString] = useState<string>('0 kb')
 
   const downloadFile = async () => {
     if (isDownloading) return
@@ -54,38 +54,28 @@ export function GdocAttachment({attachment}: Props) {
     return `${mbSize.toFixed(2)} MB`
   }
 
-  useEffect(() => {
-    setAttachmentSizeString(getSize())
-  }, [])
+  const getAttachmentType = () => {
+    if (attachment.type === 'application/pdf') return 'pdf'
+    if (attachment.type.startsWith('image/')) return 'image'
+    return 'other'
+  }
 
   return (
     <Pressable
       style={style.container}
       onPress={downloadFile}
     >
-      <View style={style.previewContainer}>
-
-        {attachment.type === 'application/pdf' && (
-          <Pdf
-            source={{uri: attachment.url}}
-            singlePage
-            style={style.preview}
-          />
-        )}
-        {attachment.type.startsWith('image/') && (
-          <Image
-            source={{uri: attachment.url}}
-            style={style.preview}
-          />
-        )}
-      </View>
+      <AttachmentPreview
+        type={getAttachmentType()}
+        source={{uri: attachment.url}}
+      />
 
       <View style={style.footer}>
         <Icon size={15} source={'download'} color={theme.colors.primaryText}/>
         <View>
           <Text style={style.attachmentName}>{attachment.name}</Text>
           <Text style={style.footerText}>
-            <Text>{attachmentSizeString}</Text>
+            <Text>{getSize()}</Text>
           </Text>
         </View>
       </View>
