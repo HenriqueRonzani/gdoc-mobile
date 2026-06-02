@@ -24,7 +24,6 @@ export function GdocAttachment ({field, allowedExtensions}: Props) {
       })
 
       if (result.canceled) {
-        console.log('Usuario cancelou escolha de anexo')
         return
       }
       const file = result.assets[0]

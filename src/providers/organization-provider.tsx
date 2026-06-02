@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { Organization } from '@/types/organization'
-import { getOrganization } from '@/services/organization.service'
+import { getOrganization } from '@/services/api/organization.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 
 export type OrganizationProviderData = {
@@ -23,7 +23,7 @@ export function OrganizationProvider({children}: { children: ReactNode }) {
       const response = await getOrganization()
       setOrganization(response)
     } catch (error: unknown) {
-      toastError('Houve um erro ao carregar a organização')
+      handleRequestError(error, toastError, 'Houve um erro ao carregar a organização')
     } finally {
       setIsLoading(false)
     }

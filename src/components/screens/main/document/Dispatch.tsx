@@ -10,6 +10,7 @@ import { File, Paths } from 'expo-file-system'
 import * as Sharing from 'expo-sharing'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { useState } from 'react'
+import { handleRequestError } from '@/services/request-error.helper'
 
 type Props = {
   timelineItem: TimelineDispatch
@@ -45,8 +46,7 @@ export function Dispatch({timelineItem, documentInfo, isFirst}: Props) {
         })
       }
     } catch (error: unknown) {
-      console.log(error)
-      toastError('Erro ao baixar despacho')
+      handleRequestError(error, toastError, 'Erro ao baixar despacho')
     } finally {
       setIsDownloading(false)
     }

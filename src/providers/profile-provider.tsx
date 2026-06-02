@@ -1,7 +1,8 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { useSnackbar } from '@/providers/snackbar-provider'
-import { getProfile } from '@/services/profile.service'
+import { getProfile } from '@/services/api/profile.service'
 import { UserSessionData } from '@/types/auth-me'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export type ProfileProviderData = {
   isLoading: boolean
@@ -23,8 +24,7 @@ export function ProfileProvider({children}: { children: ReactNode }) {
       const response = await getProfile()
       setProfile(response)
     } catch (error: unknown) {
-      toastError('Erro ao carregar perfil')
-      console.log(error)
+      handleRequestError(error, toastError, 'Erro ao carregar perfil')
     } finally {
       setIsLoading(false)
     }

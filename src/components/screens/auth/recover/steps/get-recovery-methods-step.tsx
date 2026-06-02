@@ -9,8 +9,9 @@ import { Text } from 'react-native-paper'
 import { GetRecoveryMethodsFormData } from '@/schemas/auth/recover.schema'
 import { GetRecoveryMethodsForm } from '../forms/get-recovery-methods-form'
 import { useRecover } from '@/providers/recover-context-provider'
-import { getRecoveryMethods } from '@/services/auth.service'
+import { getRecoveryMethods } from '@/services/api/auth.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export function GetRecoveryMethodsStep() {
   const {setStepName} = useStepper()
@@ -26,8 +27,7 @@ export function GetRecoveryMethodsStep() {
       setRecoverParams({...recoverParams, cpfCnpj: data.cpfCnpj, recovery_methods: response})
       setStepName('request_recovery_code')
     } catch (error: any) {
-      toastError('Houve um erro')
-      console.log(error)
+      handleRequestError(error, toastError, 'Houve um erro')
     } finally {
       setLoading(false)
     }

@@ -1,5 +1,4 @@
 import { StyleSheet, View } from 'react-native'
-import { useStepper } from '@/providers/stepper-context-provider'
 import { useNavigation } from '@react-navigation/native'
 import { NavigatorType } from '@/types/navigation'
 import { theme } from '@/theme'
@@ -8,9 +7,10 @@ import React, { useState } from 'react'
 import { FinishResetPasswordForm } from '../forms/finish-reset-password-form'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
 import { FinishResetPasswordFormData } from '@/schemas/auth/recover.schema'
-import { finishResetPassword } from '@/services/auth.service'
+import { finishResetPassword } from '@/services/api/auth.service'
 import { useRecover } from '@/providers/recover-context-provider'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export function FinishResetPasswordStep () {
   const navigation = useNavigation<NavigatorType>()
@@ -31,8 +31,7 @@ export function FinishResetPasswordStep () {
       clearRecoverParams()
       navigation.navigate('Login')
     } catch (error: any) {
-      toastError('Houve um erro no registro')
-      console.log(error)
+      handleRequestError(error, toastError, 'Houve um erro no registro')
     } finally {
       setLoading(false)
     }

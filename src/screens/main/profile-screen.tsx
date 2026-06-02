@@ -1,33 +1,11 @@
-import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native-paper'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
-import { getProfile } from '@/services/profile.service'
 import { ProfileAreas } from '@/components/screens/main/profile/profile-areas'
-import { ProfileType } from '@/types/profile'
-import { useSnackbar } from '@/providers/snackbar-provider'
 import { useProfile } from '@/providers/profile-provider'
 
-const initialProfile: ProfileType = {
-  person: {
-    name: '',
-    cpfCnpj: '',
-    dateOfBirth: '',
-    gender: 'other',
-    email: '',
-    cellphone: '',
-    address: {
-      zip: '',
-      city: '',
-      state: '',
-      street: '',
-      number: ''
-    }
-  }
-}
 
 export function ProfileScreen() {
-  const { toastError } = useSnackbar()
   const {profile} = useProfile()
 
   return (

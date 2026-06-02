@@ -6,9 +6,10 @@ import { VerifyRecoveryCodeForm } from '../forms/verify-recovery-code-form'
 import { theme } from '@/theme'
 import { Text } from 'react-native-paper'
 import { VerifyRecoveryCodeFormData } from '@/schemas/auth/recover.schema'
-import { verifyRecoveryCode } from '@/services/auth.service'
+import { verifyRecoveryCode } from '@/services/api/auth.service'
 import { useRecover } from '@/providers/recover-context-provider'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export function VerifyRecoveryCodeStep() {
   const {setStepName} = useStepper()
@@ -35,8 +36,7 @@ export function VerifyRecoveryCodeStep() {
       })
       setStepName('finish_reset_password')
     } catch (error: unknown) {
-      toastError('Houve um erro')
-      console.log(error)
+      handleRequestError(error, toastError, 'Houve um erro')
     } finally {
       setLoading(false)
     }

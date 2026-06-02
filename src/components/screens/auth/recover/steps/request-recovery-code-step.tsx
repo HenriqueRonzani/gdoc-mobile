@@ -6,8 +6,9 @@ import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
 import { useRecover } from '@/providers/recover-context-provider'
 import { VerificationMethod } from '@/components/screens/auth/recover/verification-method'
-import { requestRecoveryCode } from '@/services/auth.service'
+import { requestRecoveryCode } from '@/services/api/auth.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export function RequestRecoveryCodeStep() {
   const {setStepName} = useStepper()
@@ -25,8 +26,7 @@ export function RequestRecoveryCodeStep() {
       setRecoverParams({...recoverParams, verification_token: response.verification_token})
       setStepName('verify_recovery_code')
     } catch (error: unknown) {
-      toastError('Houve um erro')
-      console.log(error)
+      handleRequestError(error, toastError, 'Houve um erro')
     } finally {
       setLoading(false)
     }

@@ -8,6 +8,7 @@ import { theme } from '@/theme'
 import { useEffect, useState } from 'react'
 import { Icon } from 'react-native-paper/src'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { handleRequestError } from '@/services/request-error.helper'
 
 type Props = {
   attachment: Attachment
@@ -36,8 +37,7 @@ export function GdocAttachment({attachment}: Props) {
         })
       }
     } catch (error: unknown) {
-      console.log(error)
-      toastError('Erro ao baixar despacho')
+      handleRequestError(error, toastError, 'Erro ao baixar despacho')
     } finally {
       setIsDownloading(false)
     }

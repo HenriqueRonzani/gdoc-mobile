@@ -5,10 +5,11 @@ import { GdocUseTerms } from '@/components/screens/auth/register/forms/gdoc-use-
 import React, { useState } from 'react'
 import { GdocConfirmRecaptcha } from '@/components/form/gdoc-confirm-recaptcha'
 import { useRegister } from '@/providers/register-context-provider'
-import { registerUser } from '@/services/auth.service'
+import { registerUser } from '@/services/api/auth.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { useAuth } from '@/providers/auth-provider'
 import { RegisterHeader } from '@/components/screens/auth/register/register-header'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export function RegisterUseTermsStep() {
   const {setToken} = useAuth()
@@ -27,8 +28,7 @@ export function RegisterUseTermsStep() {
       await setToken(result?.auth_token)
       toastSuccess('Registro realizado com sucesso')
     } catch (error: unknown) {
-      toastError('Houve um erro no registro')
-      console.log(error)
+      handleRequestError(error, toastError, 'Houve um erro no registro')
     } finally {
       setLoading(false)
     }

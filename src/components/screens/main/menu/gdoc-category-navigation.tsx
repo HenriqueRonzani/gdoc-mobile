@@ -6,9 +6,10 @@ import { GdocServices } from '@/components/screens/main/menu/service-sheet/gdoc-
 import { useCallback, useEffect, useState } from 'react'
 import { Subject } from '@/types/service'
 import { useOrganization } from '@/providers/organization-provider'
-import { getRootServiceLetter, getServiceLetterByCategory } from '@/services/service.service'
+import { getRootServiceLetter, getServiceLetterByCategory } from '@/services/api/service.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { useFocusEffect } from '@react-navigation/native'
+import { handleRequestError } from '@/services/request-error.helper'
 
 type Props = {
   onPressService: (id: number) => void
@@ -47,8 +48,7 @@ export function GdocCategoryNavigation ({onPressService, loading}: Props) {
       setCategories(categories)
       setServices(services)
     } catch (error: unknown) {
-      toastError('Erro ao carregar categorias')
-      console.log(error)
+      handleRequestError(error, toastError, 'Erro ao carregar categorias')
     } finally {
       setLocalLoading(false)
     }

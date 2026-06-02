@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 import { CreateDocumentRouteParam, type NavigatorType, ParamType } from '@/types/navigation'
-import { createDocument } from '@/services/document.service'
+import { createDocument } from '@/services/api/document.service'
 import { useCallback, useState } from 'react'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native'

@@ -145,11 +145,6 @@ type FormFields = {
   value: StringValue | CheckboxValue | FileValue
 }
 
-type CreateDocumentFormData = {
-  recipients: number
-  fields: FormFields[]
-}
-
 export type TransformedFields = {
   id: string | number
   value: StringValue | CheckboxValue | FileValue

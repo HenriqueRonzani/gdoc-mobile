@@ -3,6 +3,7 @@ import { clearAuthToken, getAuthToken, setAuthToken } from '@/services/auth.stor
 import api from '@/lib/axios'
 import { isAxiosError } from 'axios'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { handleRequestError } from '@/services/request-error.helper'
 
 type AuthContextType = {
   token: string | null
@@ -38,8 +39,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
       (response) => response,
       async (error: unknown) => {
         if (isAxiosError(error) && error?.response && error.response.status === 401) {
-          console.log('Sessão Expirada')
-          toastError('Sessão Expirada')
+          handleRequestError(error, toastError, 'Sessão Expirada')
           await clearToken()
         }
 

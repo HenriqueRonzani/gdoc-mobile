@@ -3,7 +3,7 @@ import type { ZodTypeAny } from 'zod/v3'
 import React from 'react'
 import type { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, ViewStyle } from 'react-native'
 import { GdocPrimaryButton } from '@/components/button/gdoc-primary-button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 

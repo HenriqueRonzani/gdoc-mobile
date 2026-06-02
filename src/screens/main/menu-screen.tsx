@@ -3,12 +3,13 @@ import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { useOrganization } from '@/providers/organization-provider'
 import { useState } from 'react'
 import { IdentificationType, Service } from '@/types/service'
-import { getService } from '@/services/service.service'
+import { getService } from '@/services/api/service.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { useNavigation } from '@react-navigation/native'
 import type { NavigatorType } from '@/types/navigation'
 import { IdentificationTypeModal } from '@/components/screens/main/document/create/identification-type-modal'
 import { GdocCategoryNavigation } from '@/components/screens/main/menu/gdoc-category-navigation'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export function MenuScreen() {
   const {toastError} = useSnackbar()
@@ -35,8 +36,7 @@ export function MenuScreen() {
         })
       }
     } catch (error: unknown) {
-      toastError('Erro ao carregar categorias')
-      console.log(error)
+      handleRequestError(error, toastError, 'Erro ao carregar categorias')
     } finally {
       setLoading(false)
     }

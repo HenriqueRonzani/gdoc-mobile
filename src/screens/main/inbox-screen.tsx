@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { ActivityIndicator, IconButton, Text, TextInput } from 'react-native-paper'
 import { InboxItem } from '@/components/screens/main/inbox/inbox-item'
-import { FlatList } from 'react-native-gesture-handler'
-import { getInbox } from '@/services/inbox.service'
+import { getInbox } from '@/services/api/inbox.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { debounce } from 'lodash'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { InboxDocument } from '@/types/inbox'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export function InboxScreen() {
   const {toastError} = useSnackbar()
@@ -23,8 +23,7 @@ export function InboxScreen() {
       const response = await getInbox({tab, search})
       setData(response?.data ?? [])
     } catch (error: unknown) {
-      console.log(error)
-      toastError('Erro ao buscar documentos!')
+      handleRequestError(error, toastError, 'Erro ao buscar documentos!')
     } finally {
       setLoading(false)
     }
