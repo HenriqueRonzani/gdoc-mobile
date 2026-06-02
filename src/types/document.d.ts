@@ -6,6 +6,12 @@ export type CreateDocumentRequest = {
   is_test: boolean
 }
 
+export type CreateDocumentResponse = {
+  uuid: string
+  number: string
+  created_at: string
+}
+
 export type Attachment = {
   name: string
   size: number
@@ -23,11 +29,11 @@ export type TimelineDispatch = {
 }
 
 export type DocumentInfo = {
-  "number": string
-  "uuid": string
-  "created_at": string
-  "created_by": string
-  "status": string
-  "request_type": string
-  "subject_type": string
+  number: string
+  uuid: string
+  created_at: string
+  created_by: string
+  status: string
+  request_type: string
+  subject_type: string
 }

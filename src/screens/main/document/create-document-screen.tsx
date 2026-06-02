@@ -9,6 +9,7 @@ import { ActivityIndicator, Text } from 'react-native-paper'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { TransformedCreateDocumentFormData } from '@/schemas/main/create-document.schema'
 import { Icon } from 'react-native-paper/src'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export function CreateDocumentScreen() {
   const navigation = useNavigation<NavigatorType>()
@@ -23,7 +24,7 @@ export function CreateDocumentScreen() {
   const onSubmit = async (data: TransformedCreateDocumentFormData) => {
     setLoading(true)
     try {
-      await createDocument({
+      const response = await createDocument({
         recipients: data.recipients ? [data.recipients] : undefined,
         identification_type: identificationType,
         service_id: service.id,
@@ -31,10 +32,14 @@ export function CreateDocumentScreen() {
         is_test: false
       })
       toastSuccess('Documento criado com sucesso!')
-      navigation.navigate('Menu')
+
+      if(!response.uuid) return
+
+      navigation.navigate('Document', {
+        uuid: response.uuid
+      })
     } catch (error: unknown) {
-      toastError('Houve um erro na criação do documento')
-      console.log(error)
+      handleRequestError(error, toastError, 'Erro ao carregar documento')
     } finally {
       setLoading(false)
     }

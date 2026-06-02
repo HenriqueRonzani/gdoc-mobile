@@ -1,6 +1,6 @@
 import api from '@/lib/axios'
 import { formatToFormData } from '@/services/create-document.helper'
-import { CreateDocumentRequest, DocumentInfo, TimelineDispatch } from '@/types/document'
+import { CreateDocumentRequest, CreateDocumentResponse, DocumentInfo, TimelineDispatch } from '@/types/document'
 
 export const createDocument = async (payload: CreateDocumentRequest) => {
   const formData = formatToFormData(payload)
@@ -8,7 +8,7 @@ export const createDocument = async (payload: CreateDocumentRequest) => {
     formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
-  return response.data
+  return response.data as CreateDocumentResponse
 }
 
 export const getDocument = async (uuid: string) => {
