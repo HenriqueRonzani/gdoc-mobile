@@ -123,11 +123,3 @@ type FieldCreation = {
   id: number | string
   value: StringValue | CheckboxValue | FileValue
 }
-
-export type CreateDocumentRequest = {
-  service_id: number
-  recipients?: number[]
-  identification_type: IdentificationType
-  fields: FieldCreation[]
-  is_test: boolean
-}

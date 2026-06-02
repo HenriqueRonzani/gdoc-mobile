@@ -6,6 +6,10 @@ export type CreateDocumentRouteParam = {
   identificationType: IdentificationType
 }
 
+export type DocumentRouteParam = {
+  uuid: string
+}
+
 export type RootStackParamList = {
   Login: undefined
   Register: undefined
@@ -14,6 +18,7 @@ export type RootStackParamList = {
   Profile: undefined
   Inbox: undefined
   CreateDocument: CreateDocumentRouteParam
+  Document: DocumentRouteParam
 }
 
 export type NavigatorType = NativeStackNavigationProp<RootStackParamList>

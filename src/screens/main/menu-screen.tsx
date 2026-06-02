@@ -7,7 +7,7 @@ import { getService } from '@/services/service.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { useNavigation } from '@react-navigation/native'
 import type { NavigatorType } from '@/types/navigation'
-import { IdentificationTypeModal } from '@/components/screens/main/create-document/identification-type-modal'
+import { IdentificationTypeModal } from '@/components/screens/main/document/create/identification-type-modal'
 import { GdocCategoryNavigation } from '@/components/screens/main/menu/gdoc-category-navigation'
 
 export function MenuScreen() {

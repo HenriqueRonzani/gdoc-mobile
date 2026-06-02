@@ -7,7 +7,8 @@ import { theme } from '@/theme'
 import { MainDrawerContent } from '@/components/screens/main/main-drawer-content'
 import { useProfile } from '@/providers/profile-provider'
 import { ActivityIndicator } from 'react-native-paper'
-import { CreateDocumentScreen } from '@/screens/main/create-document-screen'
+import { CreateDocumentScreen } from '@/screens/main/document/create-document-screen'
+import { DocumentScreen } from '@/screens/main/document/document-screen'
 
 const Drawer = createDrawerNavigator()
 
@@ -43,6 +44,7 @@ export function MainDrawer() {
         <Drawer.Screen name={'Profile'} component={ProfileScreen}/>
         <Drawer.Screen name={'Inbox'} component={InboxScreen}/>
         <Drawer.Screen name={'CreateDocument'} component={CreateDocumentScreen}/>
+        <Drawer.Screen name={'Document'} component={DocumentScreen}/>
       </Drawer.Navigator>
     )
 }

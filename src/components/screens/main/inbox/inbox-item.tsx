@@ -4,17 +4,19 @@ import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
 import { Icon } from 'react-native-paper/src'
 import dayjs from 'dayjs'
-import { Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons'
 import { formatFeatherIconName } from '@/services/format-feather-icon-name.helper'
+import { useNavigation } from '@react-navigation/native'
+import { NavigatorType } from '@/types/navigation'
 
 type props = {
   item: InboxDocument
 }
 
 export function InboxItem({item}: props) {
+  const navigation = useNavigation<NavigatorType>()
   const onOpen = () => {
-    // TODO: Open document
-    console.log('oi')
+    navigation.navigate('Document', {uuid: item.email_uuid})
   }
 
   const icon = formatFeatherIconName(item.document_type_icon)
@@ -23,13 +25,13 @@ export function InboxItem({item}: props) {
     <View style={[style.itemContainer, item.has_update && style.itemHasUpdate]}>
       <View style={style.itemHeader}>
         <View style={style.iconContainer}>
-          <Icon color={theme.colors.primaryText} source={(props: any) => <Feather {...props} name={icon} />} size={30}/>
+          <Icon color={theme.colors.primaryText} source={(props: any) => <Feather {...props} name={icon}/>} size={30}/>
         </View>
         <View style={style.textContainer}>
-          <View style={style.headerTitle}>
+          <Text>
             <Text style={style.numberText}>{item.number}</Text>
-            <Text style={style.typeText}>| {item.document_type_name} |</Text>
-          </View>
+            <Text style={style.typeText}> | {item.document_type_name}</Text>
+          </Text>
           <View>
             <Text style={style.createdAtText}>{dayjs(item.created_at).format('DD/MM/YYYY HH:mm')}</Text>
             <Text style={style.subjectText}>{item.subject_name}</Text>
@@ -53,11 +55,14 @@ const style = StyleSheet.create({
     marginVertical: 5,
     borderBottomRightRadius: 5,
     borderTopRightRadius: 5,
-    gap: 10
+    gap: 10,
+    width: '98%',
+    borderWidth: 1,
+    borderColor: theme.colors.text
   },
   itemHasUpdate: {
     borderLeftWidth: 2,
-    borderColor: theme.colors.primary
+    borderLeftColor: theme.colors.primary
   },
   itemHeader: {
     flexDirection: 'row',
@@ -73,13 +78,8 @@ const style = StyleSheet.create({
     borderColor: theme.colors.text
   },
   textContainer: {
-    gap: 10
-  },
-  headerTitle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    gap: 2
+    gap: 10,
+    width: '80%'
   },
   openContainer: {
     flexDirection: 'row',

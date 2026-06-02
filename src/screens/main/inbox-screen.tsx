@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { ActivityIndicator, IconButton, Text, TextInput } from 'react-native-paper'
 import { InboxItem } from '@/components/screens/main/inbox/inbox-item'
 import { FlatList } from 'react-native-gesture-handler'
 import { getInbox } from '@/services/inbox.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { debounce } from 'lodash'
+import { GdocPageTitle } from '@/components/gdoc-page-title'
+import { InboxDocument } from '@/types/inbox'
 
 export function InboxScreen() {
   const {toastError} = useSnackbar()
 
   const [tab, setTab] = useState('opened_by_me')
-  const [data, setData] = useState<any[]>([])
+  const [data, setData] = useState<InboxDocument[]>([])
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -34,7 +36,7 @@ export function InboxScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Minhas solicitações</Text>
+      <GdocPageTitle>Minhas solicitações</GdocPageTitle>
 
       <View style={styles.filter}>
         <View style={styles.searchRow}>
@@ -107,13 +109,14 @@ export function InboxScreen() {
 
       { loading
         ? <ActivityIndicator animating={true} />
-        : <View>
-          <FlatList
-            data={data}
-            renderItem={({ item }) => <InboxItem item={item} />}
-            keyExtractor={(_, index) => index.toString()}
-          />
-        </View>
+        : <ScrollView>
+          {data.map(item => (
+            <InboxItem
+              key={item.number}
+              item={item}
+            />
+            ))}
+        </ScrollView>
       }
 
     </View>
