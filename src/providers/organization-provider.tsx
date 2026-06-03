@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import { Organization } from '@/types/organization'
 import { getOrganization } from '@/services/api/organization.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export type OrganizationProviderData = {
   isLoading: boolean

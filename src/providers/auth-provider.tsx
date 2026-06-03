@@ -3,7 +3,7 @@ import { clearAuthToken, getAuthToken, setAuthToken } from '@/services/auth.stor
 import api from '@/lib/axios'
 import { isAxiosError } from 'axios'
 import { useSnackbar } from '@/providers/snackbar-provider'
-import { handleRequestError } from '@/services/request-error.helper'
+import { handleRequestError, logIfDev } from '@/services/request-error.helper'
 
 type AuthContextType = {
   token: string | null
@@ -26,7 +26,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
       try {
         setLocalToken(await getAuthToken())
       } catch (error) {
-        console.log(error)
+        logIfDev(error)
       } finally {
         setIsLoading(false)
       }

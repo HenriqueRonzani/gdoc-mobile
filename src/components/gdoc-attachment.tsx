@@ -24,9 +24,10 @@ export function GdocAttachment({attachment}: Props) {
 
     try {
       setIsDownloading(true)
+      const safeName = attachment.name.replace(/[\/\\.: ]/g, '_');
       const timestamp = new Date().getTime()
 
-      const file = new File(Paths.cache, `${timestamp}_${attachment.name}`)
+      const file = new File(Paths.cache, `${timestamp}_${safeName}`)
       await File.downloadFileAsync(attachment.url, file)
 
       if (await Sharing.isAvailableAsync()) {
@@ -36,7 +37,7 @@ export function GdocAttachment({attachment}: Props) {
         })
       }
     } catch (error: unknown) {
-      handleRequestError(error, toastError, 'Erro ao baixar despacho')
+      handleRequestError(error, toastError, 'Erro ao baixar anexo')
     } finally {
       setIsDownloading(false)
     }

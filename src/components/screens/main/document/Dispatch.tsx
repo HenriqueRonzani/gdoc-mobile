@@ -15,10 +15,9 @@ import { handleRequestError } from '@/services/request-error.helper'
 type Props = {
   timelineItem: TimelineDispatch
   documentInfo: DocumentInfo
-  isFirst?: boolean
 }
 
-export function Dispatch({timelineItem, documentInfo, isFirst}: Props) {
+export function Dispatch({timelineItem, documentInfo}: Props) {
   const {toastError} = useSnackbar()
   const date = dayjs(timelineItem.created_at)
   const dateString = date.format('DD/MM/YYYY')
@@ -53,7 +52,7 @@ export function Dispatch({timelineItem, documentInfo, isFirst}: Props) {
   }
 
   return (
-    <View style={[style.container, {width: isFirst ? '100%' : '80%'}]}>
+    <View style={[style.container]}>
       <View style={style.header}>
         <Text style={style.headerText}>
           <Text style={style.headerFieldName}>Tipo do documento: </Text>
@@ -129,6 +128,7 @@ export function Dispatch({timelineItem, documentInfo, isFirst}: Props) {
 
 const style = StyleSheet.create({
   container: {
+    width: '100%',
     borderWidth: 1,
     borderColor: theme.colors.text,
     borderRadius: 10

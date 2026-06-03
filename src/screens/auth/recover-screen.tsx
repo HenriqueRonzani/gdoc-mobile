@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import type { StepObjectType } from '@/providers/stepper-context-provider'
 import { StepperProvider } from '@/providers/stepper-context-provider'
 import { GetRecoveryMethodsStep } from '@/components/screens/auth/recover/steps/get-recovery-methods-step'

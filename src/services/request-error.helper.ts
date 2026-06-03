@@ -1,28 +1,34 @@
 import { isAxiosError } from 'axios'
 
+export const logIfDev = (...toLog: any) => {
+  if (__DEV__) {
+    console.log(toLog)
+  }
+}
+
 export const handleRequestError = (error: unknown, toastError: (message: string) => void, errorMessage?: string)=> {
   if (!(error instanceof Error)) {
     toastError('Houve um erro interno')
-    console.log('Erro desconhecido', error)
+    logIfDev('Erro desconhecido', error)
     return
   }
 
-  console.log('Erro', `${error.name} - ${error.message}`)
-  console.log('Stack Trace', error.stack)
+  logIfDev('Erro', `${error.name} - ${error.message}`)
+  logIfDev('Stack Trace', error.stack)
 
   if (isAxiosError(error)) {
     if (error.response) {
       if (error.response.status === 401) {
         toastError('Sessão expirada')
-        console.log('Sessão expirada')
+        logIfDev('Sessão expirada')
         return
       }
       toastError(errorMessage || 'Houve um erro ao processar sua solicitação')
-      console.log(`Api Response: ${error.response.status} `, error.response.data)
+      logIfDev(`Api Response: ${error.response.status} `, error.response.data)
       return
     }
   }
 
   toastError('Houve um erro interno')
-  console.log('Erro fora da API')
+  logIfDev('Erro fora da API')
 }

@@ -49,7 +49,6 @@ export function RenderTimeline({uuid, documentInfo}: Props) {
           key={firstDispatch.dispatch_number}
           timelineItem={firstDispatch}
           documentInfo={documentInfo}
-          isFirst={true}
         />
       )}
 
@@ -61,13 +60,11 @@ export function RenderTimeline({uuid, documentInfo}: Props) {
 
         <View style={style.timelineDispatches}>
           {timeline.map((item) => (
-              <View style={style.dispatchContainer}>
+              <View style={style.dispatchContainer} key={item.dispatch_number}>
                 <Text style={style.dispatchText}>Novo despacho - {dayjs(item.created_at).format('DD/MM/YYYY')}</Text>
                 <Dispatch
-                  key={item.dispatch_number}
                   timelineItem={item}
                   documentInfo={documentInfo}
-                  isFirst={true}
                 />
               </View>
             )

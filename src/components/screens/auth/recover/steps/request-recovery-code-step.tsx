@@ -23,7 +23,7 @@ export function RequestRecoveryCodeStep() {
         cpfCnpj: recoverParams.cpfCnpj,
         contact_id: methodId
       })
-      setRecoverParams({...recoverParams, verification_token: response.verification_token})
+      setRecoverParams({...recoverParams, chosen_method_id: methodId, verification_token: response.verification_token})
       setStepName('verify_recovery_code')
     } catch (error: unknown) {
       handleRequestError(error, toastError, 'Houve um erro')

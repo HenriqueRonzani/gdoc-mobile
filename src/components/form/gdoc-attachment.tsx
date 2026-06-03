@@ -7,6 +7,7 @@ import * as DocumentPicker from 'expo-document-picker'
 import { EXTENSION_MIMETYPE_MAPPING } from '@/mapping/extension-mimetype.mapping'
 import { extension, FileValue } from '@/types/service'
 import { AttachmentPreview } from '@/components/attachment-preview'
+import { logIfDev } from '@/services/request-error.helper'
 
 type Props = {
   field: ControllerRenderProps<FieldValues, string>
@@ -37,7 +38,7 @@ export function GdocAttachment({field, allowedExtensions}: Props) {
 
       field.onChange(fileFormatted)
     } catch (error: unknown) {
-      console.log(error)
+      logIfDev(error)
     }
   }
 

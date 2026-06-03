@@ -28,7 +28,7 @@ export function FinishResetPasswordForm({onSubmit, footer, loading}: Props) {
     >
       <View style={styles.container}>
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Digite seu CPF ou CNPJ</Text>
+          <Text style={styles.title}>Digite sua nova senha</Text>
 
           <GdocFormItem name={'password'}>
             {(field) => (

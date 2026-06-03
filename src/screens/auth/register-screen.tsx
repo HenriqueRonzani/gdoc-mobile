@@ -6,7 +6,6 @@ import { RegisterUseTermsStep } from '@/components/screens/auth/register/steps/r
 import { RegisterContextProvider } from '@/providers/register-context-provider'
 import type { StepObjectType } from '@/providers/stepper-context-provider'
 import { StepperProvider } from '@/providers/stepper-context-provider'
-import { KeyboardAvoidingView, Platform, View } from 'react-native'
 import { GdocStepperContent } from '@/components/stepper/gdoc-stepper-content'
 
 const screens: StepObjectType[] = [
