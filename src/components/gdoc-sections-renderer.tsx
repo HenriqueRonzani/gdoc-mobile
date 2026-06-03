@@ -75,7 +75,7 @@ const style = StyleSheet.create({
     alignItems: 'center'
   },
   itemText: {
-    fontSize: 10,
+    fontSize: 12,
     flex: 1,
     color: '#0e0e0e'
   },
@@ -91,7 +91,7 @@ const style = StyleSheet.create({
     paddingVertical: 10
   },
   sectionText: {
-    fontSize: 10,
+    fontSize: 12,
     color: theme.colors.text,
     fontWeight: 'bold'
   },

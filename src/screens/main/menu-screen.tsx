@@ -1,14 +1,16 @@
-import { ScrollView, StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { useOrganization } from '@/providers/organization-provider'
 import { useState } from 'react'
 import { IdentificationType, Service } from '@/types/service'
-import { getService } from '@/services/service.service'
+import { getService } from '@/services/api/service.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { useNavigation } from '@react-navigation/native'
 import type { NavigatorType } from '@/types/navigation'
-import { IdentificationTypeModal } from '@/components/screens/main/create-document/identification-type-modal'
+import { IdentificationTypeModal } from '@/components/screens/main/document/create/identification-type-modal'
 import { GdocCategoryNavigation } from '@/components/screens/main/menu/gdoc-category-navigation'
+import { handleRequestError } from '@/services/request-error.helper'
+import { Text } from 'react-native-paper'
 
 export function MenuScreen() {
   const {toastError} = useSnackbar()
@@ -17,7 +19,7 @@ export function MenuScreen() {
   const serviceLetterId = organization.external_service_letter_id
 
   const [loading, setLoading] = useState<boolean>(false)
-  const [service, setService] = useState<Service|null>(null)
+  const [service, setService] = useState<Service | null>(null)
   const [openModal, setOpenModal] = useState<boolean>(false)
 
   const onPressService = async (id: number) => {
@@ -35,8 +37,7 @@ export function MenuScreen() {
         })
       }
     } catch (error: unknown) {
-      toastError('Erro ao carregar categorias')
-      console.log(error)
+      handleRequestError(error, toastError, 'Erro ao carregar categorias')
     } finally {
       setLoading(false)
     }
@@ -57,28 +58,23 @@ export function MenuScreen() {
   }
 
   return (
-    <ScrollView style={style.container}>
-      <GdocPageTitle>Serviços</GdocPageTitle>
+    <View style={style.container}>
+      <View>
+        <GdocPageTitle>Serviços</GdocPageTitle>
+        <Text style={style.text}>Busque e solicite os serviços oferecidos por {organization.name}</Text>
+      </View>
       <GdocCategoryNavigation onPressService={onPressService} loading={loading}/>
       <IdentificationTypeModal open={openModal} onClose={onCloseModal} onChoose={onConfirmModal} loading={loading}/>
-    </ScrollView>
+    </View>
   )
 }
 
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
     paddingHorizontal: 15,
+    paddingBottom: 10,
     gap: 8
-  },
-  backContainer: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  backText: {
-    fontSize: 12
   },
   content: {
     gap: 30

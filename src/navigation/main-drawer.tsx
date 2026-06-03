@@ -7,7 +7,8 @@ import { theme } from '@/theme'
 import { MainDrawerContent } from '@/components/screens/main/main-drawer-content'
 import { useProfile } from '@/providers/profile-provider'
 import { ActivityIndicator } from 'react-native-paper'
-import { CreateDocumentScreen } from '@/screens/main/create-document-screen'
+import { CreateDocumentScreen } from '@/screens/main/document/create-document-screen'
+import { DocumentScreen } from '@/screens/main/document/document-screen'
 
 const Drawer = createDrawerNavigator()
 
@@ -26,7 +27,7 @@ export function MainDrawer() {
           drawerType: 'front',
           drawerStyle: {
             backgroundColor: theme.colors.background,
-            width: '50%',
+            width: '60%',
             borderTopLeftRadius: 0,
             borderBottomLeftRadius: 0,
             borderWidth: 0
@@ -43,6 +44,7 @@ export function MainDrawer() {
         <Drawer.Screen name={'Profile'} component={ProfileScreen}/>
         <Drawer.Screen name={'Inbox'} component={InboxScreen}/>
         <Drawer.Screen name={'CreateDocument'} component={CreateDocumentScreen}/>
+        <Drawer.Screen name={'Document'} component={DocumentScreen}/>
       </Drawer.Navigator>
     )
 }

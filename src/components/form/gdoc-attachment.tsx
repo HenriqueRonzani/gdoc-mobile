@@ -6,13 +6,15 @@ import { theme } from '@/theme'
 import * as DocumentPicker from 'expo-document-picker'
 import { EXTENSION_MIMETYPE_MAPPING } from '@/mapping/extension-mimetype.mapping'
 import { extension, FileValue } from '@/types/service'
+import { AttachmentPreview } from '@/components/attachment-preview'
+import { logIfDev } from '@/services/request-error.helper'
 
 type Props = {
   field: ControllerRenderProps<FieldValues, string>
   allowedExtensions: extension[]
 }
 
-export function GdocAttachment ({field, allowedExtensions}: Props) {
+export function GdocAttachment({field, allowedExtensions}: Props) {
   const handleClick = async () => {
     const cleanExtensions = allowedExtensions.flatMap(i => i.split(',')).map(i => i.trim()) as extension[]
     const allowedMimeTypes = cleanExtensions.flatMap(i => EXTENSION_MIMETYPE_MAPPING[i]).filter(Boolean) as string[]
@@ -24,7 +26,6 @@ export function GdocAttachment ({field, allowedExtensions}: Props) {
       })
 
       if (result.canceled) {
-        console.log('Usuario cancelou escolha de anexo')
         return
       }
       const file = result.assets[0]
@@ -37,8 +38,14 @@ export function GdocAttachment ({field, allowedExtensions}: Props) {
 
       field.onChange(fileFormatted)
     } catch (error: unknown) {
-      console.log(error)
+      logIfDev(error)
     }
+  }
+
+  const getAttachmentType = () => {
+    if (field.value?.type === 'application/pdf') return 'pdf'
+    if (field.value?.type.startsWith('image/')) return 'image'
+    return 'other'
   }
 
   return (
@@ -49,7 +56,15 @@ export function GdocAttachment ({field, allowedExtensions}: Props) {
           { !field.value ? 'Toque para adicionar um anexo' : 'Toque para trocar o anexo' }
         </Text>
       </View>
-      {/*Adicionar preview ou icon quando for anexado*/}
+      <View style={style.previewContainer}>
+        {field.value?.type && field.value?.uri && (
+          <AttachmentPreview
+            type={getAttachmentType()}
+            source={{uri: field.value.uri}}
+            small
+          />
+        )}
+      </View>
     </Pressable>
   )
 }
@@ -59,22 +74,29 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: theme.colors.gray,
-    paddingHorizontal: 6,
+    paddingLeft: 6,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: theme.colors.text,
     borderStyle: 'dashed',
-    paddingVertical: 10,
   },
   textContainer: {
+    paddingVertical: 10,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     gap: 6,
     alignItems: 'center'
   },
+  previewContainer: {
+    width: 50,
+    height: 50,
+    maxHeight: 100,
+    maxWidth: 100,
+    borderRadius: 8
+  },
   text: {
     color: '#000000BB',
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   }
 })

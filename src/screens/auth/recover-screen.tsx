@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import type { StepObjectType } from '@/providers/stepper-context-provider'
 import { StepperProvider } from '@/providers/stepper-context-provider'
 import { GetRecoveryMethodsStep } from '@/components/screens/auth/recover/steps/get-recovery-methods-step'
@@ -18,28 +18,24 @@ const screens: StepObjectType[] = [
 
 export function RecoverScreen() {
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1}}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <RecoverContextProvider>
-        <StepperProvider initialStepName={'get_recovery_methods'} steps={screens} totalSteps={4}>
-          <View style={style.container}>
-            <RecoverHeader/>
-            <GdocStepperContent/>
-          </View>
-        </StepperProvider>
-      </RecoverContextProvider>
-    </KeyboardAvoidingView>
+    <RecoverContextProvider>
+      <StepperProvider initialStepName={'get_recovery_methods'} steps={screens} totalSteps={4}>
+        <RecoverHeader/>
+        <View style={style.container}>
+          <GdocStepperContent/>
+        </View>
+      </StepperProvider>
+    </RecoverContextProvider>
   )
 }
 
-const style =  StyleSheet.create({
+const style = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
     flexDirection: 'column',
     paddingHorizontal: 15,
+    paddingBottom: 10,
     gap: 30
-  },
+  }
 })
