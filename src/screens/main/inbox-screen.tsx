@@ -108,7 +108,7 @@ export function InboxScreen() {
 
       { loading
         ? <ActivityIndicator animating={true} />
-        : <ScrollView>
+        : <ScrollView showsVerticalScrollIndicator={false}>
           {data.map(item => (
             <InboxItem
               key={item.number}
@@ -129,17 +129,10 @@ const styles = StyleSheet.create({
     gap: 5
   },
 
-  title: {
-    fontSize: 36,
-    alignSelf: 'center',
-    marginTop: 32,
-  },
-
   filter: {
     width: '100%',
     height: 111,
     alignSelf: 'center',
-    marginTop: 36,
     padding: 14,
 
     borderWidth: 1,

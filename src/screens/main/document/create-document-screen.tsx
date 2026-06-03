@@ -3,13 +3,13 @@ import { CreateDocumentRouteParam, type NavigatorType, ParamType } from '@/types
 import { createDocument } from '@/services/api/document.service'
 import { useCallback, useState } from 'react'
 import { useSnackbar } from '@/providers/snackbar-provider'
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { CreateDocumentForm } from '@/components/screens/main/document/create/create-document-form'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { TransformedCreateDocumentFormData } from '@/schemas/main/create-document.schema'
-import { Icon } from 'react-native-paper/src'
 import { handleRequestError } from '@/services/request-error.helper'
+import { GdocBack } from '@/components/gdoc-back'
 
 export function CreateDocumentScreen() {
   const navigation = useNavigation<NavigatorType>()
@@ -33,7 +33,7 @@ export function CreateDocumentScreen() {
       })
       toastSuccess('Documento criado com sucesso!')
 
-      if(!response.uuid) return
+      if (!response.uuid) return
 
       navigation.navigate('Document', {
         uuid: response.uuid
@@ -52,13 +52,12 @@ export function CreateDocumentScreen() {
   )
 
   return (
-    <ScrollView contentContainerStyle={style.container}>
+    <View style={style.container}>
       <GdocPageTitle>Criar serviço</GdocPageTitle>
 
-      <Pressable style={style.backContainer} onPress={() => navigation.navigate('Menu')}>
-        <Icon source={'arrow-left'} size={25}/>
-        <Text style={style.backText}>Voltar ao menu</Text>
-      </Pressable>
+      <GdocBack onPress={() => navigation.navigate('Menu')}
+        text={'Voltar ao menu'}
+      />
 
       <View style={style.content}>
         <Text style={{textAlign: 'center'}}>
@@ -76,26 +75,23 @@ export function CreateDocumentScreen() {
           )
         }
       </View>
-    </ScrollView>
+    </View>
   )
 }
 
 const style = StyleSheet.create({
   container: {
+    flex:1,
     flexDirection: 'column',
     paddingHorizontal: 15,
-    gap: 8
-  },
-  backContainer: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  backText: {
-    fontSize: 12
+    gap: 8,
+    paddingBottom: 10
   },
   content: {
+    flex: 1,
     backgroundColor: 'white',
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     borderRadius: 10,
     gap: 15
   },

@@ -60,7 +60,7 @@ export function RenderTimeline({uuid, documentInfo}: Props) {
         </View>
 
         <View style={style.timelineDispatches}>
-          {timeline.map((item, index) => (
+          {timeline.map((item) => (
               <View style={style.dispatchContainer}>
                 <Text style={style.dispatchText}>Novo despacho - {dayjs(item.created_at).format('DD/MM/YYYY')}</Text>
                 <Dispatch

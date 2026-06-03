@@ -8,6 +8,11 @@ import { RootNavigation } from '@/navigation/root-navigation'
 import * as SplashScreen from 'expo-splash-screen'
 import { OrganizationProvider, useOrganization } from '@/providers/organization-provider'
 import { useEffect } from 'react'
+import { LogBox } from 'react-native'
+
+LogBox.ignoreLogs([
+  "SafeAreaView has been deprecated" // No use in projects, only libs which we cannot fix
+])
 
 SplashScreen.preventAutoHideAsync().catch(() => {
 })

@@ -56,7 +56,6 @@ const style = StyleSheet.create({
     borderBottomRightRadius: 5,
     borderTopRightRadius: 5,
     gap: 10,
-    width: '98%',
     borderWidth: 1,
     borderColor: theme.colors.text
   },

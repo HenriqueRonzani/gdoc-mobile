@@ -1,6 +1,5 @@
-import { Pressable, StyleSheet, View } from 'react-native'
-import { Icon } from 'react-native-paper/src'
-import { ActivityIndicator, Text } from 'react-native-paper'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { ActivityIndicator } from 'react-native-paper'
 import { GdocCategories } from '@/components/screens/main/menu/service-sheet/gdoc-categories'
 import { GdocServices } from '@/components/screens/main/menu/service-sheet/gdoc-services'
 import { useCallback, useEffect, useState } from 'react'
@@ -10,6 +9,7 @@ import { getRootServiceLetter, getServiceLetterByCategory } from '@/services/api
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { useFocusEffect } from '@react-navigation/native'
 import { handleRequestError } from '@/services/request-error.helper'
+import { GdocBack } from '@/components/gdoc-back'
 
 type Props = {
   onPressService: (id: number) => void
@@ -66,13 +66,16 @@ export function GdocCategoryNavigation ({onPressService, loading}: Props) {
   )
 
   return (
-    <View style={style.content}>
-      <Text style={style.text}>Busque e solicite os serviços oferecidos por {organization.name}</Text>
+    <ScrollView
+      style={{flex: 1}}
+      contentContainerStyle={style.content}
+      showsVerticalScrollIndicator={false}
+    >
       {parentIds.length > 0 && (
-        <Pressable style={style.backContainer} onPress={onPreviousCategory}>
-          <Icon source={'arrow-left'} size={25}/>
-          <Text style={style.backText}>Voltar a categoria anterior</Text>
-        </Pressable>
+        <GdocBack
+          text={'Voltar para categoria anterior'}
+          onPress={onPreviousCategory}
+        />
       )}
       {localLoading || loading
         ? <ActivityIndicator animating={true}/>
@@ -83,28 +86,14 @@ export function GdocCategoryNavigation ({onPressService, loading}: Props) {
           </View>
         )
       }
-    </View>
+    </ScrollView>
   )
 }
 
 
 const style = StyleSheet.create({
-  backContainer: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  backText: {
-    fontSize: 12
-  },
   content: {
-    gap: 30
-  },
-  text: {
-    fontSize: 14,
-    alignSelf: 'flex-start',
-    color: '#7C7C7C',
-    justifyContent: 'center',
-    textAlign: 'center'
+    gap: 5,
   }
 })
 

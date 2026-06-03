@@ -36,22 +36,9 @@ const getDrawerConfig = ({navigation}: DrawerContentComponentProps): SectionsCon
           icon: 'file-document-multiple-outline',
           title: 'Carta de Serviço',
           onPress: () => navigation.navigate('Menu')
-        },
-        {
-          icon: 'shield-check',
-          title: 'Autenticidade de Documento',
-          onPress: () => null
         }
       ]
     },
-    {
-      name: 'Transparência',
-      items: [{
-        icon: 'file-document-outline',
-        title: 'LAI - Acesso à Informação',
-        onPress: () => null
-      }]
-    }
   ]
 }
 
@@ -68,7 +55,9 @@ export function MainDrawerContent(props: DrawerContentComponentProps) {
         </View>
         <IconButton icon={'logout'} size={15} iconColor={theme.colors.primaryText} onPress={clearToken}/>
       </View>
-      <SectionsRenderer drawerSectionsConfig={drawerItems}/>
+      <View style={style.content}>
+        <SectionsRenderer drawerSectionsConfig={drawerItems}/>
+      </View>
     </View>
   )
 }
@@ -100,5 +89,8 @@ const style = StyleSheet.create({
     borderRadius: 40,
     borderWidth: 2,
     borderColor: theme.colors.gray
+  },
+  content: {
+    padding: 5
   }
 })

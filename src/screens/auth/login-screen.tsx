@@ -68,7 +68,8 @@ const style = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    paddingBottom: 10
   },
   containerLogo: {
     alignSelf: 'center'

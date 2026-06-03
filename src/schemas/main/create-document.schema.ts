@@ -140,11 +140,6 @@ export const makeServiceSchema = (hasRecipientOptions: boolean, customFields: Cu
   })
 }
 
-type FormFields = {
-  field_id: string | number
-  value: StringValue | CheckboxValue | FileValue
-}
-
 export type TransformedFields = {
   id: string | number
   value: StringValue | CheckboxValue | FileValue

@@ -4,9 +4,9 @@ import { RegisterOrganizationStep } from '@/components/screens/auth/register/ste
 import { RegisterAddressStep } from '@/components/screens/auth/register/steps/register-address-step'
 import { RegisterUseTermsStep } from '@/components/screens/auth/register/steps/register-use-terms-step'
 import { RegisterContextProvider } from '@/providers/register-context-provider'
-import type { StepObjectType} from '@/providers/stepper-context-provider'
+import type { StepObjectType } from '@/providers/stepper-context-provider'
 import { StepperProvider } from '@/providers/stepper-context-provider'
-import { KeyboardAvoidingView, Platform } from 'react-native'
+import { KeyboardAvoidingView, Platform, View } from 'react-native'
 import { GdocStepperContent } from '@/components/stepper/gdoc-stepper-content'
 
 const screens: StepObjectType[] = [
@@ -19,16 +19,10 @@ const screens: StepObjectType[] = [
 
 export function RegisterScreen() {
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1}}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-
-      <RegisterContextProvider>
-        <StepperProvider initialStepName={'user_type'} steps={screens} totalSteps={4}>
-          <GdocStepperContent/>
-        </StepperProvider>
-      </RegisterContextProvider>
-    </KeyboardAvoidingView>
+    <RegisterContextProvider>
+      <StepperProvider initialStepName={'user_type'} steps={screens} totalSteps={4}>
+        <GdocStepperContent/>
+      </StepperProvider>
+    </RegisterContextProvider>
   )
 }

@@ -1,4 +1,4 @@
-import Pdf, { Source } from 'react-native-pdf'
+import Pdf from 'react-native-pdf'
 import { Image, StyleSheet, View } from 'react-native'
 import { theme } from '@/theme'
 import { Icon } from 'react-native-paper/src'

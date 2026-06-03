@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 import { DocumentInfo } from '@/types/document'
 import { getDocument } from '@/services/api/document.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
-import { Icon } from 'react-native-paper/src'
-import { ActivityIndicator, Text } from 'react-native-paper'
+import { ActivityIndicator } from 'react-native-paper'
 import { handleRequestError } from '@/services/request-error.helper'
 import { RenderTimeline } from '@/components/screens/main/document/render-timeline'
+import { GdocBack } from '@/components/gdoc-back'
 
 export function DocumentScreen() {
   const {toastError} = useSnackbar()
@@ -40,10 +40,7 @@ export function DocumentScreen() {
   return (
     <ScrollView style={style.container}>
       <GdocPageTitle>Visualizar Documento</GdocPageTitle>
-      <Pressable style={style.backContainer} onPress={() => navigation.navigate('Inbox')}>
-        <Icon source={'arrow-left'} size={25}/>
-        <Text style={style.backText}>Voltar ao menu</Text>
-      </Pressable>
+      <GdocBack text={'Voltar ao menu'} onPress={() => navigation.navigate('Inbox')}/>
       <View style={style.content}>
         {loading
           ? <ActivityIndicator animating={true}/>
@@ -59,13 +56,6 @@ const style = StyleSheet.create({
     flexDirection: 'column',
     paddingHorizontal: 15,
     gap: 8
-  },
-  backContainer: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  backText: {
-    fontSize: 12
   },
   content: {
     backgroundColor: 'white',

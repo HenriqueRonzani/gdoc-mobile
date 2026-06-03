@@ -27,7 +27,7 @@ export function MainDrawer() {
           drawerType: 'front',
           drawerStyle: {
             backgroundColor: theme.colors.background,
-            width: '50%',
+            width: '60%',
             borderTopLeftRadius: 0,
             borderBottomLeftRadius: 0,
             borderWidth: 0
