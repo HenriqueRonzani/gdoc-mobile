@@ -67,7 +67,7 @@ const style = StyleSheet.create({
   valueContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   titleText: {
     fontSize: 14,

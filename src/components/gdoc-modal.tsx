@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { IconButton, Modal, Portal, Text } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 import { theme } from '@/theme'

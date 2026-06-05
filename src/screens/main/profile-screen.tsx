@@ -4,7 +4,6 @@ import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { ProfileAreas } from '@/components/screens/main/profile/profile-areas'
 import { useProfile } from '@/providers/profile-provider'
 
-
 export function ProfileScreen() {
   const {profile} = useProfile()
 

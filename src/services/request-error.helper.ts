@@ -6,7 +6,7 @@ export const logIfDev = (...toLog: any) => {
   }
 }
 
-export const handleRequestError = (error: unknown, toastError: (message: string) => void, errorMessage?: string)=> {
+export const handleRequestError = (error: unknown, toastError: (message: string) => void, errorMessage?: string) => {
   if (!(error instanceof Error)) {
     toastError('Houve um erro interno')
     logIfDev('Erro desconhecido', error)

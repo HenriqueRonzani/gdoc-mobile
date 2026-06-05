@@ -1,4 +1,4 @@
-import { GENDER_ENUM } from '@/enum/gender.enum'
+import type { GENDER_ENUM } from '@/enum/gender.enum'
 
 export interface Contact {
   id: number

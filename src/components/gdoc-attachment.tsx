@@ -1,4 +1,4 @@
-import { Attachment } from '@/types/document'
+import type { Attachment } from '@/types/document'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { File, Paths } from 'expo-file-system'
@@ -24,7 +24,7 @@ export function GdocAttachment({attachment}: Props) {
 
     try {
       setIsDownloading(true)
-      const safeName = attachment.name.replace(/[\/\\.: ]/g, '_');
+      const safeName = attachment.name.replace(/[\/\\.: ]/g, '_')
       const timestamp = new Date().getTime()
 
       const file = new File(Paths.cache, `${timestamp}_${safeName}`)

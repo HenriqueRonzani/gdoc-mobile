@@ -1,5 +1,5 @@
 import api from '@/lib/axios'
-import { Service, Subject } from '@/types/service'
+import type { Service, Subject } from '@/types/service'
 
 export const getRootServiceLetter = async (serviceLetterId: number) => {
   const response = await api.get(`/integration/native-login/service-letter/${serviceLetterId}/services`)

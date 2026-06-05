@@ -1,4 +1,4 @@
-import { extension } from '@/types/service'
+import type { extension } from '@/types/service'
 
 export const EXTENSION_MIMETYPE_MAPPING: Record<extension, string | string[]> = {
   '.pdf': 'application/pdf',
@@ -7,7 +7,7 @@ export const EXTENSION_MIMETYPE_MAPPING: Record<extension, string | string[]> = 
   '.wav': 'audio/wav',
   '.webm': [
     'video/webm',
-    'audio/webm',
+    'audio/webm'
   ],
   '.doc': 'application/msword',
   '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -23,4 +23,4 @@ export const EXTENSION_MIMETYPE_MAPPING: Record<extension, string | string[]> = 
     'video/ogg'
   ],
   '*': '*/*'
-};
+}

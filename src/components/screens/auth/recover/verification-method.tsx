@@ -24,5 +24,5 @@ export function VerificationMethod({method, onClick}: Props) {
 const styles = StyleSheet.create({
   option: {
     backgroundColor: theme.colors.gray
-  },
+  }
 })

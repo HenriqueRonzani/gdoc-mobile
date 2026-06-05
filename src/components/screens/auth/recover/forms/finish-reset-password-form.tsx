@@ -3,7 +3,8 @@ import { GdocForm } from '@/components/form/gdoc-form'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
-import { FinishResetPasswordFormData, FinishResetPasswordFormSchema } from '@/schemas/auth/recover.schema'
+import type { FinishResetPasswordFormData} from '@/schemas/auth/recover.schema'
+import { FinishResetPasswordFormSchema } from '@/schemas/auth/recover.schema'
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
@@ -31,7 +32,7 @@ export function FinishResetPasswordForm({onSubmit, footer, loading}: Props) {
           <Text style={styles.title}>Digite sua nova senha</Text>
 
           <GdocFormItem name={'password'}>
-            {(field) => (
+            {field => (
               <>
                 <GdocTextInput field={field} label={'Senha'} placeholder={'Senha'} secureTextEntry={true}/>
                 <GdocFormError name={'password'}/>
@@ -39,10 +40,10 @@ export function FinishResetPasswordForm({onSubmit, footer, loading}: Props) {
             )}
           </GdocFormItem>
           <GdocFormItem name={'confirm_password'}>
-            {(field) => (
+            {field => (
               <>
                 <GdocTextInput field={field} label={'Confirme a senha'} placeholder={'Confirme a senha'}
-                               secureTextEntry={true}/>
+                  secureTextEntry={true}/>
                 <GdocFormError name={'confirm_password'}/>
               </>
             )}

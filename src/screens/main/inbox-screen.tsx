@@ -6,7 +6,7 @@ import { getInbox } from '@/services/api/inbox.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { debounce } from 'lodash'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
-import { InboxDocument } from '@/types/inbox'
+import type { InboxDocument } from '@/types/inbox'
 import { handleRequestError } from '@/services/request-error.helper'
 
 export function InboxScreen() {
@@ -31,7 +31,9 @@ export function InboxScreen() {
 
   const getInboxItemsDebounce = debounce(getInboxItems, 500)
 
-  useEffect(() => {getInboxItemsDebounce()}, [tab, search])
+  useEffect(() => {
+    getInboxItemsDebounce()
+  }, [tab, search])
 
   return (
     <View style={styles.container}>
@@ -74,7 +76,7 @@ export function InboxScreen() {
           <Pressable
             style={[
               styles.tab,
-              tab === 'opened_by_others' && styles.tabActive,
+              tab === 'opened_by_others' && styles.tabActive
             ]}
             onPress={() => setTab('opened_by_others')}
           >
@@ -114,7 +116,7 @@ export function InboxScreen() {
               key={item.number}
               item={item}
             />
-            ))}
+          ))}
         </ScrollView>
       }
 
@@ -138,45 +140,45 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#000',
     borderRadius: 5,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#F5F5F5'
   },
 
   searchRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
 
   searchInput: {
     width: 272,
-    height: 40,
+    height: 40
   },
 
   icon: {
-    margin: 0,
+    margin: 0
   },
 
   tabRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    flex: 1,
+    flex: 1
   },
 
   tab: {
-    paddingBottom: 4,
+    paddingBottom: 4
   },
 
   tabActive: {
     borderBottomWidth: 1,
-    borderColor: '#1F1B79',
+    borderColor: '#1F1B79'
   },
 
   textActive: {
-    color: '#1F1B79',
+    color: '#1F1B79'
   },
 
   textInactive: {
-    color: '#737373',
-  },
+    color: '#737373'
+  }
 })

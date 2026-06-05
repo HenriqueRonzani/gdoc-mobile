@@ -5,7 +5,7 @@ import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
 import * as DocumentPicker from 'expo-document-picker'
 import { EXTENSION_MIMETYPE_MAPPING } from '@/mapping/extension-mimetype.mapping'
-import { extension, FileValue } from '@/types/service'
+import type { extension, FileValue } from '@/types/service'
 import { AttachmentPreview } from '@/components/attachment-preview'
 import { logIfDev } from '@/services/request-error.helper'
 
@@ -78,7 +78,7 @@ const style = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: theme.colors.text,
-    borderStyle: 'dashed',
+    borderStyle: 'dashed'
   },
   textContainer: {
     paddingVertical: 10,

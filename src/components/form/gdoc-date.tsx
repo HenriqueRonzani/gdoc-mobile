@@ -1,5 +1,6 @@
 import type { ControllerRenderProps, FieldValues } from 'react-hook-form'
-import { GdocTextInput, GdocTextInputProps } from '@/components/form/gdoc-text-input'
+import type { GdocTextInputProps } from '@/components/form/gdoc-text-input'
+import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { Masks } from 'react-native-mask-input'
 
 type Props = GdocTextInputProps & {

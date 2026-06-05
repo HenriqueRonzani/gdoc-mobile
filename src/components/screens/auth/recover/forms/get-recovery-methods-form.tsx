@@ -4,7 +4,8 @@ import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
 import React from 'react'
 import { Masks } from 'react-native-mask-input'
-import { GetRecoveryMethodsFormData, GetRecoveryMethodsFormSchema } from '@/schemas/auth/recover.schema'
+import type { GetRecoveryMethodsFormData} from '@/schemas/auth/recover.schema'
+import { GetRecoveryMethodsFormSchema } from '@/schemas/auth/recover.schema'
 import { useRecover } from '@/providers/recover-context-provider'
 import { StyleSheet, View } from 'react-native'
 import { theme } from '@/theme'
@@ -27,7 +28,7 @@ export function GetRecoveryMethodsForm ({onSubmit, footer, loading}: Props) {
       onSubmit={onSubmit}
       footer={footer}
       isLoading={loading}
-      confirmLabel={"Próximo"}
+      confirmLabel={'Próximo'}
     >
       <View style={styles.container}>
         <View style={styles.contentContainer}>

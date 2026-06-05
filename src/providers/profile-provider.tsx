@@ -1,7 +1,8 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import type { ReactNode} from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { getProfile } from '@/services/api/profile.service'
-import { UserSessionData } from '@/types/auth-me'
+import type { UserSessionData } from '@/types/auth-me'
 import { handleRequestError } from '@/services/request-error.helper'
 
 export type ProfileProviderData = {
@@ -30,7 +31,9 @@ export function ProfileProvider({children}: { children: ReactNode }) {
     }
   }
 
-  useEffect(() => {loadProfile()}, [])
+  useEffect(() => {
+    loadProfile()
+  }, [])
 
   return (
     <ProfileContext.Provider value={{profile, isLoading}}>

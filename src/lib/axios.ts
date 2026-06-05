@@ -7,7 +7,7 @@ const api = axios.create({
   baseURL: baseUrl
 })
 
-api.interceptors.request.use(async config => {
+api.interceptors.request.use(async (config) => {
   const token = await getAuthToken()
 
   if (token) {

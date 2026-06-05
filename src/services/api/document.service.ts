@@ -1,6 +1,6 @@
 import api from '@/lib/axios'
 import { formatToFormData } from '@/services/create-document.helper'
-import { CreateDocumentRequest, CreateDocumentResponse, DocumentInfo, TimelineDispatch } from '@/types/document'
+import type { CreateDocumentRequest, CreateDocumentResponse, DocumentInfo, TimelineDispatch } from '@/types/document'
 
 export const createDocument = async (payload: CreateDocumentRequest) => {
   const formData = formatToFormData(payload)

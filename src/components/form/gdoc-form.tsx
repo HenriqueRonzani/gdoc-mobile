@@ -3,7 +3,8 @@ import type { ZodTypeAny } from 'zod/v3'
 import React, { useCallback, useRef } from 'react'
 import type { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { StyleSheet, View, ViewStyle } from 'react-native'
+import type { ViewStyle } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { GdocPrimaryButton } from '@/components/button/gdoc-primary-button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useFocusEffect } from '@react-navigation/native'
@@ -38,7 +39,6 @@ export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, chil
       }
     }, [])
   )
-
 
   return (
     <FormProvider {...methods}>
@@ -75,7 +75,7 @@ const style = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingBottom: 25,
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   formBody: {
     gap: 10
