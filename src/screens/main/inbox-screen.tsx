@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { ActivityIndicator, IconButton, Text, TextInput } from 'react-native-paper'
 import { InboxItem } from '@/components/screens/main/inbox/inbox-item'
@@ -72,24 +72,7 @@ export function InboxScreen() {
               Abertos por mim
             </Text>
           </Pressable>
-
-          <Pressable
-            style={[
-              styles.tab,
-              tab === 'opened_by_others' && styles.tabActive
-            ]}
-            onPress={() => setTab('opened_by_others')}
-          >
-            <Text
-              style={
-                tab === 'opened_by_others'
-                  ? styles.textActive
-                  : styles.textInactive
-              }
-            >
-              Aberto por outros
-            </Text>
-          </Pressable>
+          {/*
 
           <Pressable
             style={[styles.tab, tab === 'archived' && styles.tabActive]}
@@ -105,7 +88,9 @@ export function InboxScreen() {
               Concluído
             </Text>
           </Pressable>
+          */}
         </View>
+
       </View>
 
       { loading
@@ -160,7 +145,7 @@ const styles = StyleSheet.create({
 
   tabRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     flex: 1
   },
