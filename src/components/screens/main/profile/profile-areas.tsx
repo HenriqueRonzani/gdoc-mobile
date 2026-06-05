@@ -21,21 +21,7 @@ export function ProfileAreas({ profile }: { profile: ProfileType }) {
         },
         {
             title: 'Gênero',
-            value: GENDER_ENUM[profile.person.gender],
-            customActions: [
-                {
-                    icon: 'plus',
-                    onPress: () => console.log('Adicionar')
-                },
-                {
-                    icon: 'pencil',
-                    onPress: () => console.log('Editar')
-                },
-                {
-                    icon: 'trash-can',
-                    onPress: () => console.log('Excluir')
-                }
-            ]
+            value: GENDER_ENUM[profile.person.gender]
         }
     ]
 
@@ -114,10 +100,6 @@ export function ProfileAreas({ profile }: { profile: ProfileType }) {
             <GdocDataRenderer
                 renderConfig={contatos}
                 headerTitle={'Contatos'}
-                headerAction={{
-                    title: 'Editar',
-                    onPress: () => console.log('Editar Header')
-                }}
             />
 
             <GdocDataRenderer
