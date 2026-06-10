@@ -9,6 +9,8 @@ import { GdocPageTitle } from '@/components/gdoc-page-title'
 import type { InboxDocument } from '@/types/inbox'
 import { handleRequestError } from '@/services/request-error.helper'
 import { useProfile } from '@/providers/profile-provider'
+import { loadNextPage } from '@/services/api/common.service'
+import type { NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
 
 export function InboxScreen() {
   const {toastError} = useSnackbar()
@@ -18,15 +20,19 @@ export function InboxScreen() {
   const [data, setData] = useState<InboxDocument[]>([])
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(false)
+  const [loadingNextPage, setLoadingNextPage] = useState(false)
+  const [nextPageUrl, setNextPageUrl] = useState < string | null | undefined>()
+
+  const filterDocuments = (documents: InboxDocument[]) => {
+    return documents.filter(item => item.created_by === profile.person.name)
+  }
 
   const getInboxItems = async () => {
     setLoading(true)
     try {
       const response = await getInbox({tab, search})
-      const filteredResponse = response?.data
-        ? response.data.filter(item => item.created_by === profile.person.name)
-        : []
-      setData(filteredResponse)
+      setData(response?.data ? filterDocuments(response.data) : [])
+      setNextPageUrl(response.next_page_url)
     } catch (error: unknown) {
       handleRequestError(error, toastError, 'Erro ao buscar documentos!')
     } finally {
@@ -35,6 +41,24 @@ export function InboxScreen() {
   }
 
   const getInboxItemsDebounce = debounce(getInboxItems, 500)
+
+  const getNextPage = async ({nativeEvent}: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (!nextPageUrl) return
+
+    const { layoutMeasurement, contentOffset, contentSize } = nativeEvent
+    if (layoutMeasurement.height + contentOffset.y < contentSize.height - 20) return
+
+    try {
+      setLoadingNextPage(true)
+      const response = await loadNextPage<InboxDocument>(nextPageUrl)
+      setData([...data, ...filterDocuments(response.data)])
+      setNextPageUrl(response.next_page_url)
+    } catch (error: unknown) {
+      handleRequestError(error, toastError, 'Erro ao buscar documentos!')
+    } finally {
+      setLoadingNextPage(false)
+    }
+  }
 
   useEffect(() => {
     getInboxItemsDebounce()
@@ -99,7 +123,10 @@ export function InboxScreen() {
 
       { loading
         ? <ActivityIndicator animating={true} />
-        : <ScrollView showsVerticalScrollIndicator={false}>
+        : <ScrollView
+          showsVerticalScrollIndicator={false}
+          onScroll={nativeEvent => getNextPage(nativeEvent)}
+        >
           { data.length === 0
             ? <Text style={{textAlign: 'center'}}>Nenhum registro encontrado.</Text>
 
@@ -111,6 +138,7 @@ export function InboxScreen() {
 
             ))
           }
+          { loadingNextPage && <ActivityIndicator animating={true} /> }
         </ScrollView>
       }
 
