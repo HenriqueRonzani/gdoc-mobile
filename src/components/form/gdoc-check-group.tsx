@@ -32,4 +32,3 @@ export function GdocCheckGroup ({field, values, disabled}: Props) {
     </View>
   )
 }
-

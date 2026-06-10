@@ -21,7 +21,7 @@ export function MainDrawer() {
         initialRouteName={'Menu'}
         backBehavior={'initialRoute'}
         defaultStatus={'closed'}
-        drawerContent={(props) => <MainDrawerContent {...props}/>}
+        drawerContent={props => <MainDrawerContent {...props}/>}
         screenOptions={{
           drawerPosition: 'right',
           drawerType: 'front',

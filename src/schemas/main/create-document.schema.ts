@@ -1,6 +1,6 @@
-import { CheckboxValue, CustomFieldConfig, extension, FileValue, StringValue } from '@/types/service'
+import type { CheckboxValue, CustomFieldConfig, extension, FileValue, StringValue } from '@/types/service'
 import { z } from 'zod'
-import { ZodTypeAny } from 'zod/v3'
+import type { ZodTypeAny } from 'zod/v3'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
@@ -101,13 +101,13 @@ export const makeServiceSchema = (hasRecipientOptions: boolean, customFields: Cu
       })
     }
   }).transform((field) => {
-      const fieldConfig = customFields.find(c => c.id === field.field_id)
-      const value = fieldConfig?.type === 'checkbox' ? field.value.join(', ') : field.value
-      return {
-        id: field.field_id,
-        value: value
-      } as TransformedFields
-    }
+    const fieldConfig = customFields.find(c => c.id === field.field_id)
+    const value = fieldConfig?.type === 'checkbox' ? field.value.join(', ') : field.value
+    return {
+      id: field.field_id,
+      value: value
+    } as TransformedFields
+  }
   )
 
   return z.object({
@@ -118,7 +118,7 @@ export const makeServiceSchema = (hasRecipientOptions: boolean, customFields: Cu
       : z.coerce.number().int().optional(),
     fields: z.array(fieldSchema)
   }).transform((data: TransformedCreateDocumentFormData) => {
-    const filtered = data.fields.filter(i => {
+    const filtered = data.fields.filter((i) => {
       const fieldConfig = customFields.find(c => c.id === i.id)
       if (!fieldConfig) return false
 

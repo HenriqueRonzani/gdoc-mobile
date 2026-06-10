@@ -28,5 +28,5 @@ const style = StyleSheet.create({
     paddingVertical: 4,
     gap: 16,
     paddingHorizontal: 15
-  },
+  }
 })

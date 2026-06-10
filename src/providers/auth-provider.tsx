@@ -36,7 +36,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
 
   useEffect(() => {
     const interceptor = api.interceptors.response.use(
-      (response) => response,
+      response => response,
       async (error: unknown) => {
         if (isAxiosError(error) && error?.response && error.response.status === 401) {
           handleRequestError(error, toastError, 'Sessão Expirada')
@@ -46,7 +46,7 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
         return Promise.reject(error)
       }
     )
-    return ()=> {
+    return () => {
       api.interceptors.response.eject(interceptor)
     }
   }, [])

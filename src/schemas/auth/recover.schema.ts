@@ -12,7 +12,7 @@ export const VerifyRecoveryCodeFormSchema = z.object({
 export const FinishResetPasswordFormSchema = z.object({
   password: createPasswordField,
   confirm_password: z.string().min(8, 'Deve conter menos 8 caracteres')
-}).refine((data) => data.password === data.confirm_password, {
+}).refine(data => data.password === data.confirm_password, {
   message: 'Senhas devem ser iguais',
   path: ['confirm_password']
 })

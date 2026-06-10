@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import { handleRequestError } from '@/services/request-error.helper'
-import { DocumentInfo, TimelineDispatch } from '@/types/document'
+import type { DocumentInfo, TimelineDispatch } from '@/types/document'
 import { getDocumentTimeline } from '@/services/api/document.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { Dispatch } from '@/components/screens/main/document/Dispatch'
@@ -59,15 +59,15 @@ export function RenderTimeline({uuid, documentInfo}: Props) {
         </View>
 
         <View style={style.timelineDispatches}>
-          {timeline.map((item) => (
-              <View style={style.dispatchContainer} key={item.dispatch_number}>
-                <Text style={style.dispatchText}>Novo despacho - {dayjs(item.created_at).format('DD/MM/YYYY')}</Text>
-                <Dispatch
-                  timelineItem={item}
-                  documentInfo={documentInfo}
-                />
-              </View>
-            )
+          {timeline.map(item => (
+            <View style={style.dispatchContainer} key={item.dispatch_number}>
+              <Text style={style.dispatchText}>Novo despacho - {dayjs(item.created_at).format('DD/MM/YYYY')}</Text>
+              <Dispatch
+                timelineItem={item}
+                documentInfo={documentInfo}
+              />
+            </View>
+          )
           )}
         </View>
       </View>

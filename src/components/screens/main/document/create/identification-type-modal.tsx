@@ -4,7 +4,7 @@ import { theme } from '@/theme'
 import { GdocModal } from '@/components/gdoc-modal'
 import { Icon } from 'react-native-paper/src'
 import { OptionCard } from '@/components/gdoc-option-card'
-import { IdentificationType } from '@/types/service'
+import type { IdentificationType } from '@/types/service'
 
 type Props = {
   open: boolean
@@ -29,7 +29,6 @@ export function IdentificationTypeModal({open, onChoose, onClose, loading}: Prop
                 solicitante.
               </Text>
             </View>
-
 
             <View style={style.identificationTypeContainer}>
               <Text style={style.questionText}>Como você gostaria de prosseguir?</Text>

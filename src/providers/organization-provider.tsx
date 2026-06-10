@@ -1,5 +1,6 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
-import { Organization } from '@/types/organization'
+import type { ReactNode} from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import type { Organization } from '@/types/organization'
 import { getOrganization } from '@/services/api/organization.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { handleRequestError } from '@/services/request-error.helper'
@@ -30,7 +31,9 @@ export function OrganizationProvider({children}: { children: ReactNode }) {
     }
   }
 
-  useEffect(() => {loadOrganization()}, [])
+  useEffect(() => {
+    loadOrganization()
+  }, [])
 
   return (
     <OrganizationContext.Provider value={{organization, isLoading}}>

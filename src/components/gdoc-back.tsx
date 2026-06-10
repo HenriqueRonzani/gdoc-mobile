@@ -23,5 +23,5 @@ const style = StyleSheet.create({
   },
   backText: {
     fontSize: 12
-  },
+  }
 })

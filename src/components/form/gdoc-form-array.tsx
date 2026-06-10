@@ -1,5 +1,5 @@
 import { useFieldArray, useFormContext } from 'react-hook-form'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 export type DynamicFieldData = {
   id: string

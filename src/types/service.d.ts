@@ -10,22 +10,22 @@ export type Subject = {
 }
 
 export type extension =
-  | ".pdf"
-  | ".txt"
-  | ".png"
-  | ".wav"
-  | ".webm"
-  | ".doc"
-  | ".docx"
-  | ".csv"
-  | ".xls"
-  | ".xlsx"
-  | ".jpeg"
-  | ".jpg"
-  | ".mp3"
-  | ".mp4"
-  | ".ogg"
-  | "*"
+  | '.pdf'
+  | '.txt'
+  | '.png'
+  | '.wav'
+  | '.webm'
+  | '.doc'
+  | '.docx'
+  | '.csv'
+  | '.xls'
+  | '.xlsx'
+  | '.jpeg'
+  | '.jpg'
+  | '.mp3'
+  | '.mp4'
+  | '.ogg'
+  | '*'
 
 export type StringBool = 'false' | 'true'
 export type FieldType =

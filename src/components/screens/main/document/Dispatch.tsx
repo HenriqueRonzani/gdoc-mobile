@@ -1,4 +1,4 @@
-import { DocumentInfo, TimelineDispatch } from '@/types/document'
+import type { DocumentInfo, TimelineDispatch } from '@/types/document'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import dayjs from 'dayjs'
@@ -30,9 +30,9 @@ export function Dispatch({timelineItem, documentInfo}: Props) {
 
     try {
       setIsDownloading(true)
-      const name = `${documentInfo.subject_type}-${documentInfo.number}`;
-      const safeName = name.replace(/[\/\\.: ]/g, '_');
-      const timestamp = new Date().getTime();
+      const name = `${documentInfo.subject_type}-${documentInfo.number}`
+      const safeName = name.replace(/[\/\\.: ]/g, '_')
+      const timestamp = new Date().getTime()
 
       const file = new File(Paths.cache, `${safeName}_${timestamp}.pdf`)
       await File.downloadFileAsync(timelineItem.url, file)
@@ -137,7 +137,7 @@ const style = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderColor: theme.colors.text,
-    backgroundColor: theme.colors.gray + 'AA',
+    backgroundColor: `${theme.colors.gray  }AA`,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10
   },

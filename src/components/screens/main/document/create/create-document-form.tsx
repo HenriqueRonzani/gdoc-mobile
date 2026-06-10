@@ -1,6 +1,7 @@
-import { Service } from '@/types/service'
+import type { Service } from '@/types/service'
 import { GdocForm } from '@/components/form/gdoc-form'
-import { makeServiceSchema, TransformedCreateDocumentFormData } from '@/schemas/main/create-document.schema'
+import type { TransformedCreateDocumentFormData } from '@/schemas/main/create-document.schema'
+import { makeServiceSchema } from '@/schemas/main/create-document.schema'
 import { StyleSheet, View } from 'react-native'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocDropdown } from '@/components/form/gdoc-dropdown'
@@ -28,7 +29,7 @@ export function CreateDocumentForm({service, onSubmit}: Props) {
     fields: initialFields
   }
 
-  const recipientsItems = service.recipient_options.map(i => {
+  const recipientsItems = service.recipient_options.map((i) => {
     const value = i.responsible_id || i.sector_id
     return {
       label: i.recipient_name,

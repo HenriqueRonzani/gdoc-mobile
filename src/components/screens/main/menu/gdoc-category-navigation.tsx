@@ -3,7 +3,7 @@ import { ActivityIndicator } from 'react-native-paper'
 import { GdocCategories } from '@/components/screens/main/menu/service-sheet/gdoc-categories'
 import { GdocServices } from '@/components/screens/main/menu/service-sheet/gdoc-services'
 import { useCallback, useEffect, useState } from 'react'
-import { Subject } from '@/types/service'
+import type { Subject } from '@/types/service'
 import { useOrganization } from '@/providers/organization-provider'
 import { getRootServiceLetter, getServiceLetterByCategory } from '@/services/api/service.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
@@ -90,11 +90,8 @@ export function GdocCategoryNavigation ({onPressService, loading}: Props) {
   )
 }
 
-
 const style = StyleSheet.create({
   content: {
-    gap: 5,
+    gap: 5
   }
 })
-
-

@@ -1,4 +1,4 @@
-import { Subject } from '@/types/service'
+import type { Subject } from '@/types/service'
 import { GdocSubject } from '@/components/screens/main/menu/gdoc-subject'
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'

@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 import { Feather } from '@expo/vector-icons'
 import { formatFeatherIconName } from '@/services/format-feather-icon-name.helper'
 import { useNavigation } from '@react-navigation/native'
-import { NavigatorType } from '@/types/navigation'
+import type { NavigatorType } from '@/types/navigation'
 
 type props = {
   item: InboxDocument

@@ -38,7 +38,7 @@ const getDrawerConfig = ({navigation}: DrawerContentComponentProps): SectionsCon
           onPress: () => navigation.navigate('Menu')
         }
       ]
-    },
+    }
   ]
 }
 

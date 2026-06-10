@@ -1,4 +1,5 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
+import type { Dispatch, ReactNode, SetStateAction} from 'react'
+import { createContext, useContext, useState } from 'react'
 
 type RecoverContextFields = {
   cpfCnpj: string

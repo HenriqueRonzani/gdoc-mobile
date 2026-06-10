@@ -1,5 +1,5 @@
-import { Mask } from 'react-native-mask-input'
-import { StringBool } from '@/types/service'
+import type { Mask } from 'react-native-mask-input'
+import type { StringBool } from '@/types/service'
 
 export const stringToMask = (mascaraString: string): Mask => {
   return mascaraString.split('').map((char) => {
@@ -11,6 +11,15 @@ export const stringToMask = (mascaraString: string): Mask => {
     }
     return char
   })
+}
+
+export function fixEncoding(text: any) {
+  if (!text) return text
+  try {
+    return decodeURIComponent(escape(text))
+  } catch (e) {
+    return text
+  }
 }
 
 export const formatToFormData = (

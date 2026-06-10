@@ -11,7 +11,7 @@ import { useEffect } from 'react'
 import { LogBox } from 'react-native'
 
 LogBox.ignoreLogs([
-  "SafeAreaView has been deprecated" // No use in projects, only libs which we cannot fix
+  'SafeAreaView has been deprecated' // No use in projects, only libs which we cannot fix
 ])
 
 SplashScreen.preventAutoHideAsync().catch(() => {

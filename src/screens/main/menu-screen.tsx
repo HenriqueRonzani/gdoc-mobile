@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { useOrganization } from '@/providers/organization-provider'
 import { useState } from 'react'
-import { IdentificationType, Service } from '@/types/service'
+import type { IdentificationType, Service } from '@/types/service'
 import { getService } from '@/services/api/service.service'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { useNavigation } from '@react-navigation/native'
@@ -87,4 +87,3 @@ const style = StyleSheet.create({
     textAlign: 'center'
   }
 })
-
