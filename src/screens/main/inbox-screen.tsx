@@ -8,9 +8,11 @@ import { debounce } from 'lodash'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import type { InboxDocument } from '@/types/inbox'
 import { handleRequestError } from '@/services/request-error.helper'
+import { useProfile } from '@/providers/profile-provider'
 
 export function InboxScreen() {
   const {toastError} = useSnackbar()
+  const {profile} = useProfile()
 
   const [tab, setTab] = useState('opened_by_me')
   const [data, setData] = useState<InboxDocument[]>([])
@@ -21,7 +23,10 @@ export function InboxScreen() {
     setLoading(true)
     try {
       const response = await getInbox({tab, search})
-      setData(response?.data ?? [])
+      const filteredResponse = response?.data
+        ? response.data.filter(item => item.created_by === profile.person.name)
+        : []
+      setData(filteredResponse)
     } catch (error: unknown) {
       handleRequestError(error, toastError, 'Erro ao buscar documentos!')
     } finally {
@@ -72,7 +77,6 @@ export function InboxScreen() {
               Abertos por mim
             </Text>
           </Pressable>
-          {/*
 
           <Pressable
             style={[styles.tab, tab === 'archived' && styles.tabActive]}
@@ -88,7 +92,7 @@ export function InboxScreen() {
               Concluído
             </Text>
           </Pressable>
-          */}
+
         </View>
 
       </View>
@@ -96,12 +100,17 @@ export function InboxScreen() {
       { loading
         ? <ActivityIndicator animating={true} />
         : <ScrollView showsVerticalScrollIndicator={false}>
-          {data.map(item => (
-            <InboxItem
-              key={item.number}
-              item={item}
-            />
-          ))}
+          { data.length === 0
+            ? <Text style={{textAlign: 'center'}}>Nenhum registro encontrado.</Text>
+
+            : data.map(item => (
+              <InboxItem
+                key={item.number}
+                item={item}
+              />
+
+            ))
+          }
         </ScrollView>
       }
 
