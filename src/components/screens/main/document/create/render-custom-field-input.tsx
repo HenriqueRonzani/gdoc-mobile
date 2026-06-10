@@ -27,6 +27,7 @@ export function RenderCustomFieldInput({ field, customFieldConfig }: Props) {
         field={field}
         label={formattedName}
         placeholder={formattedName}
+        {...(customFieldConfig.options.maxchar ? { maxLength: Number(customFieldConfig.options.maxchar) } : {})}
         {...(customFieldConfig.options.mask && { mask: stringToMask(customFieldConfig.options.mask) })}
         disabled={disabled}
         style={{ fontSize: 12 }}
