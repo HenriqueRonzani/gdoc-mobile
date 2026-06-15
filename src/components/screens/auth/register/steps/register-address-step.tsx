@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     paddingHorizontal: 15,
+    paddingBottom: 10,
     gap: 8
   }
 })

@@ -14,3 +14,8 @@ export type InboxDocument = {
   user_has_pending_signature: boolean;
   users_can_reopen_document: boolean;
 };
+
+export type GetInboxParams = {
+  tab: string
+  search: string
+}

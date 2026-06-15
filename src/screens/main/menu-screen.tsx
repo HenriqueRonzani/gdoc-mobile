@@ -1,19 +1,70 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { GdocService } from '@/components/screens/main/home/gdoc-service'
+import { StyleSheet, View } from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
+import { useOrganization } from '@/providers/organization-provider'
+import { useState } from 'react'
+import type { IdentificationType, Service } from '@/types/service'
+import { getService } from '@/services/api/service.service'
+import { useSnackbar } from '@/providers/snackbar-provider'
+import { useNavigation } from '@react-navigation/native'
+import type { NavigatorType } from '@/types/navigation'
+import { IdentificationTypeModal } from '@/components/screens/main/document/create/identification-type-modal'
+import { GdocCategoryNavigation } from '@/components/screens/main/menu/gdoc-category-navigation'
+import { handleRequestError } from '@/services/request-error.helper'
+import { Text } from 'react-native-paper'
 
 export function MenuScreen() {
+  const {toastError} = useSnackbar()
+  const {organization} = useOrganization()
+  const navigation = useNavigation<NavigatorType>()
+  const serviceLetterId = organization.external_service_letter_id
+
+  const [loading, setLoading] = useState<boolean>(false)
+  const [service, setService] = useState<Service | null>(null)
+  const [openModal, setOpenModal] = useState<boolean>(false)
+
+  const onPressService = async (id: number) => {
+    setLoading(true)
+    try {
+      const response = await getService(serviceLetterId, id)
+      const identificationTypes = response.identification_type.filter(i => i !== 'CONFIDENTIAL')
+      if (identificationTypes.length > 1) {
+        setService(response)
+        setOpenModal(true)
+      } else {
+        navigation.navigate('CreateDocument', {
+          service: response,
+          identificationType: identificationTypes[0]
+        })
+      }
+    } catch (error: unknown) {
+      handleRequestError(error, toastError, 'Erro ao carregar categorias')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const onCloseModal = () => {
+    setOpenModal(false)
+    setService(null)
+  }
+
+  const onConfirmModal = (chosenType: IdentificationType) => {
+    if (!service) return
+    navigation.navigate('CreateDocument', {
+      service: service,
+      identificationType: chosenType
+    })
+    setOpenModal(false)
+  }
+
   return (
     <View style={style.container}>
-      <GdocPageTitle>Serviços</GdocPageTitle>
-      <Text style={style.text}>Busque e solicite os serviços oferecidos por Prefeitura Municipal de Modelandia</Text>
-
-      {/* Esse é só um exemplo de como usar o componente, ajustar conforme o protótipo*/}
-      <GdocService
-        iconName={'wrench'}
-        iconColor={'#1A237E'}
-        title={'Chamado Técnico'}
-        onPress={() => console.log('Clique no serviço')}/>
+      <View>
+        <GdocPageTitle>Serviços</GdocPageTitle>
+        <Text style={style.text}>Busque e solicite os serviços oferecidos por {organization.name}</Text>
+      </View>
+      <GdocCategoryNavigation onPressService={onPressService} loading={loading}/>
+      <IdentificationTypeModal open={openModal} onClose={onCloseModal} onChoose={onConfirmModal} loading={loading}/>
     </View>
   )
 }
@@ -21,10 +72,12 @@ export function MenuScreen() {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
     paddingHorizontal: 15,
+    paddingBottom: 10,
     gap: 8
+  },
+  content: {
+    gap: 30
   },
   text: {
     fontSize: 14,

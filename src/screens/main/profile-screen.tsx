@@ -1,52 +1,11 @@
-import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native-paper'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView} from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
-import { getProfile } from '@/services/profile.service'
 import { ProfileAreas } from '@/components/screens/main/profile/profile-areas'
-import type { ProfileType } from '@/types/profile'
-import { useSnackbar } from '@/providers/snackbar-provider'
-
-const initialProfile: ProfileType = {
-  //id: null,
-  person: {
-    name: '',
-    cpfCnpj: '',
-    dateOfBirth: '',
-    gender: 'other',
-    email: '',
-    cellphone: '',
-    address: {
-      zip: '',
-      city: '',
-      state: '',
-      street: '',
-      number: ''
-    }
-  }
-}
+import { useProfile } from '@/providers/profile-provider'
 
 export function ProfileScreen() {
-  const { toastError } = useSnackbar()
-  const [profile, setProfile] = useState<ProfileType>(initialProfile)
-  const [loading, setLoading] = useState(false)
-
-  async function loadProfile() {
-    setLoading(true)
-    try {
-      const data = await getProfile()
-      setProfile(data)
-    } catch (err: unknown) {
-      toastError('Erro ao carregar perfil')
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    loadProfile()
-  }, [])
+  const {profile, reloadProfile} = useProfile()
 
   return (
 
@@ -61,15 +20,10 @@ export function ProfileScreen() {
         as informações da sua conta, como nome,
         e-mail e dados de contato.
       </Text>
-      {
-        loading
-          ? <Text>Carregando...</Text>
-          : (
-            <View style={style.contentContainer}>
-              <ProfileAreas profile={profile} reload={loadProfile}/>
-            </View>
-          )
-      }
+
+      <View style={style.contentContainer}>
+        <ProfileAreas profile={profile} reload={reloadProfile} />
+      </View>
     </ScrollView>
   )
 }

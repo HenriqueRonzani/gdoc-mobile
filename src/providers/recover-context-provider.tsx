@@ -1,8 +1,10 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
+import type { Dispatch, ReactNode, SetStateAction} from 'react'
+import { createContext, useContext, useState } from 'react'
 
 type RecoverContextFields = {
   cpfCnpj: string
   recovery_methods: RecoveryMethod[]
+  chosen_method_id: number
   verification_token: string
   verification_code: string
 }
@@ -25,9 +27,10 @@ export function useRecover() {
   return recoverContext
 }
 
-const initialParams = {
+const initialParams: RecoverContextFields = {
   cpfCnpj: '',
   recovery_methods: [],
+  chosen_method_id: 0,
   verification_token: '',
   verification_code: ''
 }

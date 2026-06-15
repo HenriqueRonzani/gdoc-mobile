@@ -8,10 +8,11 @@ import React from 'react'
 export function RecoverHeader() {
   return (
     <View style={style.headerContainer}>
-      <GdocPageTitle>Central de recuperação de conta</GdocPageTitle>
-      <GdocStepperProgressBar/>
       <GdocMemo title={'Recuperar Conta'} description={'Siga o passo a passo abaixo para recuperar sua conta'}/>
-      <GdocDivider/>
+      <View style={style.stepsContainer}>
+        <GdocStepperProgressBar/>
+        <GdocDivider/>
+      </View>
     </View>
   )
 }
@@ -19,7 +20,13 @@ export function RecoverHeader() {
 const style = StyleSheet.create({
   headerContainer: {
     width: '100%',
-    paddingVertical: 4,
+    paddingBottom: 4,
     gap: 16
+  },
+  stepsContainer: {
+    width: '100%',
+    paddingVertical: 4,
+    gap: 16,
+    paddingHorizontal: 15
   }
 })

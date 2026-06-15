@@ -13,7 +13,7 @@ export const fullNameField = z.string()
   .regex(/^\S+\s+\S+/, 'O nome deve incluir nome e sobrenome')
 
 export const cpfField = z.string()
-  .refine(value => value.length === 14)
+  .refine(value => value.length === 14, 'CPF inválido')
   .refine(validateCPF, 'CPF inválido')
 
 export const cnpjField = z.string()

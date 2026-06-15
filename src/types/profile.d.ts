@@ -1,4 +1,4 @@
-import { GENDER_ENUM } from "@/enum/gender.enum"
+import type { GENDER_ENUM } from '@/enum/gender.enum'
 
 export type ProfileType = {
   //id: integer
@@ -10,11 +10,11 @@ export type ProfileType = {
     email: string
     cellphone: string
     address: {
-        zip?: string
-        city?: string
-        state?: string
-        street?: string
-        number?: string
+        zip: string | null
+        city: string | null
+        state: string | null
+        street: string | null
+        number: string | null
     }
   }
 }

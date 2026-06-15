@@ -9,9 +9,10 @@ import { useNavigation } from '@react-navigation/native'
 import type { NavigatorType } from '@/types/navigation'
 import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
-import { loginUser } from '@/services/auth.service'
+import { loginUser } from '@/services/api/auth.service'
 import { GdocSecondaryButton } from '@/components/button/gdoc-secondary-button'
 import { useAuth } from '@/providers/auth-provider'
+import { handleRequestError } from '@/services/request-error.helper'
 
 export function LoginScreen() {
   const {setToken} = useAuth()
@@ -26,8 +27,7 @@ export function LoginScreen() {
       await setToken(response?.access_token)
       toastSuccess('Login realizado com Sucesso!')
     } catch (error) {
-      console.log(error)
-      toastError('Erro ao realizar login!')
+      handleRequestError(error, toastError, 'Erro ao realizar login!')
     } finally {
       setIsLoading(false)
     }
@@ -68,7 +68,8 @@ const style = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    paddingBottom: 10
   },
   containerLogo: {
     alignSelf: 'center'

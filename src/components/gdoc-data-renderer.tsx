@@ -9,7 +9,7 @@ type CustomAction = {
 
 type FieldConfig = {
   title: string
-  value?: string
+  value?: string | null
   customActions?: CustomAction[]
 }
 
@@ -67,7 +67,7 @@ const style = StyleSheet.create({
   valueContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   titleText: {
     fontSize: 14,

@@ -3,14 +3,14 @@ import { GdocDataRenderer } from '@/components/gdoc-data-renderer'
 import { GENDER_ENUM } from '@/enum/gender.enum'
 import type { ProfileType } from '@/types/profile'
 import { StyleSheet, View } from 'react-native'
-import React, {useState} from 'react'
+import {useState} from 'react'
 import { GdocModal } from '@/components/gdoc-modal'
 import { ProfileModelScreens } from './profile-model-screens'
 
 type Props = {
     profile: ProfileType
     reload?: () => void
-  }
+}
 
 export function ProfileAreas({ profile, reload }: Props) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -109,16 +109,13 @@ export function ProfileAreas({ profile, reload }: Props) {
         }}/>}
       </GdocModal>
     </View>
-
   )
 }
 const style = StyleSheet.create({
-
   contentContainer: {
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 10,
     gap: 15
   }
-
 })

@@ -4,6 +4,7 @@ import { DefaultTheme as NavTheme } from '@react-navigation/native'
 export const theme = {
   ...MD3LightTheme,
   colors: {
+    ...MD3LightTheme.colors,
     'primary': '#023452',
     'secondary': '#00CE84',
     'gray': '#F0F0F0',
@@ -11,6 +12,7 @@ export const theme = {
     'background': '#FFFFFF',
     'onPrimary': '#FFFFFF',
     'onSecondary': '#FFFFFF',
+
     'text': '#7C7C7C',
     'primaryText': '#565656',
     'component-on': '#F0F0F0',
@@ -23,6 +25,7 @@ export const navTheme = {
   colors: {
     ...NavTheme.colors,
     primary: theme.colors.primary,
-    background: theme.colors.background
+    background: theme.colors.background,
+    text: theme.colors.onSurface
   }
 }

@@ -2,7 +2,6 @@ import type { ReactNode } from 'react'
 import { IconButton, Modal, Portal, Text } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 import { theme } from '@/theme'
-import React from 'react'
 
 type Props = {
   headerTitle?: string
@@ -30,12 +29,7 @@ export function GdocModal ({headerTitle, open, onClose, children}: Props) {
 
 const style = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    width: '90%',
-    alignSelf: 'center',
-    borderColor: '#00000',
-    borderRadius: 10,
-    overflow: 'hidden',
+    flexDirection: 'column'
   },
   header: {
     flexDirection: 'row-reverse',
