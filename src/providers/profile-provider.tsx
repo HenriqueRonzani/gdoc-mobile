@@ -8,6 +8,7 @@ import { handleRequestError } from '@/services/request-error.helper'
 export type ProfileProviderData = {
   isLoading: boolean
   profile: UserSessionData
+  reloadProfile: () => void
 }
 
 const ProfileContext = createContext<ProfileProviderData>({} as ProfileProviderData)
@@ -19,24 +20,25 @@ export function ProfileProvider({children}: { children: ReactNode }) {
   const [profile, setProfile] = useState<UserSessionData>({} as UserSessionData)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const loadProfile = async () => {
-    setIsLoading(true)
+  const reloadProfile = async () => {
     try {
       const response = await getProfile()
       setProfile(response)
     } catch (error: unknown) {
       handleRequestError(error, toastError, 'Erro ao carregar perfil')
-    } finally {
-      setIsLoading(false)
     }
   }
 
   useEffect(() => {
+    const loadProfile = async () => {
+      await reloadProfile()
+      setIsLoading(false)
+    }
     loadProfile()
   }, [])
 
   return (
-    <ProfileContext.Provider value={{profile, isLoading}}>
+    <ProfileContext.Provider value={{profile, isLoading, reloadProfile}}>
       {children}
     </ProfileContext.Provider>
   )

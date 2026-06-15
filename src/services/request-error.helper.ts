@@ -14,7 +14,7 @@ export const handleRequestError = (error: unknown, toastError: (message: string)
   }
 
   logIfDev('Erro', `${error.name} - ${error.message}`)
-  logIfDev('Stack Trace', error.stack)
+  //  logIfDev('Stack Trace', error.stack) In react native the stack error is gigantic and gives no help
 
   if (isAxiosError(error)) {
     if (error.response) {
@@ -24,7 +24,7 @@ export const handleRequestError = (error: unknown, toastError: (message: string)
         return
       }
       toastError(errorMessage || 'Houve um erro ao processar sua solicitação')
-      logIfDev(`Api Response: ${error.response.status} `, error.response.data)
+      logIfDev(`Api Response: ${error.response.status} `, JSON.stringify(error.response.data))
       return
     }
   }

@@ -5,6 +5,7 @@ import globals from 'globals'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import importPlugin from 'eslint-plugin-import'
+import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default defineConfig([
   {
@@ -59,7 +60,6 @@ export default defineConfig([
       'space-infix-ops': 'error',
       'space-in-parens': ['error', 'never'],
       'no-trailing-spaces': ['error', { skipBlankLines: false }],
-      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
       'no-tabs': 'error',
 
       /**
@@ -69,7 +69,6 @@ export default defineConfig([
       'quote-props': ['error', 'consistent-as-needed'],
       'comma-dangle': ['error', 'never'],
       'semi': ['error', 'never'],
-      'eol-last': ['error', 'always'],
       'linebreak-style': ['error', 'unix'],
 
       /**
@@ -86,7 +85,6 @@ export default defineConfig([
       'no-implicit-coercion': 'error',
       'prefer-template': 'error',
       'no-useless-return': 'error',
-      'no-unexpected-multiline': 'error',
 
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-unused-vars': [
@@ -104,5 +102,6 @@ export default defineConfig([
       'react/prop-types': 'off',
       'react-hooks/exhaustive-deps': 'off'
     }
-  }
+  },
+  eslintConfigPrettier
 ])

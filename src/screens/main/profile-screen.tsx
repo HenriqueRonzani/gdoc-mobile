@@ -1,13 +1,14 @@
 import { Text } from 'react-native-paper'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView} from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { ProfileAreas } from '@/components/screens/main/profile/profile-areas'
 import { useProfile } from '@/providers/profile-provider'
 
 export function ProfileScreen() {
-  const {profile} = useProfile()
+  const {profile, reloadProfile} = useProfile()
 
   return (
+
     <ScrollView style={style.container}>
 
       <GdocPageTitle>
@@ -21,7 +22,7 @@ export function ProfileScreen() {
       </Text>
 
       <View style={style.contentContainer}>
-        <ProfileAreas profile={profile} />
+        <ProfileAreas profile={profile} reload={reloadProfile} />
       </View>
     </ScrollView>
   )

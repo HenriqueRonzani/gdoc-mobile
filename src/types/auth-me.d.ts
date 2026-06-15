@@ -196,7 +196,7 @@ export interface UserSessionData {
   deleted_at: string | null
 
   ged_user_id: number | null
-  external_user_type: any | null
+  external_user_type:  null
   moodle_id_number: any | null
   moodle_user_id: any | null
   origin: any | null

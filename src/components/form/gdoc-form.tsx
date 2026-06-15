@@ -1,13 +1,12 @@
 import { FormProvider, useForm } from 'react-hook-form'
 import type { ZodTypeAny } from 'zod/v3'
-import React, { useCallback, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import type { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { ViewStyle } from 'react-native'
 import { StyleSheet, View } from 'react-native'
 import { GdocPrimaryButton } from '@/components/button/gdoc-primary-button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useFocusEffect } from '@react-navigation/native'
 
 export type GdocFormProps<T extends ZodTypeAny> = {
   initial: z.infer<T>
@@ -32,13 +31,11 @@ export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, chil
 
   const scrollRef = useRef<KeyboardAwareScrollView>(null)
 
-  useFocusEffect(
-    useCallback(() => {
-      if (scrollRef.current) {
-        scrollRef.current.scrollToPosition(0, 0, false)
-      }
-    }, [])
-  )
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollToPosition(0, 0, false)
+    }
+  })
 
   return (
     <FormProvider {...methods}>
@@ -70,7 +67,7 @@ export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, chil
 
 const style = StyleSheet.create({
   form: {
-    flex: 1
+    width: '100%'
   },
   scrollContent: {
     flexGrow: 1,
