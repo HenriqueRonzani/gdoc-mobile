@@ -1,5 +1,5 @@
-import type { RegisterPersonFormData } from '@/schemas/auth.schema'
-import { RegisterFormPersonSchema } from '@/schemas/auth.schema'
+import type { RegisterPersonFormData } from '../../../../../schemas/auth/register.schema'
+import { RegisterFormPersonSchema } from '../../../../../schemas/auth/register.schema'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'

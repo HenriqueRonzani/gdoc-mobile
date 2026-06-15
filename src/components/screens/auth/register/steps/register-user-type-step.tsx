@@ -1,7 +1,5 @@
 import { StyleSheet, View } from 'react-native'
 import { OptionCard } from '@/components/gdoc-option-card'
-import individual from '@/assets/individual-icon.png'
-import legal from '@/assets/legal-entity-icon.png'
 import { initialRegisterParams, useRegister } from '@/providers/register-context-provider'
 import { useStepper } from '@/providers/stepper-context-provider'
 import { GdocGrayedButton } from '@/components/button/gdoc-grayed-button'
@@ -30,12 +28,12 @@ export function RegisterUserTypeStep() {
       <OptionCard
         onPress={() => chooseType('person')}
         optionName="Pessoa Física"
-        imageSource={individual}
+        icon={'account'}
       />
       <OptionCard
         onPress={() => chooseType('organization')}
         optionName="Pessoa Jurídica"
-        imageSource={legal}
+        icon={'domain'}
       />
 
       <GdocGrayedButton onPress={() => navigation.navigate('Login')}>

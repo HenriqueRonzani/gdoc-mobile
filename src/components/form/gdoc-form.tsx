@@ -3,7 +3,7 @@ import type { ZodTypeAny } from 'zod/v3'
 import React from 'react'
 import type { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native'
 import { GdocPrimaryButton } from '@/components/button/gdoc-primary-button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -16,9 +16,10 @@ export type GdocFormProps<T extends ZodTypeAny> = {
   showConfirm?: boolean
   confirmLabel?: string
   isLoading?: boolean
+  formStyle?: ViewStyle
 }
 
-export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, children, footer, showConfirm, confirmLabel, isLoading}: GdocFormProps<T>) {
+export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, children, footer, showConfirm, confirmLabel, isLoading, formStyle}: GdocFormProps<T>) {
   type formData = z.infer<typeof schema>
   const methods = useForm<formData>({
     resolver: zodResolver(schema),
@@ -31,7 +32,7 @@ export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, chil
     <FormProvider {...methods}>
       <KeyboardAwareScrollView
         style={style.form}
-        contentContainerStyle={style.scrollContent}
+        contentContainerStyle={[style.scrollContent, formStyle]}
         showsVerticalScrollIndicator={false}
       >
         <View style={style.formBody}>
@@ -53,14 +54,14 @@ export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, chil
 
 const style = StyleSheet.create({
   form: {
-    flex: 1
+    width: '100%'
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 25
+    paddingBottom: 25,
+    justifyContent: 'space-between',
   },
   formBody: {
-    flex: 1,
     gap: 10
   },
   formFooter: {

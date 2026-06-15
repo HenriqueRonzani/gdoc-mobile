@@ -1,19 +1,34 @@
-import { cnpj, cpf } from 'cpf-cnpj-validator'
 import { TypeOf, z } from 'zod'
-import { fullNameField, telephoneField } from '@/schemas/index'
+import { obligatoryStringField, fullNameField, emailField, telephoneField } from './common.schema'
 
 export const ProfileEditSchema = z.object({
-    name: fullNameField,
-    cpfCnpj: z.string().min(14, 'CPF incompleto').refine(field => cpf.isValid(field), 'Cpf invalido'),
-    dateOfBirth: z.string().min(10, 'Data incompleta').refine((field) => {
-      const [day, month, year] = field.split('/').map(Number)
-      const newDate = new Date(year, month - 1, day)
-      return year >= 1900 && day === newDate.getDate() && month - 1 === newDate.getMonth() && year === newDate.getFullYear()
-    }, 'Data invalída').transform((val) => {
-      const [day, month, year] = val.replace(/\//g, '-').split('-')
-      return `${year}-${month}-${day}`
-    }),
-    gender: z.string().min(1, 'Campo obrigatório'),
+  name: fullNameField,
+  gender: obligatoryStringField
 })
 
+export const EmailEditSchema = z.object({
+email: emailField
+})
+
+export const PhoneEditSchema = z.object({
+cellphone: telephoneField
+})
+
+export const AddressEditSchema = z.object({
+street: obligatoryStringField,
+number: obligatoryStringField,
+city: obligatoryStringField,
+state: obligatoryStringField,
+zip: obligatoryStringField,
+})
+export const AddPhoneSchema = z.object(
+  {
+    name: obligatoryStringField,
+    value: telephoneField
+}
+)
+export type EmailEditSchemaType = z.infer<typeof EmailEditSchema>
+export type PhoneEditSchemaType = z.infer<typeof PhoneEditSchema>
+export type AddressEditSchema = z.infer<typeof AddressEditSchema>
 export type ProfileEditSchemaType = z.infer<typeof ProfileEditSchema>
+export type AddPhoneSchemaType = z.infer<typeof AddPhoneSchema>

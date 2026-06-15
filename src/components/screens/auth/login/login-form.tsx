@@ -2,8 +2,8 @@ import { GdocForm } from '@/components/form/gdoc-form'
 import { GdocFormItem } from '@/components/form/gdoc-form-item'
 import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocFormError } from '@/components/form/gdoc-form-error'
-import type { LoginFormType} from '@/schemas/auth.schema'
-import { LoginFormSchema } from '@/schemas/auth.schema'
+import type { LoginFormType} from '@/schemas/auth/login.schema'
+import { LoginFormSchema } from '@/schemas/auth/login.schema'
 import React from 'react'
 import { Masks } from 'react-native-mask-input'
 
@@ -29,7 +29,7 @@ export function LoginForm({children, onSubmit, isLoading, footer}: Props) {
       <GdocFormItem name={'cpf_cnpj'}>
         {field => (
           <>
-            <GdocTextInput field={field} label={'CPF'} placeholder={'CPF'} mask={Masks.BRL_CPF}/>
+            <GdocTextInput field={field} label={'CPF/CNPJ'} placeholder={'CPF/CNPJ'} mask={Masks.BRL_CPF_CNPJ}/>
             <GdocFormError name={'cpf_cnpj'}/>
           </>
         )}
