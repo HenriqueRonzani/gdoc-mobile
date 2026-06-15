@@ -4,18 +4,23 @@ import { GENDER_ENUM } from '@/enum/gender.enum'
 import type { ProfileType } from '@/types/profile'
 import { StyleSheet, View } from 'react-native'
 import {useState} from 'react'
-import { GdocModal } from '@/components/gdoc-modal'
-import { ProfileModelScreens } from './profile-model-screens'
+import { updateProfile } from '@/services/api/profile.service'
+import { handleRequestError } from '@/services/request-error.helper'
+import { useSnackbar } from '@/providers/snackbar-provider'
+import { AddressModal } from './edit/address-modal'
+import { PersonModal } from './edit/person-modal'
+import type { UpdateUserProfileFormData } from '@/schemas/profile-edit.schema'
 
 type Props = {
     profile: ProfileType
-    reload?: () => void
+    reload: () => void
 }
 
 export function ProfileAreas({ profile, reload }: Props) {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [modalTitle, setModalTitle] = useState('')
-  const [screen, setScreen] = useState('')
+  const {toastError} = useSnackbar()
+  const [addressOpen, setAddressOpen] = useState<boolean>(false)
+  const [personOpen, setPersonOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const exampleData: RenderConfig = [
     {
@@ -53,12 +58,12 @@ export function ProfileAreas({ profile, reload }: Props) {
       value: profile.person.address?.zip
     },
     {
-      title: 'Cidade',
-      value: profile.person.address?.city
-    },
-    {
       title: 'UF',
       value: profile.person.address?.state
+    },
+    {
+      title: 'Cidade',
+      value: profile.person.address?.city
     },
     {
       title: 'Logradouro',
@@ -69,6 +74,32 @@ export function ProfileAreas({ profile, reload }: Props) {
       value: profile.person.address?.number
     }
   ]
+
+  const editProfile = async (data: UpdateUserProfileFormData) => {
+    try {
+      setLoading(true)
+      await updateProfile({
+        ...profile.person, 
+        ...data, 
+        address: {
+          ...profile.person.address, 
+          ...data.address
+        }
+      })
+      reload()
+      closeModals()
+    } catch (error: unknown) {
+      handleRequestError(error, toastError, 'Erro ao atualizar perfil')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const closeModals = () => {
+    setAddressOpen(false)
+    setPersonOpen(false)
+  }
+
   return (
     <View style={style.contentContainer}>
       <GdocDataRenderer
@@ -76,11 +107,7 @@ export function ProfileAreas({ profile, reload }: Props) {
         headerTitle={'Dados Pessoais'}
         headerAction={{
           title: 'Editar',
-          onPress: () => {
-            setModalTitle('Editar dados pessoais')
-            setScreen('DADOS_PESSOAIS')
-            setModalOpen(true)
-          }
+          onPress: () => setPersonOpen(true)
         }}
       />
 
@@ -94,20 +121,11 @@ export function ProfileAreas({ profile, reload }: Props) {
         headerTitle={'Endereço'}
         headerAction={{
           title: 'Editar',
-          onPress: () => {
-            setModalTitle('Editar endereço')
-            setScreen('ENDERECO')
-            setModalOpen(true)
-          }
+          onPress: () => setAddressOpen(true)
         }}
       />
-      <GdocModal open={modalOpen} onClose={() => {
-        setModalOpen(false)
-      }} headerTitle={modalTitle}>
-        {modalOpen && <ProfileModelScreens screen={screen} profile={profile} onSuccess={() => {
-          setModalOpen(false); reload?.()
-        }}/>}
-      </GdocModal>
+      <PersonModal openModal={personOpen} onSave={editProfile} onClose={closeModals} loading={loading}/>
+      <AddressModal open={addressOpen} onSave={editProfile} onClose={closeModals} loading={loading}/>
     </View>
   )
 }

@@ -1,34 +1,34 @@
-import { TypeOf, z } from 'zod'
-import { obligatoryStringField, fullNameField, emailField, telephoneField } from './common.schema'
-
-export const ProfileEditSchema = z.object({
-  name: fullNameField,
-  gender: obligatoryStringField
-})
-
-export const EmailEditSchema = z.object({
-email: emailField
-})
-
-export const PhoneEditSchema = z.object({
-cellphone: telephoneField
-})
+import { z } from 'zod'
+import { obligatoryStringField, fullNameField } from './common.schema'
 
 export const AddressEditSchema = z.object({
-street: obligatoryStringField,
-number: obligatoryStringField,
-city: obligatoryStringField,
-state: obligatoryStringField,
-zip: obligatoryStringField,
+  street: obligatoryStringField.optional(),
+  number: obligatoryStringField.optional(),
+  city: obligatoryStringField.optional(),
+  state: obligatoryStringField.optional(),
+  zip: obligatoryStringField.optional()
 })
-export const AddPhoneSchema = z.object(
-  {
-    name: obligatoryStringField,
-    value: telephoneField
-}
-)
-export type EmailEditSchemaType = z.infer<typeof EmailEditSchema>
-export type PhoneEditSchemaType = z.infer<typeof PhoneEditSchema>
-export type AddressEditSchema = z.infer<typeof AddressEditSchema>
-export type ProfileEditSchemaType = z.infer<typeof ProfileEditSchema>
-export type AddPhoneSchemaType = z.infer<typeof AddPhoneSchema>
+
+export const ContactEditSchema = z.object({
+  id: z.number().optional(),
+  name: z.string().nullable().optional(),
+  value: z.string().optional(),
+  type: z.string().optional(),
+  is_verified: z.boolean().optional()
+})
+
+export const UpdateUserProfileSchema = z.object({
+  name: fullNameField.optional(),
+  gender: obligatoryStringField.optional(),
+  nationality: z.string().optional(),
+  place_of_birth: z.string().nullable().optional(),
+  mother_name: z.string().nullable().optional(),
+  cpfCnpj: z.string().optional(),
+  dateOfBirth: z.string().optional(),
+
+  contacts: z.array(ContactEditSchema).optional(),
+
+  address: AddressEditSchema.optional()
+})
+
+export type UpdateUserProfileFormData = z.infer<typeof UpdateUserProfileSchema>
