@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet } from 'react-native'
-import { GdocForm } from "@/components/form/gdoc-form"
-import { GdocFormItem } from "@/components/form/gdoc-form-item"
-import { GdocFormError } from "@/components/form/gdoc-form-error"
-import { GdocTextInput } from "@/components/form/gdoc-text-input"
-import { GdocDropdown } from "@/components/form/gdoc-dropdown"
+import { GdocForm } from '@/components/form/gdoc-form'
+import { GdocFormItem } from '@/components/form/gdoc-form-item'
+import { GdocFormError } from '@/components/form/gdoc-form-error'
+import { GdocTextInput } from '@/components/form/gdoc-text-input'
+import { GdocDropdown } from '@/components/form/gdoc-dropdown'
 import { GdocCep } from '@/components/form/gdoc-cep'
 import { Masks } from 'react-native-mask-input'
-import { AddPhoneSchema, AddressEditSchema, EmailEditSchema, PhoneEditSchema, ProfileEditSchema } from "@/schemas/profile-edit.schema"
-import { ProfileType } from "@/types/profile"
+import { AddressEditSchema, EmailEditSchema, PhoneEditSchema, ProfileEditSchema } from '@/schemas/profile-edit.schema'
+import type { ProfileType } from '@/types/profile'
 import api from '@/lib/axios'
-import { ItemType } from 'react-native-dropdown-picker'
+import type { ItemType } from 'react-native-dropdown-picker'
 import { getCities, getStates } from '@/services/cep.service'
 
 type Props = {
@@ -20,11 +19,9 @@ type Props = {
 }
 
 export function ProfileModelScreens({ screen, profile, onSuccess}: Props) {
-  // Mantemos os estados das listas no topo do arquivo
   const [states, setStates] = useState<ItemType<string>[]>([])
   const [cities, setCities] = useState<ItemType<string>[]>([])
 
-  // Carrega as cidades baseadas no estado atual do perfil assim que a tela abre
   useEffect(() => {
     getStates().then((data) => {
       const formattedStates = data.map((state: { nome: string, sigla: string }) => ({
@@ -46,64 +43,34 @@ export function ProfileModelScreens({ screen, profile, onSuccess}: Props) {
     }
   }, [profile])
 
-  /*
-  async function addContact(data:any) {
-    console.log("a")
-
-      try {
-        const id = profile.id
-        const initialValues = {
-        name: "",
-        value: "",
-        type: "telephone",
-        is_hidden: false,
-        is_primary: false,
-        should_receive_notifications: true
-        }
-        let payload: any;
-        payload = {...initialValues, ...data}
-        console.log(id)
-        console.log("/user/"+id+"/contacts", payload)
-
-      await api.post("/user/"+id+"/contacts", payload)
-      onSuccess?.();
-    } catch (error) {
-      console.log(error)
-      
-    }
-    
-  } 
-   */
-
-  async function updateProfile(data: any) {
+  async function updateProfile(data: object) {
     try {
-      let payload: any;
-  
-      if (screen === "ENDERECO") {
+      let payload: object
+
+      if (screen === 'ENDERECO') {
         const updatedAddress = {
           ...profile.person.address,
           ...data
-        };
-  
+        }
+
         payload = {
           ...profile.person,
           address: updatedAddress
-        };
+        }
       } else {
         payload = {
           ...profile.person,
           ...data
-        };
+        }
       }
-    
-      await api.put("/user/me", payload);
-      onSuccess?.();
+
+      await api.put('/user/me', payload)
+      onSuccess?.()
     } catch (error) {
-      console.error("Erro ao atualizar perfil:", error);
+      console.error('Erro ao atualizar perfil:', error)
     }
   }
-  
-  // Função para atualizar as cidades caso o usuário mude o Estado manualmente no Dropdown
+
   const handleStateChange = (stateSigla: string) => {
     if (stateSigla) {
       getCities(stateSigla).then((data) => {
@@ -117,184 +84,141 @@ export function ProfileModelScreens({ screen, profile, onSuccess}: Props) {
   }
 
   switch (screen) {
-    case 'DADOS_PESSOAIS': {
-      const initialValues = {
-        name: profile.person.name || "",
-        gender: profile.person.gender
-      }
-      const genreOptions = [
-        { label: 'Masculino', value: 'male' },
-        { label: 'Feminino', value: 'female' },
-        { label: 'Outro', value: 'other' }
-      ]
+  case 'DADOS_PESSOAIS': {
+    const initialValues = {
+      name: profile.person.name || '',
+      gender: profile.person.gender
+    }
+    const genreOptions = [
+      { label: 'Masculino', value: 'male' },
+      { label: 'Feminino', value: 'female' },
+      { label: 'Outro', value: 'other' }
+    ]
 
-       return (
-        <GdocForm schema={ProfileEditSchema} onSubmit={updateProfile} confirmLabel="Salvar" initial={initialValues}>
-          <GdocFormItem name={'name'}>
-            {field => (
-              <>
-                <GdocTextInput field={field} label="Nome completo" placeholder="Nome completo" />
-                <GdocFormError name={'name'} />
-              </>
-            )}
-          </GdocFormItem>
-          <GdocFormItem name={'gender'}>
-            {field => (
-              <>
-                <GdocDropdown placeholder="Gênero" items={genreOptions} field={field} />
-                <GdocFormError name={'gender'} />
-              </>
-            )}
-          </GdocFormItem>
-        </GdocForm>
-      )
+    return (
+      <GdocForm schema={ProfileEditSchema} onSubmit={updateProfile} confirmLabel="Salvar" initial={initialValues}>
+        <GdocFormItem name={'name'}>
+          {field => (
+            <>
+              <GdocTextInput field={field} label="Nome completo" placeholder="Nome completo" />
+              <GdocFormError name={'name'} />
+            </>
+          )}
+        </GdocFormItem>
+        <GdocFormItem name={'gender'}>
+          {field => (
+            <>
+              <GdocDropdown placeholder="Gênero" items={genreOptions} field={field} />
+              <GdocFormError name={'gender'} />
+            </>
+          )}
+        </GdocFormItem>
+      </GdocForm>
+    )
+  }
+
+  case 'EMAIL': {
+    const initialValues = { email: profile.person.email }
+    return (
+      <GdocForm schema={EmailEditSchema} onSubmit={updateProfile} confirmLabel="Salvar" initial={initialValues}>
+        <GdocFormItem name={'email'}>
+          {field => (
+            <>
+              <GdocTextInput field={field} label="Email" placeholder="Email" keyboardType={'email-address'}/>
+              <GdocFormError name={'email'} />
+            </>
+          )}
+        </GdocFormItem>
+      </GdocForm>
+    )
+  }
+
+  case 'TELEPHONE': {
+    const initialValues = { cellphone: profile.person.cellphone }
+    return (
+      <GdocForm schema={PhoneEditSchema} onSubmit={updateProfile} confirmLabel="Salvar" initial={initialValues}>
+        <GdocFormItem name={'cellphone'}>
+          {field => (
+            <>
+              <GdocTextInput mask={Masks.BRL_PHONE} field={field} label="Telefone" placeholder="Telefone" keyboardType={'numeric'}/>
+              <GdocFormError name={'cellphone'} />
+            </>
+          )}
+        </GdocFormItem>
+      </GdocForm>
+    )
+  }
+
+  case 'ENDERECO': {
+    const initialValues = {
+      zip: profile.person.address?.zip ?? '',
+      street: profile.person.address?.street ?? '',
+      city: profile.person.address?.city ?? '',
+      state: profile.person.address?.state ?? '',
+      number: profile.person.address?.number ?? ''
     }
 
-    case "EMAIL": {
-      const initialValues = { "email": profile.person.email }
-      return (
-        <GdocForm schema={EmailEditSchema} onSubmit={updateProfile} confirmLabel="Salvar" initial={initialValues}>
-          <GdocFormItem name={'email'}>
-            {field => (
-              <>
-                <GdocTextInput field={field} label="Email" placeholder="Email" keyboardType={'email-address'}/>
-                <GdocFormError name={'email'} />
-              </>
-            )}
-          </GdocFormItem>
-        </GdocForm>
-      )
-    }
+    return (
+      <GdocForm schema={AddressEditSchema} confirmLabel='Salvar' initial={initialValues} onSubmit={updateProfile}>
+        <GdocFormItem name={'zip'}>
+          {field => (
+            <>
+              <GdocCep field={field} label="CEP" placeholder="CEP" />
+              <GdocFormError name={'zip'} />
+            </>
+          )}
+        </GdocFormItem>
 
-    case "TELEPHONE": {
-      const initialValues = { "cellphone": profile.person.cellphone }
-      return (
-        <GdocForm schema={PhoneEditSchema} onSubmit={updateProfile} confirmLabel="Salvar" initial={initialValues}>
-          <GdocFormItem name={'cellphone'}>
-            {field => (
-              <>
-                <GdocTextInput mask={Masks.BRL_PHONE} field={field} label="Telefone" placeholder="Telefone" keyboardType={'numeric'}/>
-                <GdocFormError name={'cellphone'} />
-              </>
-            )}
-          </GdocFormItem>
-        </GdocForm>
-      )
-    }
+        <GdocFormItem name={'state'}>
+          {field => (
+            <>
+              <GdocDropdown
+                placeholder="Estado"
+                items={states}
+                field={{
+                  ...field,
+                  onChange: (value) => {
+                    field.onChange(value)
+                    handleStateChange(value)
+                  }
+                }}
+              />
+              <GdocFormError name={'state'} />
+            </>
+          )}
+        </GdocFormItem>
 
-    /*case "ADD-TELEFONE":{
-      const initialValues = {
-        name: "",
-        value: "",
-        type: "telephone",
-        is_hidden: false,
-        is_primary: false,
-        should_receive_notifications: true
-      }
+        <GdocFormItem name={'city'}>
+          {field => (
+            <>
+              <GdocDropdown placeholder="Cidades" items={cities} field={field} />
+              <GdocFormError name={'city'} />
+            </>
+          )}
+        </GdocFormItem>
 
-      return (
-        <GdocForm schema={AddPhoneSchema} onSubmit={addContact} confirmLabel="Adicionar Contato" initial={initialValues}>
-          
-          <GdocFormItem name={'name'}>
-            {field => (
-              <>
-                <GdocTextInput field={field} label="Nome do contato" placeholder="Ex: Mãe, Trabalho..." />
-                <GdocFormError name={'name'} />
-              </>
-            )}
-          </GdocFormItem>
+        <GdocFormItem name={'street'}>
+          {field => (
+            <>
+              <GdocTextInput field={field} label="Rua" placeholder="Rua" />
+              <GdocFormError name={'street'} />
+            </>
+          )}
+        </GdocFormItem>
 
-          <GdocFormItem name={'value'}>
-            {field => (
-              <>
-                <GdocTextInput mask={Masks.BRL_PHONE} field={field} label="Telefone" placeholder="Telefone" keyboardType={'numeric'}/>
-                <GdocFormError name={'value'} />
-              </>
-            )}
-          </GdocFormItem>
+        <GdocFormItem name={'number'}>
+          {field => (
+            <>
+              <GdocTextInput field={field} label="Número" placeholder="Número" />
+              <GdocFormError name={'number'} />
+            </>
+          )}
+        </GdocFormItem>
+      </GdocForm>
+    )
+  }
 
-        </GdocForm>
-      )      
-    }
-    */
-    case "ENDERECO": {
-      const initialValues = {
-        zip: profile.person.address?.zip ?? "",
-        street: profile.person.address?.street ?? "",
-        city: profile.person.address?.city ?? "",
-        state: profile.person.address?.state ?? "",
-        number: profile.person.address?.number ?? ""
-      }
-
-      return (
-        <GdocForm schema={AddressEditSchema} confirmLabel='Salvar' initial={initialValues} onSubmit={updateProfile}>
-          <GdocFormItem name={'zip'}>
-            {field => (
-              <>
-                <GdocCep field={field} label="CEP" placeholder="CEP" />
-                <GdocFormError name={'zip'} />
-              </>
-            )}
-          </GdocFormItem>
-
-          <GdocFormItem name={'state'}>
-            {field => (
-              <>
-                {/* Usamos o onChange do próprio dropdown para atualizar as cidades sem precisar de watch */}
-                <GdocDropdown 
-                  placeholder="Estado" 
-                  items={states} 
-                  field={{
-                    ...field,
-                    onChange: (value) => {
-                      field.onChange(value);
-                      handleStateChange(value);
-                    }
-                  }} 
-                />
-                <GdocFormError name={'state'} />
-              </>
-            )}
-          </GdocFormItem>
-
-          <GdocFormItem name={'city'}>
-           {field => (
-              <>
-                <GdocDropdown placeholder="Cidades" items={cities} field={field} />
-                <GdocFormError name={'city'} />
-              </>
-            )}
-          </GdocFormItem>
-
-          <GdocFormItem name={'street'}>
-            {field => (
-              <>
-                <GdocTextInput field={field} label="Rua" placeholder="Rua" />
-                <GdocFormError name={'street'} />
-              </>
-            )}
-          </GdocFormItem>
-
-          <GdocFormItem name={'number'}>
-            {field => (
-              <>
-                <GdocTextInput field={field} label="Número" placeholder="Número" />
-                <GdocFormError name={'number'} />
-              </>
-            )}
-          </GdocFormItem>
-        </GdocForm>
-      )
-    }
-
-    default:
-      return null
+  default:
+    return null
   }
 }
-
-const styles = StyleSheet.create({
-  placeholder: {
-    padding: 20,
-    alignItems: 'center'
-  }
-})

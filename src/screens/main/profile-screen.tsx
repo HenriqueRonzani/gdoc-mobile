@@ -4,7 +4,7 @@ import { StyleSheet, View, ScrollView } from 'react-native'
 import { GdocPageTitle } from '@/components/gdoc-page-title'
 import { getProfile } from '@/services/profile.service'
 import { ProfileAreas } from '@/components/screens/main/profile/profile-areas'
-import { ProfileType } from '@/types/profile'
+import type { ProfileType } from '@/types/profile'
 import { useSnackbar } from '@/providers/snackbar-provider'
 
 const initialProfile: ProfileType = {
@@ -26,15 +26,12 @@ const initialProfile: ProfileType = {
   }
 }
 
-
-
 export function ProfileScreen() {
   const { toastError } = useSnackbar()
   const [profile, setProfile] = useState<ProfileType>(initialProfile)
   const [loading, setLoading] = useState(false)
 
   async function loadProfile() {
-    
     setLoading(true)
     try {
       const data = await getProfile()
@@ -43,14 +40,16 @@ export function ProfileScreen() {
       toastError('Erro ao carregar perfil')
       console.error(err)
     } finally {
-      setLoading(false) 
+      setLoading(false)
     }
   }
 
-  useEffect(() => { loadProfile() }, [])
+  useEffect(() => {
+    loadProfile()
+  }, [])
 
   return (
-    
+
     <ScrollView style={style.container}>
 
       <GdocPageTitle>
@@ -68,7 +67,6 @@ export function ProfileScreen() {
           : (
             <View style={style.contentContainer}>
               <ProfileAreas profile={profile} reload={loadProfile}/>
-
             </View>
           )
       }
