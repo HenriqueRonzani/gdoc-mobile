@@ -22,7 +22,7 @@ export function ProfileAreas({ profile, reload }: Props) {
   const [personOpen, setPersonOpen] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
 
-  const exampleData: RenderConfig = [
+  const personData: RenderConfig = [
     {
       title: 'Nome',
       value: profile.person.name
@@ -38,10 +38,22 @@ export function ProfileAreas({ profile, reload }: Props) {
     {
       title: 'Gênero',
       value: GENDER_ENUM[profile.person.gender]
+    },
+    {
+      title: 'Nacionalidade',
+      value: profile.person.nationality
+    },
+    {
+      title: 'Naturalidade',
+      value: profile.person.place_of_birth
+    },
+    {
+      title: 'Nome da Mãe',
+      value: profile.person.mother_name
     }
   ]
 
-  const contatos: RenderConfig = [
+  const contactData: RenderConfig = [
     {
       title: 'E-mails',
       value: profile.person.email
@@ -52,7 +64,7 @@ export function ProfileAreas({ profile, reload }: Props) {
     }
   ]
 
-  const endereco: RenderConfig = [
+  const addressData: RenderConfig = [
     {
       title: 'CEP',
       value: profile.person.address?.zip
@@ -103,7 +115,7 @@ export function ProfileAreas({ profile, reload }: Props) {
   return (
     <View style={style.contentContainer}>
       <GdocDataRenderer
-        renderConfig={exampleData}
+        renderConfig={personData}
         headerTitle={'Dados Pessoais'}
         headerAction={{
           title: 'Editar',
@@ -112,12 +124,12 @@ export function ProfileAreas({ profile, reload }: Props) {
       />
 
       <GdocDataRenderer
-        renderConfig={contatos}
+        renderConfig={contactData}
         headerTitle={'Contatos'}
       />
 
       <GdocDataRenderer
-        renderConfig={endereco}
+        renderConfig={addressData}
         headerTitle={'Endereço'}
         headerAction={{
           title: 'Editar',

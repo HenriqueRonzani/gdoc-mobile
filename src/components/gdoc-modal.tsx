@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { IconButton, Modal, Portal, Text } from 'react-native-paper'
-import { StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { theme } from '@/theme'
 
 type Props = {
@@ -19,9 +19,9 @@ export function GdocModal ({headerTitle, open, onClose, children}: Props) {
           <Text style={style.headerText}>{headerTitle}</Text>
         </View>
 
-        <View style={style.content}>
+        <ScrollView contentContainerStyle={style.content}>
           {children}
-        </View>
+        </ScrollView>
       </Modal>
     </Portal>
   )
@@ -29,7 +29,10 @@ export function GdocModal ({headerTitle, open, onClose, children}: Props) {
 
 const style = StyleSheet.create({
   container: {
-    flexDirection: 'column'
+    flexDirection: 'column',
+    width: '100%',
+    maxHeight: '70%',
+    alignSelf: 'center'
   },
   header: {
     flexDirection: 'row-reverse',
