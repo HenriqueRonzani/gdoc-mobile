@@ -82,7 +82,12 @@ export function GdocCategoryNavigation ({onPressService, loading}: Props) {
         : (
           <View>
             <GdocCategories categories={categories} onPressCategory={onPressCategory}/>
-            <GdocServices services={services} onPressService={onPressService}/>
+            {
+              (services.length !== 0 || parentIds.length !== 0) 
+                && (
+                <GdocServices services={services} onPressService={onPressService}/>
+              )
+            }
           </View>
         )
       }
