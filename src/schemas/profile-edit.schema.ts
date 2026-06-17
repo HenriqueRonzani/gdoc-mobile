@@ -1,6 +1,5 @@
 import { z } from 'zod'
 import { obligatoryStringField, fullNameField } from './common.schema'
-import dayjs from 'dayjs'
 
 export const AddressEditSchema = z.object({
   street: obligatoryStringField.optional(),
@@ -25,7 +24,7 @@ export const UpdateUserProfileSchema = z.object({
   place_of_birth: z.string().nullable().optional(),
   mother_name: z.string().nullable().optional(),
   cpfCnpj: z.string().optional(),
-  dateOfBirth: z.string().optional().transform(value => dayjs(value, 'DD/MM/YYYY').format('YYYY-MM-DD')),
+  dateOfBirth: z.string().optional(),
 
   contacts: z.array(ContactEditSchema).optional(),
 
