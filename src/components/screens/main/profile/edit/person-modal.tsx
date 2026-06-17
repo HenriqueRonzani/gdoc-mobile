@@ -6,6 +6,8 @@ import { GdocTextInput } from '@/components/form/gdoc-text-input'
 import { GdocModal } from '@/components/gdoc-modal'
 import { useProfile } from '@/providers/profile-provider'
 import { UpdateUserProfileSchema, type UpdateUserProfileFormData } from '@/schemas/profile-edit.schema'
+import dayjs from 'dayjs'
+import { Masks } from 'react-native-mask-input'
 
 type Props = {
   openModal: boolean
@@ -18,7 +20,8 @@ export function PersonModal({openModal, loading, onClose, onSave}: Props) {
   const {profile} = useProfile()
 
   const initialValues = {
-    ...profile.person
+    ...profile.person,
+    dateOfBirth: dayjs(profile.person.dateOfBirth, 'YYYY-MM-DD').format('DD/MM/YYYY')
   } as UpdateUserProfileFormData
 
   const genreOptions = [
@@ -55,11 +58,11 @@ export function PersonModal({openModal, loading, onClose, onSave}: Props) {
             </>
           )}
         </GdocFormItem>
-        <GdocFormItem name={'birthDate'}>
+        <GdocFormItem name={'dateOfBirth'}>
           {field => (
             <>
-              <GdocTextInput field={field} label="Data de nascimento" placeholder="Data de nascimento" disabled/>
-              <GdocFormError name={'birthDate'} />
+              <GdocTextInput field={field} label="Data de nascimento" placeholder="Data de nascimento" disabled mask={Masks.DATE_DDMMYYYY()}/>
+              <GdocFormError name={'dateOfBirth'} />
             </>
           )}
         </GdocFormItem>

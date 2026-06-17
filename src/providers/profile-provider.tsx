@@ -2,12 +2,12 @@ import type { ReactNode} from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useSnackbar } from '@/providers/snackbar-provider'
 import { getProfile } from '@/services/api/profile.service'
-import type { UserSessionData } from '@/types/auth-me'
 import { handleRequestError } from '@/services/request-error.helper'
+import type { ProfileType } from '@/types/profile'
 
 export type ProfileProviderData = {
   isLoading: boolean
-  profile: UserSessionData
+  profile: ProfileType
   reloadProfile: () => void
 }
 
@@ -17,7 +17,7 @@ export const useProfile = () => useContext(ProfileContext)
 
 export function ProfileProvider({children}: { children: ReactNode }) {
   const {toastError} = useSnackbar()
-  const [profile, setProfile] = useState<UserSessionData>({} as UserSessionData)
+  const [profile, setProfile] = useState<ProfileType>({} as ProfileType)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const reloadProfile = async () => {

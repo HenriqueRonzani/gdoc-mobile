@@ -10,6 +10,7 @@ import { useSnackbar } from '@/providers/snackbar-provider'
 import { AddressModal } from './edit/address-modal'
 import { PersonModal } from './edit/person-modal'
 import type { UpdateUserProfileFormData } from '@/schemas/profile-edit.schema'
+import dayjs from 'dayjs'
 
 type Props = {
     profile: ProfileType
@@ -33,7 +34,7 @@ export function ProfileAreas({ profile, reload }: Props) {
     },
     {
       title: 'Data de Nascimento',
-      value: profile.person.dateOfBirth
+      value: dayjs(profile.person.dateOfBirth, 'YYYY-MM-DD').format('DD/MM/YYYY')
     },
     {
       title: 'Gênero',
