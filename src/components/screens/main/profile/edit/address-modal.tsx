@@ -73,23 +73,25 @@ export function AddressModal ({open, loading, onSave, onClose}: Props) {
         <GdocFormItem name={'address.zip'}>
           {field => (
             <>
-              <GdocCep field={field} label="CEP" placeholder="CEP" />
+              <GdocCep nestedPath='address.' field={field} label="CEP" placeholder="CEP" />
               <GdocFormError name={'address.zip'} />
             </>
           )}
         </GdocFormItem>
 
         <GdocFormItem name={'address.state'}>
-          {field => (
+          {(field, setValue) => (
             <>
               <GdocDropdown
                 placeholder="Estado"
                 items={states}
+                listMode='MODAL'
                 field={{
                   ...field,
                   onChange: (value) => {
                     field.onChange(value)
                     handleStateChange(value)
+                    setValue('address.city', '')
                   }
                 }}
               />
@@ -101,7 +103,7 @@ export function AddressModal ({open, loading, onSave, onClose}: Props) {
         <GdocFormItem name={'address.city'}>
           {field => (
             <>
-              <GdocDropdown placeholder="Cidades" items={cities} field={field} />
+              <GdocDropdown listMode='MODAL' placeholder="Cidades" items={cities} field={field} />
               <GdocFormError name={'address.city'} />
             </>
           )}

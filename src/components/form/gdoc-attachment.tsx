@@ -21,7 +21,7 @@ export function GdocAttachment({field, allowedExtensions}: Props) {
 
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: allowedMimeTypes,
+        type: allowedMimeTypes.length === 0 ? '*/*' : allowedMimeTypes,
         copyToCacheDirectory: true
       })
 
