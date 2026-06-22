@@ -1,4 +1,4 @@
-import type { Service } from '@/types/service'
+import type { CustomFieldConfig, Service } from '@/types/service'
 import { GdocForm } from '@/components/form/gdoc-form'
 import type { TransformedCreateDocumentFormData } from '@/schemas/main/create-document.schema'
 import { makeServiceSchema } from '@/schemas/main/create-document.schema'
@@ -10,10 +10,30 @@ import { RenderCustomFieldInput } from '@/components/screens/main/document/creat
 import { Text } from 'react-native-paper'
 import { theme } from '@/theme'
 import { GdocFormArray } from '@/components/form/gdoc-form-array'
+import dayjs from 'dayjs'
+import { fixEncoding } from '@/services/create-document.helper'
 
 type Props = {
   service: Service
   onSubmit: (data: TransformedCreateDocumentFormData) => void
+}
+
+const handleDefaultValues = (field: CustomFieldConfig) => {
+  if (field.type === 'checkbox') {
+    return [] as string[]
+  }
+
+  const defaultValue = field.options.defaultvalue
+
+  if (!defaultValue) {
+    return ''
+  }
+
+  const dateRegex = /\d\d\d\d-\d\d-\d\d/g
+  if (field.type !== 'date' && dateRegex.test(defaultValue)){
+    return dayjs(defaultValue, 'YYYY-MM-DD').format('DD/MM/YYYY')
+  }
+  return fixEncoding(defaultValue)
 }
 
 export function CreateDocumentForm({service, onSubmit}: Props) {
@@ -21,11 +41,13 @@ export function CreateDocumentForm({service, onSubmit}: Props) {
 
   const initialFields = customFields.map(field => ({
     field_id: field.id,
-    value: field.type === 'checkbox' ? [] : (field.options.defaultvalue || '')
+    value: handleDefaultValues(field)
   }))
 
   const initialValue = {
-    recipients: 0,
+    recipients: service.recipient_options.length === 1 
+      ? service.recipient_options[0].responsible_id || service.recipient_options[0].sector_id
+      : 0,
     fields: initialFields
   }
 
@@ -47,7 +69,7 @@ export function CreateDocumentForm({service, onSubmit}: Props) {
     >
       <View style={style.container}>
 
-        {recipientsItems.length > 0 && (
+        {recipientsItems.length > 1 && (
           <GdocFormItem name={'recipients'}>
             {field => (
               <>

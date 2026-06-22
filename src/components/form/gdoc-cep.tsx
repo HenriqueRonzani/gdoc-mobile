@@ -8,21 +8,21 @@ import { Masks } from 'react-native-mask-input'
 
 type Props = TextInputProps & {
   field: ControllerRenderProps<FieldValues, string>
+  nestedPath?: string
 }
 
-export function GdocCep ({field, ...rest}: Props) {
+export function GdocCep ({field, nestedPath = '', ...rest}: Props) {
   const { setValue } = useFormContext()
 
   useEffect(() => {
     const cleanZip = field.value?.replace(/\D/g, '')
-
     if (cleanZip.length === 8) {
       getAddress(cleanZip).then((address) => {
         if (address) {
-          setValue('street', address.logradouro, { shouldValidate: true })
-          setValue('neighborhood', address.bairro, { shouldValidate: true })
-          setValue('state', address.uf, { shouldValidate: true })
-          setValue('city', address.localidade, { shouldValidate: true })
+          setValue(`${nestedPath}street`, address.logradouro, { shouldValidate: true })
+          setValue(`${nestedPath}neighborhood`, address.bairro, { shouldValidate: true })
+          setValue(`${nestedPath}state`, address.uf, { shouldValidate: true })
+          setValue(`${nestedPath}city`, address.localidade, { shouldValidate: true })
         }
       })
     }

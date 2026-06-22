@@ -16,39 +16,50 @@ type Props = {
   customFieldConfig: CustomFieldConfig
 }
 
+const handleValuesFormatting = (values: string[]) => {
+  return values.map(fixEncoding)
+}
+
 export function RenderCustomFieldInput({ field, customFieldConfig }: Props) {
   const disabled = booleanStringToBoolean(customFieldConfig.options.readonly)
   const formattedName = fixEncoding(customFieldConfig.name)
 
   switch (customFieldConfig.type) {
-  case 'string':
+  case 'string': {
+    const maxChar = customFieldConfig.options.maxchar
+    const mask = customFieldConfig.options.mask
     return (
       <GdocTextInput
         field={field}
         label={formattedName}
         placeholder={formattedName}
-        {...(customFieldConfig.options.maxchar ? { maxLength: Number(customFieldConfig.options.maxchar) } : {})}
-        {...(customFieldConfig.options.mask && { mask: stringToMask(customFieldConfig.options.mask) })}
+        maxLength={Number(maxChar) > 0 ? Number(maxChar) : undefined }
+        mask={mask ? stringToMask(mask) : undefined}
         disabled={disabled}
         style={{ fontSize: 12 }}
       />
     )
+  }
 
-  case 'checkbox':
+  case 'checkbox': {
+    const formattedValues = handleValuesFormatting(customFieldConfig.options.values)
     return (
       <View>
         <Text style={style.label}>{formattedName}</Text>
-        <GdocCheckGroup field={field} values={customFieldConfig.options.values} disabled={disabled} />
+        <GdocCheckGroup field={field} values={formattedValues} disabled={disabled} />
       </View>
     )
+  }
 
-  case 'radio':
+  case 'radio': {
+    const formattedValues = handleValuesFormatting(customFieldConfig.options.values)
     return (
       <View>
         <Text style={style.label}>{formattedName}</Text>
-        <GdocRadio field={field} values={customFieldConfig.options.values} disabled={disabled} />
+        <GdocRadio field={field} values={formattedValues} disabled={disabled} />
       </View>
     )
+  }
 
   case 'date':
     return (
@@ -70,7 +81,8 @@ export function RenderCustomFieldInput({ field, customFieldConfig }: Props) {
     )
 
   case 'select': {
-    const items = customFieldConfig.options.values.map(i => ({ value: i, label: i }))
+    const formattedValues = handleValuesFormatting(customFieldConfig.options.values)
+    const items = formattedValues.map(i => ({ value: i, label: i }))
     return (
       <View style={{ gap: 6 }}>
         <Text style={style.label}>{formattedName}</Text>

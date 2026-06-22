@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form'
 import type { ZodTypeAny } from 'zod/v3'
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import type { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { ViewStyle } from 'react-native'
@@ -45,7 +45,7 @@ export function GdocForm<T extends ZodTypeAny> ({initial, schema, onSubmit, chil
         contentContainerStyle={[style.scrollContent, formStyle]}
         showsVerticalScrollIndicator={false}
         enableOnAndroid={true}
-        extraScrollHeight={20}
+        extraScrollHeight={50}
         keyboardShouldPersistTaps='handled'
       >
         <View style={style.formBody}>

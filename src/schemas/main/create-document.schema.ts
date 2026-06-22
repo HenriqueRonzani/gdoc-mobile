@@ -45,7 +45,7 @@ export const makeServiceSchema = (hasRecipientOptions: boolean, customFields: Cu
     if (!baseFileSchema.safeParse(field.value).success) return
 
     const cleanExtensions = fieldConfig.options.extensions.flatMap(i => i.split(',')).map(i => i.trim()) as extension[]
-    if (cleanExtensions.includes('*')) return
+    if (cleanExtensions.includes('*') || cleanExtensions.length === 0) return
 
     const currentExtension = field.value?.name?.match(/\.(\w*)/g)?.at(-1)?.toLowerCase()
     if (!currentExtension) {
